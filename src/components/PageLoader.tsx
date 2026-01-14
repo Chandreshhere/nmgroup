@@ -2,26 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 export default function PageLoader() {
   const loaderRef = useRef<HTMLDivElement>(null);
-  const charsRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const logoRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
-  const innerTextRef = useRef<HTMLDivElement>(null);
+  const innerLogoRef = useRef<HTMLDivElement>(null);
   const [isComplete, setIsComplete] = useState(false);
-
-  const text = "livence";
 
   useEffect(() => {
     // Disable scroll during loader
     document.body.style.overflow = "hidden";
 
     const loader = loaderRef.current;
-    const chars = charsRef.current.filter(Boolean) as HTMLSpanElement[];
+    const logo = logoRef.current;
     const circle = circleRef.current;
-    const innerText = innerTextRef.current;
+    const innerLogo = innerLogoRef.current;
 
-    if (!loader || chars.length === 0 || !circle || !innerText) return;
+    if (!loader || !logo || !circle || !innerLogo) return;
 
     // Create main timeline
     const tl = gsap.timeline({
@@ -32,21 +31,12 @@ export default function PageLoader() {
     });
 
     // Set initial states
-    gsap.set(chars, { x: 150, opacity: 0 });
+    gsap.set(logo, { opacity: 1 });
     gsap.set(circle, { scale: 0, opacity: 0, x: 0, y: 0 });
-    gsap.set(innerText, { x: 0, y: 0 });
+    gsap.set(innerLogo, { x: 0, y: 0 });
     gsap.set(loader, { clipPath: "inset(0 0 0 0)" });
 
-    // PHASE 1 — TEXT ENTRY (each character one by one, right to left)
-    tl.to(chars, {
-      x: 0,
-      opacity: 1,
-      duration: 0.5,
-      ease: "power4.out",
-      stagger: 0.03,
-    });
-
-    // PHASE 2 — CIRCLE APPEARS at center (starts small, grows to 1)
+    // PHASE 1 — CIRCLE APPEARS at center (starts small, grows to 1)
     tl.to(
       circle,
       {
@@ -78,8 +68,8 @@ export default function PageLoader() {
       duration: 0.5,
       ease: "power2.inOut",
     });
-    // Inner text moves opposite to keep it fixed in place
-    tl.to(innerText, {
+    // Inner logo moves opposite to keep it fixed in place
+    tl.to(innerLogo, {
       x: 80,
       y: 25,
       duration: 0.5,
@@ -94,8 +84,8 @@ export default function PageLoader() {
       duration: 0.5,
       ease: "power2.inOut",
     });
-    // Inner text moves opposite
-    tl.to(innerText, {
+    // Inner logo moves opposite
+    tl.to(innerLogo, {
       x: 0,
       y: 35,
       duration: 0.5,
@@ -110,8 +100,8 @@ export default function PageLoader() {
       duration: 0.5,
       ease: "power2.inOut",
     });
-    // Inner text moves opposite
-    tl.to(innerText, {
+    // Inner logo moves opposite
+    tl.to(innerLogo, {
       x: -100,
       y: -30,
       duration: 0.5,
@@ -154,26 +144,22 @@ export default function PageLoader() {
     >
       {/* Logo Container - stays centered */}
       <div className="relative flex items-center justify-center">
-        {/* Layer 1: Dark text (base layer) */}
+        {/* Layer 1: Dark logo (base layer) */}
         <div
-          className="relative font-normal flex"
+          ref={logoRef}
+          className="relative"
           style={{
-            fontSize: "clamp(48px, 7vw, 90px)",
-            letterSpacing: "-0.02em",
-            color: "#493425",
+            width: "clamp(250px, 35vw, 450px)",
+            height: "clamp(80px, 12vw, 150px)",
           }}
         >
-          {text.split("").map((char, index) => (
-            <span
-              key={index}
-              ref={(el) => {
-                charsRef.current[index] = el;
-              }}
-              className="inline-block"
-            >
-              {char}
-            </span>
-          ))}
+          <Image
+            src="/logo.jpg"
+            alt="Livence"
+            fill
+            className="object-contain"
+            priority
+          />
         </div>
 
         {/* Layer 2: Moving circle with overflow hidden - acts as a mask */}
@@ -191,21 +177,26 @@ export default function PageLoader() {
             opacity: 0,
           }}
         >
-          {/* Inner light text - moves opposite to circle to stay aligned with dark text */}
+          {/* Inner inverted logo - moves opposite to circle to stay aligned with base logo */}
           <div
-            ref={innerTextRef}
-            className="absolute font-normal"
+            ref={innerLogoRef}
+            className="absolute"
             style={{
-              fontSize: "clamp(48px, 7vw, 90px)",
-              letterSpacing: "-0.02em",
-              color: "#E5E2DD",
-              whiteSpace: "nowrap",
+              width: "clamp(250px, 35vw, 450px)",
+              height: "clamp(80px, 12vw, 150px)",
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
+              filter: "invert(1) brightness(1.2)",
             }}
           >
-            {text}
+            <Image
+              src="/logo.jpg"
+              alt="Livence"
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
         </div>
       </div>

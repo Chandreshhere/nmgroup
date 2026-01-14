@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
@@ -13,7 +12,7 @@ export default function HeroSection() {
   const topRevealRef = useRef<HTMLDivElement>(null);
   const bottomRevealRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const textRow = textRowRef.current;
@@ -31,7 +30,7 @@ export default function HeroSection() {
     gsap.set(forYou, { opacity: 0, x: -80 });
     gsap.set(topReveal, { yPercent: 0 }); // Covers top half
     gsap.set(bottomReveal, { yPercent: 0 }); // Covers bottom half
-    gsap.set(image, { scale: 1.3 });
+    gsap.set(image, { scale: 1 });
     gsap.set(button, { opacity: 0, scale: 0.8 });
 
     // Create timeline - starts after header animation
@@ -68,9 +67,9 @@ export default function HeroSection() {
       ease: "power2.inOut",
     }, "<"); // Same time as top reveal
 
-    // Image zooms out slowly
+    // Image zooms in slightly
     tl.to(image, {
-      scale: 1,
+      scale: 1.05,
       duration: 1.2,
       ease: "power2.out",
     }, "-=0.9");
@@ -103,7 +102,7 @@ export default function HeroSection() {
           style={{ opacity: 0 }}
         >
           {/* Left - Main Headline */}
-          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-[#493425] tracking-tight leading-tight pb-2">
+          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-[#493425] tracking-tight leading-tight pb-2 mt-1 -mb-1">
             TURNING NORMAL SPACES
             <br />
             INTO STUNNING
@@ -137,7 +136,7 @@ export default function HeroSection() {
             style={{ opacity: 0 }}
           >
             <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-normal text-[#493425] tracking-tight leading-none">
-              (FOR YOU)
+              FOR YOU
             </span>
           </div>
 
@@ -152,7 +151,7 @@ export default function HeroSection() {
                 alt="Luxury architecture"
                 fill
                 priority
-                className="object-cover object-[center_40%]"
+                className="object-cover object-[center_15%]"
               />
             </div>
 
@@ -169,19 +168,24 @@ export default function HeroSection() {
             />
           </div>
 
-          {/* Submit Application Button */}
-          <Link
+          {/* Contact Button */}
+          <button
             ref={buttonRef}
-            href="/application"
-            className="absolute bottom-4 right-4 md:bottom-8 md:right-8 lg:bottom-10 lg:right-12 flex items-center justify-center w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white rounded-full text-center text-[11px] font-bold text-[#493425] uppercase tracking-wider hover:bg-[#F5F5F3] transition-colors shadow-lg z-20"
+            onClick={() => {
+              const contactSection = document.getElementById('contact-section');
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="absolute bottom-4 right-4 md:bottom-8 md:right-8 lg:bottom-10 lg:right-12 flex items-center justify-center w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white rounded-full text-center text-[11px] font-bold text-[#493425] uppercase tracking-wider hover:bg-[#F5F5F3] transition-colors shadow-lg z-20 cursor-pointer"
             style={{ opacity: 0 }}
           >
             <span className="leading-tight">
-              SUBMIT AN
+              GET IN
               <br />
-              APPLICATION
+              TOUCH
             </span>
-          </Link>
+          </button>
         </div>
       </div>
     </section>

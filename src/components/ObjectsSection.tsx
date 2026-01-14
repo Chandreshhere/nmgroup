@@ -88,8 +88,8 @@ export default function ObjectsSection() {
       // Rural Estates - first in row 2 (top to bottom)
       gsap.to(rural, {
         clipPath: "inset(0 0 0% 0)",
-        duration: 1,
-        ease: "power3.out",
+        duration: 1.8,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: rural,
           start: "top 85%",
@@ -101,9 +101,9 @@ export default function ObjectsSection() {
       // Heritage Homes - after rural with delay (top to bottom)
       gsap.to(heritage, {
         clipPath: "inset(0 0 0% 0)",
-        duration: 1,
-        delay: 0.3,
-        ease: "power3.out",
+        duration: 1.8,
+        delay: 0.4,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: rural,
           start: "top 85%",
@@ -115,9 +115,9 @@ export default function ObjectsSection() {
       // Seaside Villas - same time as heritage (top to bottom)
       gsap.to(seaside, {
         clipPath: "inset(0 0 0% 0)",
-        duration: 1,
-        delay: 0.3,
-        ease: "power3.out",
+        duration: 1.8,
+        delay: 0.4,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: rural,
           start: "top 85%",
@@ -132,6 +132,7 @@ export default function ObjectsSection() {
 
   return (
     <section
+      id="objects-section"
       ref={sectionRef}
       className="relative bg-[#F5F5F3] w-full"
       style={{
@@ -157,31 +158,31 @@ export default function ObjectsSection() {
             className="text-sm font-semibold text-[#493425] leading-[140%]"
             style={{ opacity: 0 }}
           >
-            Objects that change the
+            Shaping the Future of
             <br />
-            way of life
+            Modern Living
           </h2>
         </div>
 
         {/* Middle - Description 1 */}
-        <div style={{ maxWidth: '180px' }}>
+        <div style={{ maxWidth: '360px' }}>
           <p
             ref={desc1Ref}
             className="text-sm font-medium text-[#8D7660] leading-[160%]"
             style={{ opacity: 0 }}
           >
-            Discover exclusive properties that elevate the meaning of comfort and sophistication. Each residence is a masterpiece of architecture and design, created for those who seek more than just a home
+            Recognized across leading newspapers and media platforms, NM Group has earned a reputation for delivering landmark developments that redefine contemporary living. Our projects have received multiple accolades for architectural excellence, innovation, and superior construction standards.
           </p>
         </div>
 
         {/* Right - Description 2 */}
-        <div style={{ maxWidth: '180px' }}>
+        <div style={{ maxWidth: '360px' }}>
           <p
             ref={desc2Ref}
             className="text-sm font-medium text-[#8D7660] leading-[160%]"
             style={{ opacity: 0 }}
           >
-            Our collection redefines modern luxury — blending space, light, and emotion to create environments that inspire, impress, and transform everyday living
+            Each development reflects a commitment to quality, thoughtful design, and long-term value — going beyond buildings to create environments that elevate lifestyles. As part of the leadership at NM Group, we continue to shape urban landscapes with vision, responsibility, and purpose.
           </p>
         </div>
       </div>
@@ -190,7 +191,7 @@ export default function ObjectsSection() {
       <div className="relative mt-20">
         {/* Row 1: City Residences + Mountain Retreats */}
         <div className="flex items-start justify-end gap-6">
-          {/* City Residences - Small Square */}
+          {/* Recognized by Leading Media - Small Square */}
           <div className="flex flex-col shrink-0">
             <div
               ref={cityRef}
@@ -198,8 +199,8 @@ export default function ObjectsSection() {
               style={{ width: '280px', height: '280px' }}
             >
               <Image
-                src="/city.jpg"
-                alt="City Residences"
+                src="/n3.jpg"
+                alt="Recognized by Leading Media"
                 fill
                 className="object-cover"
               />
@@ -208,7 +209,7 @@ export default function ObjectsSection() {
               className="text-xs font-semibold text-[#493425] mt-4 uppercase"
               style={{ letterSpacing: '0.12em' }}
             >
-              CITY RESIDENCES
+              RECOGNIZED BY LEADING MEDIA
             </h3>
           </div>
 
@@ -220,8 +221,8 @@ export default function ObjectsSection() {
               style={{ width: '41vw', aspectRatio: '16/10' }}
             >
               <Image
-                src="/mountain.jpg"
-                alt="Mountain Retreats"
+                src="/n6.jpg"
+                alt="Award-Winning Excellence"
                 fill
                 className="object-cover"
               />
@@ -230,78 +231,81 @@ export default function ObjectsSection() {
               className="text-xs font-semibold text-[#493425] mt-4 uppercase"
               style={{ letterSpacing: '0.12em' }}
             >
-              MOUNTAIN RETREATS
+              AWARD-WINNING EXCELLENCE
             </h3>
           </div>
         </div>
 
         {/* Row 2: Rural Estates + Heritage Homes + Seaside Villas */}
-        <div className="flex items-end mt-8 gap-6">
-          {/* Rural Estates - Very Wide */}
-          <div className="flex flex-col">
+        <div className="mt-8">
+          {/* Images row - aligned at bottom */}
+          <div className="flex items-end gap-6">
+            {/* Rural Estates - Very Wide */}
             <div
               ref={ruralRef}
               className="relative bg-[#E5E2DD] overflow-hidden"
               style={{ width: '52vw', aspectRatio: '16/11' }}
             >
               <Image
-                src="/rural.jpg"
-                alt="Rural Estates"
+                src="/n5.jpg"
+                alt="National Industry Recognition"
                 fill
                 className="object-cover"
               />
             </div>
-            <h3
-              className="text-xs font-semibold text-[#493425] mt-4 uppercase"
-              style={{ letterSpacing: '0.12em' }}
-            >
-              RURAL ESTATES
-            </h3>
-          </div>
 
-          {/* Heritage Homes & Seaside Villas - Two Small Side by Side */}
-          <div className="flex gap-6 ml-auto">
-            {/* Heritage Homes */}
-            <div className="flex flex-col">
+            {/* Heritage Homes & Seaside Villas - Two Small Side by Side */}
+            <div className="flex items-end gap-6 ml-auto">
+              {/* Heritage Homes */}
               <div
                 ref={heritageRef}
                 className="relative bg-[#E5E2DD] overflow-hidden"
                 style={{ width: '280px', aspectRatio: '4/5' }}
               >
                 <Image
-                  src="/heritage.jpg"
-                  alt="Heritage Homes"
+                  src="/n4.jpg"
+                  alt="Leadership in Modern Development"
                   fill
                   className="object-cover"
                 />
               </div>
-              <h3
-                className="text-xs font-semibold text-[#493425] mt-4 uppercase"
-                style={{ letterSpacing: '0.12em' }}
-              >
-                HERITAGE HOMES
-              </h3>
-            </div>
 
-            {/* Seaside Villas */}
-            <div className="flex flex-col">
+              {/* Seaside Villas */}
               <div
                 ref={seasideRef}
                 className="relative bg-[#E5E2DD] overflow-hidden"
                 style={{ width: '280px', aspectRatio: '4/5' }}
               >
                 <Image
-                  src="/seaside.jpg"
-                  alt="Seaside Villas"
+                  src="/n2.jpg"
+                  alt="Building a Legacy of Trust"
                   fill
                   className="object-cover"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* Labels row */}
+          <div className="flex gap-6 mt-4">
+            <h3
+              className="text-xs font-semibold text-[#493425] uppercase"
+              style={{ letterSpacing: '0.12em', width: '52vw' }}
+            >
+              NATIONAL INDUSTRY RECOGNITION
+            </h3>
+            <div className="flex gap-6 ml-auto">
               <h3
-                className="text-xs font-semibold text-[#493425] mt-4 uppercase"
-                style={{ letterSpacing: '0.12em' }}
+                className="text-xs font-semibold text-[#493425] uppercase"
+                style={{ letterSpacing: '0.12em', width: '280px' }}
               >
-                SEASIDE VILLAS
+                LEADERSHIP IN MODERN DEVELOPMENT
+              </h3>
+              <h3
+                className="text-xs font-semibold text-[#493425] uppercase"
+                style={{ letterSpacing: '0.12em', width: '280px' }}
+              >
+                BUILDING A LEGACY OF TRUST
               </h3>
             </div>
           </div>

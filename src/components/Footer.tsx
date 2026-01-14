@@ -39,26 +39,36 @@ export default function Footer() {
 
     return () => ctx.revert();
   }, []);
+
   const navLinks1 = [
-    { label: "Why trusted", href: "#" },
-    { label: "Our Investments", href: "#" },
-    { label: "Team of professionals", href: "#" },
-    { label: "Objects", href: "#" },
+    { label: "NM Verge", href: "#gallery-section" },
+    { label: "NM Pride", href: "#gallery-section" },
+    { label: "NM Grande", href: "#gallery-section" },
+    { label: "London Villas", href: "#gallery-section" },
+    { label: "Diamond City", href: "#gallery-section" },
   ];
 
   const navLinks2 = [
-    { label: "Priorities", href: "#" },
-    { label: "Services", href: "#" },
-    { label: "Reviews", href: "#" },
-    { label: "FAQ", href: "#" },
+    { label: "About Us", href: "#our-services" },
+    { label: "Our Projects", href: "#gallery-section" },
+    { label: "In Media", href: "#objects-section" },
+    { label: "Contact", href: "#contact-section" },
   ];
 
   const socialLinks = [
-    { label: "INSTAGRAM", href: "#" },
-    { label: "LINKEDIN", href: "#" },
-    { label: "FACEBOOK", href: "#" },
-    { label: "YOUTUBE", href: "#" },
+    { label: "INSTAGRAM", href: "https://instagram.com" },
+    { label: "FACEBOOK", href: "https://facebook.com" },
+    { label: "YOUTUBE", href: "https://youtube.com" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const sectionId = href.replace("#", "");
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <footer ref={footerRef} className="relative w-full bg-[#241B14] text-white" style={{ zIndex: 2 }}>
@@ -72,75 +82,78 @@ export default function Footer() {
         }}
       >
         <div className="flex justify-between">
-          {/* Left Side: Address + Email/Hours */}
+          {/* Left Side: Address + Email */}
           <div className="flex" style={{ gap: "8vw" }}>
-            {/* Column 1: Address + Phone */}
+            {/* Column 1: Address */}
             <div>
               <p
                 className="text-xs font-medium text-white/60 uppercase mb-3"
                 style={{ letterSpacing: "0.05em" }}
               >
-                Address
+                Our Headquarters
               </p>
               <p className="text-sm font-medium text-white/90 leading-[170%]">
-                livence Real Estate. Tower 1, Dubai
+                4th Floor, NM Verge, 8/5,
                 <br />
-                Marina, Dubai, UAE
+                Yeshwant Niwas Rd, Maan Sarovar,
+                <br />
+                Indore, Madhya Pradesh 452003
               </p>
-              <p
-                className="text-xs font-medium text-white/60 uppercase mt-6 mb-3"
-                style={{ letterSpacing: "0.05em" }}
-              >
-                Phone
-              </p>
-              <p className="text-sm font-medium text-white/90">+971 50 123 4567</p>
             </div>
 
-            {/* Column 2: Email + Working hours */}
+            {/* Column 2: Email + General Inquiries */}
             <div>
               <p
                 className="text-xs font-medium text-white/60 uppercase mb-3"
                 style={{ letterSpacing: "0.05em" }}
               >
-                Email
+                General Inquiries
               </p>
-              <p className="text-sm font-medium text-white/90">info@livence.ae</p>
-              <p
-                className="text-xs font-medium text-white/60 uppercase mt-6 mb-3"
-                style={{ letterSpacing: "0.05em" }}
+              <a
+                href="mailto:sales@thenmgroup.com"
+                className="text-sm font-medium text-white/90 hover:text-white transition-colors"
               >
-                Working hours
-              </p>
-              <p className="text-sm font-medium text-white/90 leading-[170%]">
-                Mon – Fri: 09:00 – 18:00
-                <br />
-                Sat: 10:00 – 16:00
-              </p>
+                sales@thenmgroup.com
+              </a>
             </div>
           </div>
 
           {/* Right Side: Nav Links */}
           <div className="flex" style={{ gap: "6vw" }}>
-            {/* Nav Links 1 */}
+            {/* Projects */}
             <nav className="flex flex-col" style={{ gap: "12px" }}>
+              <p
+                className="text-xs font-medium text-white/60 uppercase mb-1"
+                style={{ letterSpacing: "0.05em" }}
+              >
+                Projects
+              </p>
               {navLinks1.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium text-white/90 hover:text-white transition-colors"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-sm font-medium text-white/90 hover:text-white transition-colors cursor-pointer"
                 >
                   {link.label}
                 </a>
               ))}
             </nav>
 
-            {/* Nav Links 2 */}
+            {/* Useful Links */}
             <nav className="flex flex-col" style={{ gap: "12px" }}>
+              <p
+                className="text-xs font-medium text-white/60 uppercase mb-1"
+                style={{ letterSpacing: "0.05em" }}
+              >
+                Useful Links
+              </p>
               {navLinks2.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium text-white/90 hover:text-white transition-colors"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-sm font-medium text-white/90 hover:text-white transition-colors cursor-pointer"
                 >
                   {link.label}
                 </a>
@@ -171,7 +184,7 @@ export default function Footer() {
               letterSpacing: "-0.03em",
             }}
           >
-            (livence)
+            NM Group
           </div>
 
           {/* Right Side: Legal, Social - all in one row */}
@@ -179,21 +192,16 @@ export default function Footer() {
             {/* Legal Links */}
             <div className="flex flex-col items-start" style={{ gap: "8px" }}>
               <a
-                href="#"
-                className="text-xs font-medium text-white/70 uppercase hover:text-white transition-colors flex items-center"
-                style={{ letterSpacing: "0.05em", gap: "6px" }}
-              >
-                TERMS OF SERVICE
-                <span>↗</span>
-              </a>
-              <a
-                href="#"
+                href="/privacy-policy"
                 className="text-xs font-medium text-white/70 uppercase hover:text-white transition-colors flex items-center"
                 style={{ letterSpacing: "0.05em", gap: "6px" }}
               >
                 PRIVACY POLICY
                 <span>↗</span>
               </a>
+              <p className="text-xs font-medium text-white/50">
+                © {new Date().getFullYear()} NM Group
+              </p>
             </div>
 
             {/* Social Links */}
@@ -202,6 +210,8 @@ export default function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-xs font-medium text-white/70 uppercase hover:text-white transition-colors flex items-center"
                   style={{ letterSpacing: "0.05em", gap: "6px" }}
                 >

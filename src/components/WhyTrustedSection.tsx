@@ -1,10 +1,48 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
+function AnimatedNumber({ value, suffix = "", duration = 1.2 }: { value: number; suffix?: string; duration?: number }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const elementRef = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: element,
+      start: "top 90%",
+      onEnter: () => {
+        if (hasAnimated.current) return;
+        hasAnimated.current = true;
+
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: value,
+          duration: duration,
+          ease: "power2.out",
+          onUpdate: () => {
+            setDisplayValue(Math.round(obj.val));
+          },
+        });
+      },
+    });
+
+    return () => trigger.kill();
+  }, [value, duration]);
+
+  return (
+    <span ref={elementRef}>
+      {displayValue.toLocaleString()}{suffix}
+    </span>
+  );
+}
 
 export default function WhyTrustedSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -16,39 +54,45 @@ export default function WhyTrustedSection() {
 
   const clientTypes = [
     {
-      title: "(INVESTORS)",
+      title: "(FOR FUTURE COMMUNITIES)",
       description:
-        "Capital growth is guaranteed with a verifiable return on investment (ROI) of 11% or more",
+        "Crafting environments that elevate everyday living. We design and develop spaces that enhance quality of life through thoughtful planning, timeless architecture, and sustainable growth—shaping better lifestyles for generations to come.",
     },
     {
-      title: "(NON-RESIDENTS)",
+      title: "(FOR NATIONAL GROWTH)",
       description:
-        "Complete investment management, including remote legal and financial processes, with zero need for physical presence",
+        "Building leadership through transformation. Rooted in innovation and excellence, NM Group drives planned development across residential, commercial, and retail domains—setting benchmarks in quality, scale, and national impact.",
     },
     {
-      title: "(ENTREPRENEURS)",
+      title: "(FOR CONSCIOUS DEVELOPMENT)",
       description:
-        "Acquire additional elite social status and a reliable, high-yield passive income stream instantly",
+        "Progress guided by responsibility and ethics. We uphold the highest legal, environmental, and ethical standards, ensuring every project reflects our commitment to social responsibility and long-term societal well-being.",
     },
     {
-      title: "(PUBLIC FIGURES)",
+      title: "(FOR ENDURING LEGACY)",
       description:
-        "Benefit from secure, absolutely confidential transactions protecting your personal identity and privacy completely",
+        "Vision-driven craftsmanship that stands the test of time. Inspired by the philosophy of being the change, we combine advanced technology, refined design, and superior service to create enduring landmarks of trust, value, and excellence.",
     },
   ];
 
   const stats = [
     {
-      value: "100%",
-      label: "deals with legal support",
+      value: 13,
+      suffix: "",
+      label: "Years Legacy",
+      hasPlus: true,
     },
     {
-      value: "20+",
-      label: "countries of satisfied clients",
+      value: 5000,
+      suffix: "",
+      label: "Happy Families Residing",
+      hasPlus: true,
     },
     {
-      value: "15+",
-      label: "years on the market",
+      value: 200,
+      suffix: "",
+      label: "Acres Land Transformed",
+      hasPlus: false,
     },
   ];
 
@@ -64,21 +108,20 @@ export default function WhyTrustedSection() {
 
     const ctx = gsap.context(() => {
       // Set initial states - start from below
-      gsap.set([header, description], { opacity: 0, y: 80 });
-      gsap.set(clients, { opacity: 0, y: 100 });
-      gsap.set(statsHeader, { opacity: 0, y: 80 });
-      gsap.set(statElements, { opacity: 0, y: 100 });
+      gsap.set([header, description], { opacity: 0, y: 40 });
+      gsap.set(clients, { opacity: 0, y: 50 });
+      gsap.set(statsHeader, { opacity: 0, y: 40 });
+      gsap.set(statElements, { opacity: 0, y: 50 });
 
       // Header animation - first to appear
       gsap.to(header, {
         opacity: 1,
         y: 0,
-        duration: 1.8,
+        duration: 0.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: header,
-          start: "top 98%",
-          end: "top 60%",
+          start: "top 90%",
           toggleActions: "play none none none",
         },
       });
@@ -87,12 +130,11 @@ export default function WhyTrustedSection() {
       gsap.to(description, {
         opacity: 1,
         y: 0,
-        duration: 1.8,
+        duration: 0.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: header,
-          start: "top 95%",
-          end: "top 60%",
+          start: "top 88%",
           toggleActions: "play none none none",
         },
       });
@@ -102,28 +144,26 @@ export default function WhyTrustedSection() {
         gsap.to(client, {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: 0.6,
           ease: "power2.out",
           scrollTrigger: {
             trigger: client,
-            start: "top 98%",
-            end: "top 70%",
+            start: "top 92%",
             toggleActions: "play none none none",
           },
         });
       });
 
-      // Stats header - "We sell only what we invest in"
+      // Stats header
       if (statsHeader) {
         gsap.to(statsHeader, {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: 0.6,
           ease: "power2.out",
           scrollTrigger: {
             trigger: statsHeader,
-            start: "top 98%",
-            end: "top 70%",
+            start: "top 92%",
             toggleActions: "play none none none",
           },
         });
@@ -134,12 +174,11 @@ export default function WhyTrustedSection() {
         gsap.to(stat, {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: 0.6,
           ease: "power2.out",
           scrollTrigger: {
             trigger: stat,
-            start: "top 98%",
-            end: "top 70%",
+            start: "top 92%",
             toggleActions: "play none none none",
           },
         });
@@ -185,13 +224,13 @@ export default function WhyTrustedSection() {
               ref={(el) => {
                 clientRefs.current[index] = el;
               }}
-              className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-12 py-8 lg:py-10 border-b border-[#493425]/20"
+              className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4 lg:gap-8 py-8 lg:py-10 border-b border-[#493425]/20"
               style={{ opacity: 0 }}
             >
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-[#493425] tracking-tight leading-none">
+              <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-[#493425] tracking-tight leading-tight">
                 {client.title}
               </h3>
-              <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[140%] lg:w-72 lg:text-left">
+              <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[160%] text-left">
                 {client.description}
               </p>
             </div>
@@ -209,7 +248,7 @@ export default function WhyTrustedSection() {
             className="text-sm font-medium text-[#493425]/80 leading-[140%] w-44"
             style={{ opacity: 0 }}
           >
-            We sell only what we invest in
+            Our journey in numbers
           </p>
         </div>
 
@@ -225,7 +264,10 @@ export default function WhyTrustedSection() {
               style={{ opacity: 0 }}
             >
               <div className="text-4xl md:text-5xl lg:text-6xl font-light text-[#493425] tracking-tight leading-[106%]">
-                {stat.value}
+                <AnimatedNumber value={stat.value} suffix={stat.suffix} duration={2} />
+                {stat.hasPlus && (
+                  <span className="text-2xl md:text-3xl lg:text-4xl align-top ml-1">+</span>
+                )}
               </div>
               <p className="text-xs md:text-sm font-medium text-[#493425]/60 mt-2">{stat.label}</p>
             </div>

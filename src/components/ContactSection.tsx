@@ -166,6 +166,7 @@ export default function ContactSection() {
 
   return (
     <section
+      id="contact-section"
       ref={sectionRef}
       className="relative w-full bg-[#F5F5F3]"
       style={{

@@ -151,9 +151,19 @@ export default function Header() {
           >
             SERVICES
           </a>
-          <Link href="/objects" className="text-[#493425] hover:text-[#8D7660] transition-colors">
-            OBJECTS
-          </Link>
+          <a
+            href="#gallery-section"
+            onClick={(e) => {
+              e.preventDefault();
+              const section = document.getElementById("gallery-section");
+              if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="text-[#493425] hover:text-[#8D7660] transition-colors cursor-pointer"
+          >
+            WORKS
+          </a>
           <Link href="/faq" className="text-[#493425] hover:text-[#8D7660] transition-colors">
             FAQ
           </Link>

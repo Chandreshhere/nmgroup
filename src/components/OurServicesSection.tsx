@@ -10,47 +10,47 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     number: "01",
-    title: ["FULL", "SERVICE", "CYCLE"],
+    title: ["A LEGACY", "ROOTED IN", "EXPERIENCE"],
     description1:
-      "From finding the right property to finalizing the deal — we take care of every detail",
+      "Celebrating Years of Mastery",
     description2:
-      "Our team manages each step — selection, verification, paperwork, and handover — ensuring a seamless and confident buying experience",
-    introTitle: "From request to keys — everything is under control.",
+      "With a legacy built over years of excellence, NM Group stands as a distinguished name in luxury real estate",
+    introTitle: "Our journey is defined by an unwavering commitment to quality, precision, and architectural integrity — crafting spaces that go beyond function to become enduring landmarks.",
     introText:
-      "You simply leave a request, and our team handles every stage with precision and care. From selecting the ideal property and verifying all legal details to managing negotiations and preparing full documentation — we ensure a seamless experience. We accompany you through every step until you receive the keys, guaranteeing comfort, transparency, and complete peace of mind",
+      "Rooted in experience and guided by vision, we have refined our expertise across every aspect of development. Each project reflects thoughtful planning, superior craftsmanship, and a deep understanding of modern living, creating homes that resonate with sophistication and lasting value. As we continue to evolve, our dedication to timeless design, meticulous execution, and uncompromising standards remains at the core of everything we build — ensuring our legacy endures, generation after generation.",
     showIntro: true,
-    image: "/i1.jpg",
+    image: "/building.jpg",
     layout: "default", // text left, image right
   },
   {
     number: "02",
-    title: ["LEGAL", "PROTECTION"],
+    title: ["CRAFTING", "SPACES BEYOND", "THE ORDINARY"],
     description1:
-      "Complete legal protection at every stage. We conduct thorough due diligence on every property",
+      "Every detail is an expression of artistry",
     description2:
-      "Our legal experts verify ownership, check for encumbrances, and ensure all documentation is flawless before you sign",
+      "At NM Group, design is more than aesthetics — it's a philosophy. We believe that true luxury lies in the harmony of form, function, and feeling. Our developments are crafted by visionary architects and designers who blend contemporary innovation with timeless elegance, creating environments that inspire and elevate everyday living.",
     showIntro: false,
     image: "/i2.jpg",
     layout: "imageLeft", // image left, text right
   },
   {
     number: "03",
-    title: ["INVESTMENT", "ADVISORY"],
+    title: ["EXCELLENCE", "SHAPED BY", "VISION"],
     description1:
-      "Strategic investment guidance backed by deep market analysis and local expertise",
+      "Excellence Shaped by Vision & Integrity",
     description2:
-      "We help you identify high-yield opportunities, assess risks, and build a portfolio that aligns with your financial goals",
+      "Behind NM Group's success is a leadership team driven by purpose and guided by principles. Our founders and directors bring decades of combined expertise, steering every project with a hands-on approach and an unwavering focus on quality. With a clear vision for the future and deep respect for our roots, we continue to set new standards in luxury development.",
     showIntro: false,
     image: "/i3.jpg",
     layout: "imageCenter", // title left, image center, text right
   },
   {
     number: "04",
-    title: ["PROPERTY", "MANAGEMENT"],
+    title: ["BUILDING FOR", "GENERATIONS", "TO COME"],
     description1:
-      "Comprehensive property management services for hassle-free ownership",
+      "Shaping tomorrow, one landmark at a time",
     description2:
-      "From tenant relations to maintenance coordination, we handle every aspect of your property so you can enjoy passive income",
+      "As NM Group looks ahead, our mission remains clear — to build not just spaces, but lasting legacies. With ambitious new projects on the horizon, we are committed to expanding our footprint while staying true to the values that define us: integrity, innovation, and an uncompromising pursuit of excellence.",
     showIntro: false,
     image: "/i4.jpg",
     layout: "default", // text left, image right
@@ -303,7 +303,7 @@ export default function OurServicesSection() {
       }}
     >
       {/* Left Column - Text Content */}
-      <div className="service-text-content">
+      <div className={`service-text-content ${index !== 0 ? "flex items-start h-full" : ""}`}>
         {/* Our Services Title - only on first service */}
         {index === 0 && (
           <h2 className="text-sm font-semibold text-[#493425] leading-[140%]">
@@ -311,20 +311,22 @@ export default function OurServicesSection() {
           </h2>
         )}
 
-        {/* Service Item - positioned lower */}
+        {/* Service Item - positioned lower for first, higher for others */}
         <div
           className="flex items-start"
-          style={{ marginTop: "35vh", gap: "4vw" }}
+          style={{ marginTop: index === 0 ? "35vh" : "20vh", gap: "4vw" }}
         >
-          {/* Number with parentheses */}
-          <div
-            className="text-3xl md:text-4xl font-light text-[#493425] shrink-0"
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            <span className="text-[#493425]/40">(</span>
-            <span className="mx-1">{service.number}</span>
-            <span className="text-[#493425]/40">)</span>
-          </div>
+          {/* Number with parentheses - hide for first service */}
+          {index !== 0 && (
+            <div
+              className="text-3xl md:text-4xl font-light text-[#493425] shrink-0"
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              <span className="text-[#493425]/40">(</span>
+              <span className="mx-1">{service.number}</span>
+              <span className="text-[#493425]/40">)</span>
+            </div>
+          )}
 
           {/* Service Title */}
           <h3
@@ -372,15 +374,6 @@ export default function OurServicesSection() {
             >
               {service.introText}
             </p>
-
-            {/* Order a Call CTA */}
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 text-sm font-bold text-[#493425] uppercase tracking-wide border-b border-[#493425] pb-0.5 hover:text-[#8D7660] hover:border-[#8D7660] transition-colors mt-6"
-            >
-              ORDER A CALL
-              <span className="text-base">↗</span>
-            </a>
           </div>
         )}
 
@@ -432,11 +425,11 @@ export default function OurServicesSection() {
         </div>
       </div>
 
-      {/* Right Column - Text Content */}
-      <div className="service-text-content">
+      {/* Right Column - Text Content - Positioned Higher */}
+      <div className="service-text-content flex items-start h-full">
         <div
           className="flex items-start"
-          style={{ marginTop: "35vh", gap: "4vw" }}
+          style={{ gap: "4vw", marginTop: "20vh" }}
         >
           {/* Number with parentheses */}
           <div
@@ -487,9 +480,9 @@ export default function OurServicesSection() {
         columnGap: "3vw",
       }}
     >
-      {/* Left Column - Title */}
-      <div className="service-text-content flex flex-col">
-        <div style={{ marginTop: "35vh" }}>
+      {/* Left Column - Title - Positioned Higher */}
+      <div className="service-text-content flex flex-col h-full">
+        <div style={{ marginTop: "20vh" }}>
           {/* Number with parentheses */}
           <div
             className="text-3xl md:text-4xl font-light text-[#493425] mb-6"
@@ -533,11 +526,11 @@ export default function OurServicesSection() {
         </div>
       </div>
 
-      {/* Right Column - Descriptions */}
-      <div className="service-text-content flex flex-col">
+      {/* Right Column - Descriptions - Positioned Higher */}
+      <div className="service-text-content flex flex-col h-full">
         <div
           className="flex flex-col"
-          style={{ marginTop: "35vh", gap: "24px", maxWidth: "220px" }}
+          style={{ gap: "24px", maxWidth: "220px", marginTop: "20vh" }}
         >
           <p className="text-sm font-medium text-[#8D7660] leading-[170%]">
             {service.description1}

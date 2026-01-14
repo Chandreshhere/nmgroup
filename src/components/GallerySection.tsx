@@ -1,11 +1,110 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const galleryData = [
+  {
+    image: "/mp.jpg",
+    title: "NM\nPride",
+    details: [
+      { label: "PROJECT", value: "NM Pride" },
+      { label: "STATUS", value: "Under Construction" },
+      { label: "TYPE", value: "Row Houses & Plots" },
+      { label: "DEVELOPER", value: "NM Group" },
+      { label: "LOCATION", value: "Indore, MP" },
+      { label: "ADDRESS", value: "AB Rd, Mangliya" },
+      { label: "AREA", value: "Talawali Chanda" },
+      { label: "AMENITIES", value: "Premium" },
+    ],
+    para1: "NM Pride, this distinguished property exudes elegance, with well-appointed spaces designed for the discerning few. NM Pride redefines luxury living through its distinctive architecture and premium amenities. Immerse yourself in the epitome of comfort and sophistication as you make NM Pride your home, where every detail is crafted to enhance your daily life and elevate your living standards.",
+    para2: "Features & Amenities: 24x7 Security, Surveillance System, Children's Play Area, Open Gym, Landscape Garden, Basketball Ground, Cricket Ground, Temple, 24x7 Water and Electricity. Located at AB Rd, Mangliya Road, Talawali Chanda, Indore.",
+  },
+  {
+    image: "/spotify.jpg",
+    title: "NM\nVerge",
+    details: [
+      { label: "PROJECT", value: "NM Verge" },
+      { label: "YEAR", value: "2024" },
+      { label: "FLOORS", value: "3" },
+      { label: "DEVELOPER", value: "NM Group" },
+      { label: "TYPE", value: "Commercial" },
+      { label: "LOCATION", value: "Indore, MP" },
+      { label: "STATUS", value: "Completed" },
+      { label: "ADDRESS", value: "Yeshwant Niwas Rd" },
+    ],
+    para1: "NM Verge, nestled in the heart of Indore, epitomizes modern elegance and convenience. Meticulously designed, this premier property offers exclusive residences that celebrate space, natural light, and contemporary aesthetics. NM Verge sets a new standard of living, harmonizing sophisticated design with practicality.",
+    para2: "Discover a haven where convenience meets charm, defining a refined lifestyle in the vibrant city of Indore. Located at 4th Floor, NM Verge, 8/5, Yeshwant Niwas Rd, Maan Sarovar, Indore, Madhya Pradesh 452003.",
+  },
+  {
+    image: "/hotel.jpg",
+    title: "Upcoming\nProject",
+    details: [
+      { label: "PROJECT", value: "Upcoming" },
+      { label: "STATUS", value: "Coming Soon" },
+      { label: "TYPE", value: "Residential" },
+      { label: "DEVELOPER", value: "NM Group" },
+      { label: "LOCATION", value: "Indore, MP" },
+      { label: "ADDRESS", value: "Bicholi Mardana" },
+      { label: "PHASE", value: "Planning" },
+      { label: "LAUNCH", value: "2025" },
+    ],
+    para1: "An exciting new development coming soon to Bicholi Mardana, Indore. This upcoming project by NM Group promises to deliver the same exceptional quality and thoughtful design that defines all our developments. Stay tuned for more details as we prepare to unveil our latest vision for modern living.",
+    para2: "Gallery coming soon. Register your interest to be among the first to receive updates about this prestigious new development. NM Group continues to expand its footprint in Indore with projects that set new benchmarks in quality and design.",
+  },
+  {
+    image: "/nmg.jpeg",
+    title: "NM\nGrande",
+    details: [
+      { label: "PROJECT", value: "NM Grande" },
+      { label: "STATUS", value: "Completed" },
+      { label: "TYPE", value: "Residential Spaces" },
+      { label: "DEVELOPER", value: "NM Group" },
+      { label: "LOCATION", value: "Indore, MP" },
+      { label: "ADDRESS", value: "Greater Tirupati Nagar" },
+      { label: "AREA", value: "Geeta Bhavan" },
+      { label: "AMENITIES", value: "Premium" },
+    ],
+    para1: "NM Grande stands as an architectural marvel, offering an unparalleled living experience in the vibrant city of Indore. This distinctive property seamlessly integrates modern design with the natural beauty of its surroundings. NM Grande presents spacious and thoughtfully designed residences, each promising a life of tranquility and convenience.",
+    para2: "Features & Amenities: 24x7 Security, Surveillance System, Modern Gym, Children's Play Area, Landscape Garden, 2 Lifts, 2 Staircases, Community Hall, Grand Entrance Lobby, Temple, 24x7 Water and Electricity, Narmada & Borewell, Service Floor, Vastu Based Planning, Rain Water Harvesting. Located at 80, Greater Tirupati Nagar, Behind Geeta Bhavan Mandir, Indore.",
+  },
+  {
+    image: "/lv.jpg",
+    title: "London\nVillas",
+    details: [
+      { label: "PROJECT", value: "London Villas" },
+      { label: "STATUS", value: "Completed" },
+      { label: "TYPE", value: "Plotting Township" },
+      { label: "DEVELOPER", value: "NM Group" },
+      { label: "LOCATION", value: "Indore, MP" },
+      { label: "ADDRESS", value: "Near Aurobindo Hospital" },
+      { label: "AREA", value: "Bhawrasla" },
+      { label: "PLOTS", value: "Multiple Sizes" },
+    ],
+    para1: "London is known as one of the most exciting capitals of the world, a cosmopolitan city full of cultural, executive and entertainment activities. But now you don't need to go to London to feel at London. It's all here at Indore itself. Welcome to the world of London Villas, a novel township which draws inspiration from the best city of the world.",
+    para2: "Features & Amenities: 24x7 Security, Swimming Pool, Surveillance System, Children's Play Area, Club House, Landscape Garden, Wi-fi Campus, Meditation Hub, Senior Citizens Zone, Vastu Based Planning, Temple, Party Lawn, 24x7 Water and Electricity, Pool Table, Badminton Court, Table Tennis, Extra Common Parking. Plot sizes: 20'x50', 20'x47', 21'x47', 17'x47'. Located near Aurobindo Hospital, Indore Ujjain 4 Lane Highway, Bhawrasla, Indore.",
+  },
+  {
+    image: "/e1.jpg",
+    title: "Emerald\nHeights",
+    details: [
+      { label: "PROJECT", value: "Emerald Heights" },
+      { label: "STATUS", value: "Completed" },
+      { label: "TYPE", value: "Industrial" },
+      { label: "DEVELOPER", value: "NM Group" },
+      { label: "LOCATION", value: "Surprise, AZ" },
+      { label: "AREA", value: "26,346.74 Sq. Ft." },
+      { label: "COMMENCED", value: "18 Jun, 2022" },
+      { label: "PRICE", value: "$500k-$1100k" },
+    ],
+    para1: "Emerald Heights Office Complex stands as a premier industrial development in Surprise, AZ. This meticulously planned property offers state-of-the-art facilities designed to meet the demands of modern businesses. With thoughtful architecture and premium amenities, Emerald Heights represents the pinnacle of commercial real estate excellence.",
+    para2: "Features & Amenities: 24x7 Security, Surveillance System, Fitness Center, Children's Play Area, 24 Hour Maintenance, Swimming Pool, Screening Room, Firefighting System, Game Room, Landscape Garden. A comprehensive commercial space designed for productivity and comfort.",
+  },
+];
 
 export default function GallerySection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -15,6 +114,9 @@ export default function GallerySection() {
   const detailsRef = useRef<HTMLDivElement>(null);
   const para1Ref = useRef<HTMLParagraphElement>(null);
   const para2Ref = useRef<HTMLParagraphElement>(null);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -125,19 +227,169 @@ export default function GallerySection() {
     return () => ctx.revert();
   }, []);
 
-  const propertyDetails = [
-    { label: "ARCHITECT", value: "Luca Moretti" },
-    { label: "YEAR", value: "2025" },
-    { label: "TOTAL AREA", value: "268 m²" },
-    { label: "DEVELOPER", value: "Emirates Group" },
-    { label: "FLOOR", value: "18th" },
-    { label: "LOCATION", value: "Dubai, UAE" },
-    { label: "ROOMS", value: "5" },
-    { label: "PRICE", value: "$2,480,000" },
-  ];
+  const handleNext = () => {
+    if (isAnimating || currentIndex >= galleryData.length - 1) return;
+    setIsAnimating(true);
+
+    const image = imageRef.current;
+    const imageInner = imageInnerRef.current;
+    const title = titleRef.current;
+    const details = detailsRef.current;
+    const para1 = para1Ref.current;
+    const para2 = para2Ref.current;
+
+    // Fade out current content
+    gsap.to([title, details, para1, para2], {
+      opacity: 0,
+      y: -20,
+      duration: 0.3,
+      ease: "power2.in",
+    });
+
+    gsap.to(image, {
+      clipPath: "inset(0 0 0 100%)",
+      duration: 0.5,
+      ease: "power2.in",
+      onComplete: () => {
+        setCurrentIndex((prev) => prev + 1);
+
+        // Reset and animate in
+        gsap.set(image, { clipPath: "inset(0 100% 0 0)" });
+        gsap.set(imageInner, { scale: 1.2 });
+        gsap.set([title, details, para1, para2], { opacity: 0, y: 30 });
+
+        gsap.to(image, {
+          clipPath: "inset(0 0% 0 0)",
+          duration: 0.6,
+          ease: "power2.out",
+        });
+
+        gsap.to(imageInner, {
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+
+        gsap.to(title, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.2,
+          ease: "power2.out",
+        });
+
+        gsap.to(details, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.3,
+          ease: "power2.out",
+        });
+
+        gsap.to(para1, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.4,
+          ease: "power2.out",
+        });
+
+        gsap.to(para2, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.5,
+          ease: "power2.out",
+          onComplete: () => setIsAnimating(false),
+        });
+      },
+    });
+  };
+
+  const handlePrev = () => {
+    if (isAnimating || currentIndex <= 0) return;
+    setIsAnimating(true);
+
+    const image = imageRef.current;
+    const imageInner = imageInnerRef.current;
+    const title = titleRef.current;
+    const details = detailsRef.current;
+    const para1 = para1Ref.current;
+    const para2 = para2Ref.current;
+
+    // Fade out current content
+    gsap.to([title, details, para1, para2], {
+      opacity: 0,
+      y: -20,
+      duration: 0.3,
+      ease: "power2.in",
+    });
+
+    gsap.to(image, {
+      clipPath: "inset(0 100% 0 0)",
+      duration: 0.5,
+      ease: "power2.in",
+      onComplete: () => {
+        setCurrentIndex((prev) => prev - 1);
+
+        // Reset and animate in
+        gsap.set(image, { clipPath: "inset(0 0 0 100%)" });
+        gsap.set(imageInner, { scale: 1.2 });
+        gsap.set([title, details, para1, para2], { opacity: 0, y: 30 });
+
+        gsap.to(image, {
+          clipPath: "inset(0 0 0 0%)",
+          duration: 0.6,
+          ease: "power2.out",
+        });
+
+        gsap.to(imageInner, {
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+
+        gsap.to(title, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.2,
+          ease: "power2.out",
+        });
+
+        gsap.to(details, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.3,
+          ease: "power2.out",
+        });
+
+        gsap.to(para1, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.4,
+          ease: "power2.out",
+        });
+
+        gsap.to(para2, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.5,
+          ease: "power2.out",
+          onComplete: () => setIsAnimating(false),
+        });
+      },
+    });
+  };
+
+  const currentData = galleryData[currentIndex];
 
   return (
     <section
+      id="gallery-section"
       ref={sectionRef}
       className="relative bg-[#F5F5F3] w-full"
       style={{
@@ -165,7 +417,7 @@ export default function GallerySection() {
           >
             <div ref={imageInnerRef} className="relative w-full h-full">
               <Image
-                src="/arc.jpg"
+                src={currentData.image}
                 alt="Luxury property interior"
                 fill
                 className="object-cover"
@@ -173,16 +425,6 @@ export default function GallerySection() {
             </div>
           </div>
 
-          {/* Floating CTA Button */}
-          <button
-            className="absolute bottom-8 left-8 flex items-center justify-center w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white rounded-full text-center text-[11px] font-bold text-[#493425] uppercase tracking-wider hover:bg-[#F5F5F3] transition-colors shadow-lg"
-          >
-            <span className="leading-tight">
-              VIEW THE
-              <br />
-              PROPERTY
-            </span>
-          </button>
         </div>
 
         {/* Right Column - Property Details */}
@@ -191,18 +433,24 @@ export default function GallerySection() {
           <div className="flex items-start justify-between">
             <h2
               ref={titleRef}
-              className="text-sm font-medium text-[#493425] leading-[140%]"
+              className="text-sm font-medium text-[#493425] leading-[140%] whitespace-pre-line"
               style={{ opacity: 0 }}
             >
-              Gallery of
-              <br />
-              objects
+              {currentData.title}
             </h2>
 
             {/* Navigation Arrows */}
             <div className="flex items-center gap-1">
-              {/* Left Arrow - Inactive */}
-              <button className="w-24 h-24 flex items-center justify-center text-[#493425]/30 hover:text-[#493425]/50 transition-colors">
+              {/* Left Arrow */}
+              <button
+                onClick={handlePrev}
+                disabled={isAnimating || currentIndex === 0}
+                className={`w-24 h-24 flex items-center justify-center transition-colors ${
+                  currentIndex === 0
+                    ? "text-[#493425]/30 cursor-not-allowed"
+                    : "text-[#493425]/50 hover:text-[#493425]"
+                }`}
+              >
                 <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M50 28L35 45L50 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M28 18C18 28 12 36 12 45C12 54 18 62 28 72" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
@@ -210,8 +458,21 @@ export default function GallerySection() {
                 </svg>
               </button>
 
-              {/* Right Arrow - Active */}
-              <button className="w-24 h-24 flex items-center justify-center text-[#493425] hover:text-[#493425]/70 transition-colors">
+              {/* Page Indicator */}
+              <span className="text-xs font-medium text-[#493425]/60 mx-2">
+                {currentIndex + 1} / {galleryData.length}
+              </span>
+
+              {/* Right Arrow */}
+              <button
+                onClick={handleNext}
+                disabled={isAnimating || currentIndex === galleryData.length - 1}
+                className={`w-24 h-24 flex items-center justify-center transition-colors ${
+                  currentIndex === galleryData.length - 1
+                    ? "text-[#493425]/30 cursor-not-allowed"
+                    : "text-[#493425] hover:text-[#493425]/70"
+                }`}
+              >
                 <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M40 28L55 45L40 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M28 18C18 28 12 36 12 45C12 54 18 62 28 72" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
@@ -232,7 +493,7 @@ export default function GallerySection() {
               opacity: 0,
             }}
           >
-            {propertyDetails.map((detail, index) => (
+            {currentData.details.map((detail, index) => (
               <div key={index}>
                 <p
                   className="text-xs font-semibold text-[#493425] uppercase mb-2"
@@ -254,14 +515,14 @@ export default function GallerySection() {
               className="text-sm font-medium text-[#8D7660] leading-[170%]"
               style={{ opacity: 0 }}
             >
-              This exclusive 4-bedroom residence embodies the philosophy of quiet luxury: timeless materials, natural tones, and impeccable details. The interior combines marble wall panels, warm wood textures, and soft lighting to create a space of absolute comfort. Floor-to-ceiling windows fill each room with natural light, offering breathtaking views of the Dubai skyline.
+              {currentData.para1}
             </p>
             <p
               ref={para2Ref}
               className="text-sm font-medium text-[#8D7660] leading-[170%]"
               style={{ opacity: 0 }}
             >
-              Premium finishes in natural marble and oak. Smart home system for climate control, lighting, and security. Master bedroom with en-suite bathroom and walk-in closet. Italian kitchen with built-in Miele appliances. Private amenities for residents: infinity pool, fitness club, and sky lounge. 24-hour concierge service and car parking. Underground parking and comprehensive security system
+              {currentData.para2}
             </p>
           </div>
         </div>
