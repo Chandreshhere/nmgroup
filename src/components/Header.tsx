@@ -164,21 +164,38 @@ export default function Header() {
           >
             WORKS
           </a>
-          <Link href="/faq" className="text-[#493425] hover:text-[#8D7660] transition-colors">
-            FAQ
-          </Link>
+          <a
+            href="#reviews-section"
+            onClick={(e) => {
+              e.preventDefault();
+              const section = document.getElementById("reviews-section");
+              if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="text-[#493425] hover:text-[#8D7660] transition-colors cursor-pointer"
+          >
+            REVIEW
+          </a>
         </div>
 
         {/* CTA Button */}
-        <Link
+        <a
           ref={ctaRef}
-          href="/selection"
-          className="hidden md:flex items-center gap-2 text-sm font-bold text-[#493425] hover:text-[#8D7660] transition-colors border-b border-[#493425] pb-0.5"
+          href="#contact-section"
+          onClick={(e) => {
+            e.preventDefault();
+            const section = document.getElementById("contact-section");
+            if (section) {
+              section.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          className="hidden md:flex items-center gap-2 text-sm font-bold text-[#493425] hover:text-[#8D7660] transition-colors border-b border-[#493425] pb-0.5 cursor-pointer"
           style={{ opacity: 0 }}
         >
-          GET A SELECTION FOR ME
+          CONTACT
           <span className="text-base">↗</span>
-        </Link>
+        </a>
 
         {/* Mobile Menu Button */}
         <button className="md:hidden text-[#493425] ml-auto">

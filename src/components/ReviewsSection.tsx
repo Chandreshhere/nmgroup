@@ -238,6 +238,7 @@ export default function ReviewsSection() {
 
   return (
     <section
+      id="reviews-section"
       ref={sectionRef}
       className="relative w-full bg-[#F5F5F3]"
       style={{
