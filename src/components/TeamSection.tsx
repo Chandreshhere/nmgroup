@@ -14,6 +14,10 @@ export default function TeamSection() {
   const card1Ref = useRef<HTMLDivElement>(null);
   const card2Ref = useRef<HTMLDivElement>(null);
   const card3Ref = useRef<HTMLDivElement>(null);
+  // Mobile refs
+  const mobileCard1Ref = useRef<HTMLDivElement>(null);
+  const mobileCard2Ref = useRef<HTMLDivElement>(null);
+  const mobileCard3Ref = useRef<HTMLDivElement>(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -52,7 +56,9 @@ export default function TeamSection() {
     if (isAnimating) return;
     setIsAnimating(true);
 
-    const cards = [card1Ref.current, card2Ref.current, card3Ref.current];
+    const desktopCards = [card1Ref.current, card2Ref.current, card3Ref.current].filter(Boolean);
+    const mobileCards = [mobileCard1Ref.current, mobileCard2Ref.current, mobileCard3Ref.current].filter(Boolean);
+    const cards = [...desktopCards, ...mobileCards];
 
     // Fade out
     gsap.to(cards, {
@@ -76,7 +82,9 @@ export default function TeamSection() {
     if (isAnimating) return;
     setIsAnimating(true);
 
-    const cards = [card1Ref.current, card2Ref.current, card3Ref.current];
+    const desktopCards = [card1Ref.current, card2Ref.current, card3Ref.current].filter(Boolean);
+    const mobileCards = [mobileCard1Ref.current, mobileCard2Ref.current, mobileCard3Ref.current].filter(Boolean);
+    const cards = [...desktopCards, ...mobileCards];
 
     // Fade out
     gsap.to(cards, {
@@ -103,13 +111,25 @@ export default function TeamSection() {
     const card2 = card2Ref.current;
     const card3 = card3Ref.current;
     const arrows = arrowsRef.current;
+    const mobileCard1 = mobileCard1Ref.current;
+    const mobileCard2 = mobileCard2Ref.current;
+    const mobileCard3 = mobileCard3Ref.current;
 
-    if (!section || !title || !card1 || !card2 || !card3 || !arrows) return;
+    if (!section || !title || !arrows) return;
 
     const ctx = gsap.context(() => {
       gsap.set(title, { opacity: 0, y: 40 });
-      gsap.set([card1, card2, card3], { opacity: 0, y: 30 });
       gsap.set(arrows, { opacity: 0, y: 20 });
+
+      // Desktop cards
+      if (card1) gsap.set(card1, { opacity: 0, y: 30 });
+      if (card2) gsap.set(card2, { opacity: 0, y: 30 });
+      if (card3) gsap.set(card3, { opacity: 0, y: 30 });
+
+      // Mobile cards
+      if (mobileCard1) gsap.set(mobileCard1, { opacity: 0, y: 30 });
+      if (mobileCard2) gsap.set(mobileCard2, { opacity: 0, y: 30 });
+      if (mobileCard3) gsap.set(mobileCard3, { opacity: 0, y: 30 });
 
       gsap.to(title, {
         opacity: 1,
@@ -123,43 +143,80 @@ export default function TeamSection() {
         },
       });
 
-      gsap.to(card1, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 60%",
-          toggleActions: "play none none none",
-        },
-      });
+      // Desktop card animations
+      if (card1) {
+        gsap.to(card1, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 60%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
 
-      gsap.to(card2, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 60%",
-          toggleActions: "play none none none",
-        },
-      });
+      if (card2) {
+        gsap.to(card2, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 60%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
 
-      gsap.to(card3, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.4,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 60%",
-          toggleActions: "play none none none",
-        },
-      });
+      if (card3) {
+        gsap.to(card3, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.4,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 60%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      // Mobile card animations
+      if (mobileCard1) {
+        gsap.to(mobileCard1, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 60%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      if (mobileCard2) {
+        gsap.to(mobileCard2, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 60%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
 
       gsap.to(arrows, {
         opacity: 1,
@@ -235,7 +292,7 @@ export default function TeamSection() {
         <div className="flex gap-4">
           {/* Main Card - Position 1 (Large) */}
           <div
-            ref={card1Ref}
+            ref={mobileCard1Ref}
             className="flex flex-col flex-1"
             style={{ opacity: 0 }}
           >
@@ -253,7 +310,7 @@ export default function TeamSection() {
 
           {/* Position 2 - Right side smaller */}
           <div
-            ref={card2Ref}
+            ref={mobileCard2Ref}
             className="flex flex-col w-[40%] mt-16"
             style={{ opacity: 0 }}
           >
@@ -271,7 +328,7 @@ export default function TeamSection() {
         </div>
 
         {/* Hidden card3 ref for mobile - needed for animation */}
-        <div ref={card3Ref} className="hidden" style={{ opacity: 0 }} />
+        <div ref={mobileCard3Ref} className="hidden" style={{ opacity: 0 }} />
       </div>
 
       {/* Desktop Layout */}
@@ -318,7 +375,9 @@ export default function TeamSection() {
         <div className="flex-1 flex flex-row gap-6 lg:gap-8 -ml-20 lg:-ml-32 relative">
           {/* Main Card - Position 1 (Large) */}
           <div
+            ref={card1Ref}
             className="flex flex-col"
+            style={{ opacity: 0 }}
           >
             <div className="relative w-80 lg:w-96 aspect-[3/4] bg-[#E5E2DD] overflow-hidden">
               <Image
@@ -336,7 +395,9 @@ export default function TeamSection() {
           <div className="flex flex-col gap-6 lg:gap-8">
             {/* Position 2 */}
             <div
+              ref={card2Ref}
               className="flex flex-col"
+              style={{ opacity: 0 }}
             >
               <div className="relative w-44 lg:w-52 aspect-[4/5] bg-[#E5E2DD] overflow-hidden">
                 <Image
@@ -352,7 +413,9 @@ export default function TeamSection() {
 
             {/* Position 3 */}
             <div
+              ref={card3Ref}
               className="flex flex-col ml-44 lg:ml-60 -mt-16 lg:-mt-24"
+              style={{ opacity: 0 }}
             >
               <div className="relative w-44 lg:w-52 aspect-[4/5] bg-[#E5E2DD] overflow-hidden">
                 <Image

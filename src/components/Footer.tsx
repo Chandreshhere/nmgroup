@@ -72,8 +72,65 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} className="relative w-full bg-[#241B14] text-white" style={{ zIndex: 2 }}>
-      {/* Navigation Links - Two Column Grid */}
-      <div className="px-5 md:px-12 py-10 md:py-[8vh]">
+      {/* Top Section - Contact Info in 4 columns */}
+      <div className="px-5 md:px-12 pt-10 md:pt-[8vh] pb-8 md:pb-[6vh]">
+        <div className="flex flex-wrap md:flex-nowrap justify-between gap-y-8">
+          {/* Address */}
+          <div className="w-1/2 md:w-auto md:flex-1 md:pl-[4vw]">
+            <p className="text-xs font-semibold text-white/90 mb-2">
+              Address
+            </p>
+            <p className="text-xs font-medium text-white/70 leading-[170%]">
+              NM Group. Tower
+              <br />
+              4th Floor, NM Verge, 8/5,
+              <br />
+              Indore, Madhya Pradesh 452003
+            </p>
+          </div>
+
+          {/* Phone */}
+          <div className="w-1/2 md:w-auto md:flex-1 md:pl-[4vw]">
+            <p className="text-xs font-semibold text-white/90 mb-2">
+              Phone
+            </p>
+            <p className="text-xs font-medium text-white/70">
+              +91 731 123 4567
+            </p>
+          </div>
+
+          {/* Email */}
+          <div className="w-1/2 md:w-auto md:flex-1 md:pl-[4vw]">
+            <p className="text-xs font-semibold text-white/90 mb-2">
+              Email
+            </p>
+            <a
+              href="mailto:sales@thenmgroup.com"
+              className="text-xs font-medium text-white/70 hover:text-white transition-colors block"
+            >
+              sales@thenmgroup.com
+            </a>
+          </div>
+
+          {/* Working Hours */}
+          <div className="w-1/2 md:w-auto md:flex-1 md:pl-[4vw]">
+            <p className="text-xs font-semibold text-white/90 mb-2">
+              Working hours
+            </p>
+            <p className="text-xs font-medium text-white/70 leading-[170%]">
+              Mon - Fri: 09:00 - 18:00
+              <br />
+              Sat: 10:00 - 16:00
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="mx-5 md:mx-12 h-[1px] bg-white/20" />
+
+      {/* Middle Section - Navigation Links */}
+      <div className="px-5 md:px-12 py-8 md:py-[6vh]">
         <div className="flex justify-between gap-8">
           {/* Left Column - Page Links */}
           <nav className="flex flex-col gap-3">
@@ -105,73 +162,32 @@ export default function Footer() {
             ))}
           </nav>
         </div>
-
-        {/* Address & Contact Info */}
-        <div className="flex justify-between gap-8 mt-10 md:mt-16">
-          {/* Address */}
-          <div>
-            <p
-              className="text-xs font-semibold text-white/90 mb-2"
-            >
-              Address
-            </p>
-            <p className="text-xs font-medium text-white/70 leading-[170%]">
-              NM Group. Tower
-              <br />
-              4th Floor, NM Verge, 8/5,
-              <br />
-              Indore, Madhya Pradesh 452003
-            </p>
-            <p
-              className="text-xs font-semibold text-white/90 mt-4 mb-1"
-            >
-              Phone
-            </p>
-            <p className="text-xs font-medium text-white/70">
-              +91 731 123 4567
-            </p>
-          </div>
-
-          {/* Working Hours & Email */}
-          <div className="text-right">
-            <p
-              className="text-xs font-semibold text-white/90 mb-2"
-            >
-              Working hours
-            </p>
-            <p className="text-xs font-medium text-white/70 leading-[170%]">
-              Mon - Fri: 09:00 - 18:00
-              <br />
-              Sat: 10:00 - 16:00
-            </p>
-            <p
-              className="text-xs font-semibold text-white/90 mt-4 mb-1"
-            >
-              Email
-            </p>
-            <a
-              href="mailto:sales@thenmgroup.com"
-              className="text-xs font-medium text-white/70 hover:text-white transition-colors"
-            >
-              sales@thenmgroup.com
-            </a>
-          </div>
-        </div>
       </div>
+
+      {/* Divider */}
+      <div className="mx-5 md:mx-12 h-[1px] bg-white/20" />
 
       {/* Lower Footer - Brand Logo */}
       <div
         ref={lowerFooterRef}
-        className="px-5 md:px-12 pt-12 pb-8 md:py-[4vh] overflow-hidden"
+        className="px-5 md:px-12 pt-8 md:pt-[4vh] pb-6 md:pb-[3vh] overflow-hidden"
       >
         <div
           ref={logoRef}
-          className="text-white font-normal leading-none text-[4.5rem] md:text-[clamp(80px,15vw,200px)] -ml-1"
+          className="text-white font-normal leading-none text-[3rem] md:text-[clamp(60px,12vw,160px)]"
           style={{
             letterSpacing: "-0.03em",
+            opacity: 0,
           }}
         >
           NM Group
+        </div>
+
+        {/* Bottom Row - Language Selector */}
+        <div className="flex justify-end items-center mt-6 md:mt-8">
+          <div className="text-xs font-medium text-white/70">
+            EN
+          </div>
         </div>
       </div>
     </footer>

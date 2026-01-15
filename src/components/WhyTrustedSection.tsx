@@ -106,46 +106,79 @@ export default function WhyTrustedSection() {
 
     if (!section || !header || !description) return;
 
+    // Check if mobile
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
-      // Set initial states - start from below
-      gsap.set([header, description], { opacity: 0, y: 40 });
-      gsap.set(clients, { opacity: 0, y: 50 });
-      gsap.set(statsHeader, { opacity: 0, y: 40 });
-      gsap.set(statElements, { opacity: 0, y: 50 });
+      // Set initial states - slide from left on mobile, from below on desktop
+      if (isMobile) {
+        gsap.set([header, description], { opacity: 0, x: -80 });
+        gsap.set(clients, { opacity: 0, x: -80 });
+        gsap.set(statsHeader, { opacity: 0, x: -80 });
+        gsap.set(statElements, { opacity: 0, x: -60 });
 
-      // Header animation - first to appear
-      gsap.to(header, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: header,
-          start: "top 90%",
-          toggleActions: "play none none none",
-        },
-      });
+        // Mobile: Timeline animation on page load (like hero section)
+        const tl = gsap.timeline({
+          delay: 5.5, // 1 second after hero animation (4.5 + 1)
+        });
 
-      // Description - slightly after header
-      gsap.to(description, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: header,
-          start: "top 88%",
-          toggleActions: "play none none none",
-        },
-      });
+        // Header slides in from left
+        tl.to(header, {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
 
-      // Client types - each one triggered individually as they scroll into view
-      clients.forEach((client) => {
-        gsap.to(client, {
+        // Description slides in from left (slightly overlapping)
+        tl.to(description, {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        }, "-=0.6");
+
+      } else {
+        gsap.set([header, description], { opacity: 0, y: 40 });
+        gsap.set(clients, { opacity: 0, y: 50 });
+        gsap.set(statsHeader, { opacity: 0, y: 40 });
+        gsap.set(statElements, { opacity: 0, y: 50 });
+
+        // Desktop: Scroll-triggered animation
+        gsap.to(header, {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.8,
           ease: "power2.out",
+          scrollTrigger: {
+            trigger: header,
+            start: "top 90%",
+            toggleActions: "play none none none",
+          },
+        });
+
+        gsap.to(description, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: header,
+            start: "top 88%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      // Client types - each one triggered individually as they scroll into view
+      clients.forEach((client, index) => {
+        gsap.to(client, {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 0.6,
+          delay: isMobile ? index * 0.1 : 0,
+          ease: isMobile ? "power3.out" : "power2.out",
           scrollTrigger: {
             trigger: client,
             start: "top 92%",
@@ -158,9 +191,10 @@ export default function WhyTrustedSection() {
       if (statsHeader) {
         gsap.to(statsHeader, {
           opacity: 1,
+          x: 0,
           y: 0,
           duration: 0.6,
-          ease: "power2.out",
+          ease: isMobile ? "power3.out" : "power2.out",
           scrollTrigger: {
             trigger: statsHeader,
             start: "top 92%",
@@ -169,13 +203,15 @@ export default function WhyTrustedSection() {
         });
       }
 
-      // Stats - each one triggered individually
-      statElements.forEach((stat) => {
+      // Stats - each one triggered individually with stagger on mobile
+      statElements.forEach((stat, index) => {
         gsap.to(stat, {
           opacity: 1,
+          x: 0,
           y: 0,
           duration: 0.6,
-          ease: "power2.out",
+          delay: isMobile ? index * 0.1 : 0,
+          ease: isMobile ? "power3.out" : "power2.out",
           scrollTrigger: {
             trigger: stat,
             start: "top 92%",
@@ -191,7 +227,7 @@ export default function WhyTrustedSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] py-16 md:py-40 lg:py-48 px-5 md:px-12"
+      className="relative bg-[#F5F5F3] pt-4 pb-16 md:pt-6 md:pb-40 lg:pt-8 lg:pb-48 px-5 md:px-12"
       style={{ zIndex: 2 }}
     >
       {/* Top Row */}

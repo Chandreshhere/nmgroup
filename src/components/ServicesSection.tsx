@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -13,6 +13,7 @@ export default function ServicesSection() {
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   const services = [
     {
@@ -37,6 +38,25 @@ export default function ServicesSection() {
       image: "/figures.jpg",
     },
   ];
+
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Set images visible on mobile
+  useEffect(() => {
+    if (isMobile) {
+      imageRefs.current.forEach((imageEl) => {
+        if (imageEl) {
+          gsap.set(imageEl, { opacity: 1, scale: 1 });
+        }
+      });
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -102,8 +122,9 @@ export default function ServicesSection() {
     return () => ctx.revert();
   }, []);
 
-  // Handle hover animations for images
+  // Handle hover animations for images (desktop only)
   const handleMouseEnter = (index: number) => {
+    if (isMobile) return; // Don't animate on mobile
     const imageEl = imageRefs.current[index];
     if (imageEl) {
       gsap.to(imageEl, {
@@ -116,6 +137,7 @@ export default function ServicesSection() {
   };
 
   const handleMouseLeave = (index: number) => {
+    if (isMobile) return; // Don't animate on mobile
     const imageEl = imageRefs.current[index];
     if (imageEl) {
       gsap.to(imageEl, {
@@ -186,15 +208,15 @@ export default function ServicesSection() {
                     ensuring every client feels confident at every stage of their real
                     estate journey
                   </p>
-                  {/* Image Placeholder - shows on hover - hidden on mobile */}
+                  {/* Image Placeholder - shows on hover on desktop, always visible on mobile */}
                   <div
                     ref={(el) => {
                       imageRefs.current[index] = el;
                     }}
-                    className="hidden md:block bg-[#E5E2DD] shrink-0 overflow-hidden relative w-[130px] h-[130px]"
+                    className="bg-[#E5E2DD] shrink-0 overflow-hidden relative w-32 h-32 md:w-[180px] md:h-[180px]"
                     style={{
-                      opacity: 0,
-                      transform: "scale(0.95)",
+                      opacity: isMobile ? 1 : 0,
+                      transform: "scale(1)",
                     }}
                   >
                     <Image
@@ -206,16 +228,20 @@ export default function ServicesSection() {
                   </div>
                 </div>
               ) : (
-                /* Other rows: Just Image with staggered position - hidden on mobile */
-                <div className="hidden md:block" style={{ paddingLeft: service.imageMarginLeft }}>
+                /* Other rows: Just Image with staggered position on desktop, visible on mobile */
+                <div className="block md:pl-0" style={{ paddingLeft: isMobile ? '0' : service.imageMarginLeft }}>
                   <div
                     ref={(el) => {
                       imageRefs.current[index] = el;
                     }}
-                    className="bg-[#E5E2DD] overflow-hidden relative w-[130px] h-[130px]"
+                    className={`bg-[#E5E2DD] overflow-hidden relative ${
+                      index === 2
+                        ? "w-40 h-28 md:w-[260px] md:h-[160px]"
+                        : "w-32 h-32 md:w-[180px] md:h-[180px]"
+                    }`}
                     style={{
-                      opacity: 0,
-                      transform: "scale(0.95)",
+                      opacity: isMobile ? 1 : 0,
+                      transform: "scale(1)",
                     }}
                   >
                     <Image

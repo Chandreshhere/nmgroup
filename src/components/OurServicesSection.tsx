@@ -17,7 +17,7 @@ const services = [
       "With a legacy built over years of excellence, NM Group stands as a distinguished name in luxury real estate",
     introTitle: "Our journey is defined by an unwavering commitment to quality, precision, and architectural integrity — crafting spaces that go beyond function to become enduring landmarks.",
     introText:
-      "Rooted in experience and guided by vision, we have refined our expertise across every aspect of development. Each project reflects thoughtful planning, superior craftsmanship, and a deep understanding of modern living, creating homes that resonate with sophistication and lasting value. As we continue to evolve, our dedication to timeless design, meticulous execution, and uncompromising standards remains at the core of everything we build — ensuring our legacy endures, generation after generation.",
+      "Rooted in experience and guided by vision, we have refined our expertise across every aspect of development. Each project reflects thoughtful planning, superior craftsmanship, and a deep understanding of modern living.",
     showIntro: true,
     image: "/building.jpg",
     layout: "default", // text left, image right
@@ -69,18 +69,22 @@ export default function OurServicesSection() {
 
     if (!container || cards.length === 0) return;
 
+    // Check if mobile
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       // Pin each card
-      // First card pins at top, 2nd at 25%, 3rd at 28%, 4th at 31%
-      // All cards stay pinned until the 4th card reaches 31%, then they all unpin together
-      const pinPositions = ["top", "25%", "28%", "31%"];
+      // First card pins at top, subsequent cards stack below with offset
+      // All cards stay pinned until the 4th card reaches its position, then they all unpin together
+      // Mobile uses same stacking behavior as desktop, just with adjusted positions
+      const pinPositions = isMobile ? ["top", "8%", "16%", "24%"] : ["top", "25%", "28%", "31%"];
       const lastCard = cards[cards.length - 1];
 
       cards.forEach((card, index) => {
         const pinStart = index === 0 ? "top top" : `top ${pinPositions[index]}`;
 
         if (index === cards.length - 1) {
-          // Last card (card 4) - pin at 31% with pinSpacing to create scroll distance
+          // Last card - pin with pinSpacing to create scroll distance
           ScrollTrigger.create({
             trigger: card,
             start: `top ${pinPositions[index]}`,
@@ -306,26 +310,24 @@ export default function OurServicesSection() {
       <div className={`service-text-content ${index !== 0 ? "md:flex md:items-start md:h-full" : ""}`}>
         {/* Our Services Title - only on first service */}
         {index === 0 && (
-          <h2 className="text-sm font-semibold text-[#493425] leading-[140%]">
+          <h2 className="text-sm font-semibold text-[#493425] leading-[140%] -mt-8 md:mt-0">
             Our Services
           </h2>
         )}
 
         {/* Service Item - positioned lower for first, higher for others */}
         <div
-          className={`flex flex-col md:flex-row md:items-start mt-6 gap-4 md:gap-[4vw] ${index !== 0 ? "md:mt-[20vh]" : "md:mt-0"}`}
+          className={`flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] ${index !== 0 ? "mt-0 md:mt-[10vh]" : "mt-2 md:mt-[35vh]"}`}
         >
-          {/* Number with parentheses - hide for first service */}
-          {index !== 0 && (
-            <div
-              className="text-2xl md:text-4xl font-light text-[#493425] shrink-0"
-              style={{ letterSpacing: "-0.02em" }}
-            >
-              <span className="text-[#493425]/40">(</span>
-              <span className="mx-1">{service.number}</span>
-              <span className="text-[#493425]/40">)</span>
-            </div>
-          )}
+          {/* Number with parentheses */}
+          <div
+            className="text-2xl md:text-4xl font-light text-[#493425] shrink-0"
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            <span className="text-[#493425]/40">(</span>
+            <span className="mx-1">{service.number}</span>
+            <span className="text-[#493425]/40">)</span>
+          </div>
 
           {/* Service Title */}
           <h3
@@ -355,7 +357,7 @@ export default function OurServicesSection() {
       </div>
 
       {/* Right Column - Image Content */}
-      <div className="service-image-content flex flex-col items-end mt-6 md:mt-0" style={{ perspective: "1000px" }}>
+      <div className={`service-image-content flex flex-col items-end md:mt-0 ${index === 0 ? "mt-0" : "mt-6"}`} style={{ perspective: "1000px" }}>
         {/* Intro Text - only on first service */}
         {service.showIntro && (
           <div className="w-full md:w-[85%]">
@@ -377,13 +379,13 @@ export default function OurServicesSection() {
 
         {/* Large Image - aligned to right edge */}
         <div
-          className={`service-image-wrapper relative overflow-hidden mt-4 md:mt-0 ${
+          className={`service-image-wrapper relative overflow-hidden mt-2 md:mt-0 ${
             service.showIntro
-              ? "w-full md:w-[85%] aspect-square"
-              : "w-full aspect-[3/4] md:aspect-auto md:h-screen"
+              ? "w-full md:w-[95%] aspect-square md:aspect-[4/5]"
+              : "w-full aspect-[3/5] md:aspect-auto md:h-screen"
           }`}
           style={{
-            marginTop: service.showIntro ? "4vh" : "0",
+            marginTop: service.showIntro ? "2vh" : "0",
           }}
         >
           <Image
@@ -409,7 +411,7 @@ export default function OurServicesSection() {
       {/* Left Column - Image */}
       <div className="service-image-content flex flex-col items-start mt-6 md:mt-0">
         <div
-          className="service-image-wrapper relative overflow-hidden w-full aspect-[4/3] md:aspect-auto md:h-screen"
+          className="service-image-wrapper relative overflow-hidden w-full aspect-[3/5] md:aspect-auto md:h-screen"
         >
           <Image
             src={service.image}
@@ -423,7 +425,7 @@ export default function OurServicesSection() {
       {/* Right Column - Text Content - Positioned Higher */}
       <div className="service-text-content md:flex md:items-start md:h-full">
         <div
-          className="flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] mt-0 md:mt-[20vh]"
+          className="flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] mt-0 md:mt-[10vh]"
         >
           {/* Number with parentheses */}
           <div
@@ -475,7 +477,7 @@ export default function OurServicesSection() {
     >
       {/* Left Column - Title - Positioned Higher */}
       <div className="service-text-content flex flex-col md:h-full">
-        <div className="mt-0 md:mt-[20vh]">
+        <div className="mt-0 md:mt-[10vh]">
           {/* Number with parentheses */}
           <div
             className="text-2xl md:text-4xl font-light text-[#493425] mb-4 md:mb-6"
@@ -502,9 +504,9 @@ export default function OurServicesSection() {
       </div>
 
       {/* Center Column - Image */}
-      <div className="service-image-content flex flex-col items-center mt-6 md:mt-0 order-last md:order-none">
+      <div className="service-image-content flex flex-col items-center mt-6 md:mt-0 order-last md:order-none md:-ml-[30%] md:mr-[10%]">
         <div
-          className="service-image-wrapper relative overflow-hidden w-full aspect-[4/3] md:aspect-auto md:h-screen"
+          className="service-image-wrapper relative overflow-hidden w-full aspect-[3/5] md:aspect-auto md:h-screen"
         >
           <Image
             src={service.image}
@@ -518,7 +520,7 @@ export default function OurServicesSection() {
       {/* Right Column - Descriptions - Positioned Higher */}
       <div className="service-text-content flex flex-col md:h-full mt-4 md:mt-0">
         <div
-          className="flex flex-col gap-4 md:gap-6 max-w-full md:max-w-[220px] md:mt-[20vh]"
+          className="flex flex-col gap-4 md:gap-6 max-w-full md:max-w-[220px] mt-0 md:mt-[10vh]"
         >
           <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]">
             {service.description1}

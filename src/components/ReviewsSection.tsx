@@ -644,14 +644,14 @@ export default function ReviewsSection() {
 
       {/* Desktop: Image Gallery */}
       <div
-        className={`hidden md:grid mt-16 transition-opacity duration-300 gap-[1vw] ${
+        className={`hidden md:grid mt-8 transition-opacity duration-300 gap-[1vw] ${
           isTransitioning ? "opacity-0" : "opacity-100"
         }`}
         style={{
           gridTemplateColumns: "1.4fr 1fr",
         }}
       >
-        <div className="relative bg-[#E5E2DD] overflow-hidden aspect-[16/9]">
+        <div className="relative bg-[#E5E2DD] overflow-hidden aspect-[2.5/1]">
           <div className="relative w-full h-full">
             <Image
               src={currentReview.images[0]}

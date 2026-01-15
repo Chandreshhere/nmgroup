@@ -224,7 +224,7 @@ export default function Header() {
     <>
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F3] px-6 pt-10 pb-5 md:px-10 lg:px-12"
+      className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F3] px-6 pt-10 pb-5 md:pt-6 md:pb-4 md:px-10 lg:px-12"
       style={{ opacity: 0 }}
     >
       <nav className="flex items-center">

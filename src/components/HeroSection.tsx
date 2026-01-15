@@ -8,7 +8,6 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRowRef = useRef<HTMLDivElement>(null);
   const mobileTagsRef = useRef<HTMLDivElement>(null);
-  const forYouRef = useRef<HTMLDivElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const topRevealRef = useRef<HTMLDivElement>(null);
   const bottomRevealRef = useRef<HTMLDivElement>(null);
@@ -18,7 +17,6 @@ export default function HeroSection() {
   useEffect(() => {
     const textRow = textRowRef.current;
     const mobileTags = mobileTagsRef.current;
-    const forYou = forYouRef.current;
     const imageWrapper = imageWrapperRef.current;
     const topReveal = topRevealRef.current;
     const bottomReveal = bottomRevealRef.current;
@@ -30,7 +28,6 @@ export default function HeroSection() {
     // Set initial states
     gsap.set(textRow, { opacity: 0, x: -80 });
     if (mobileTags) gsap.set(mobileTags, { opacity: 0, x: -80 });
-    if (forYou) gsap.set(forYou, { opacity: 0, x: -80 });
     gsap.set(topReveal, { yPercent: 0 }); // Covers top half
     gsap.set(bottomReveal, { yPercent: 0 }); // Covers bottom half
     gsap.set(image, { scale: 1 });
@@ -58,16 +55,6 @@ export default function HeroSection() {
       duration: 0.8,
       ease: "power3.out",
     }, mobileTags ? "-=0.6" : "+=0");
-
-    // (FOR YOU) slides in from left - same animation as text row (desktop only)
-    if (forYou) {
-      tl.to(forYou, {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      }, "<"); // Same time as text row
-    }
 
     // Image reveals - top cover moves up, bottom cover moves down
     tl.to(topReveal, {
@@ -105,7 +92,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#F5F5F3] pt-24 md:pt-28 pb-12 sticky top-0 px-5 md:px-12"
+      className="bg-[#F5F5F3] pt-20 md:pt-20 pb-12 sticky top-0 px-5 md:px-12"
       style={{ zIndex: 1 }}
     >
       {/* Hero Container */}
@@ -113,7 +100,7 @@ export default function HeroSection() {
         {/* Mobile Real Estate Tags - positioned at top right on mobile */}
         <div
           ref={mobileTagsRef}
-          className="flex md:hidden justify-between text-[#8D7660] mb-4 mt-4"
+          className="flex md:hidden justify-between text-[#8D7660] mb-4 mt-8"
           style={{ opacity: 0 }}
         >
           <div className="flex items-start gap-4">
@@ -135,13 +122,19 @@ export default function HeroSection() {
         >
           {/* Left - Main Headline */}
           <h1 className="text-2xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-[#493425] tracking-tight leading-tight pb-2 mt-1 -mb-1">
-            TURNING NORMAL SPACES
-            <br />
-            INTO STUNNING
-            <br />
-            <span className="inline-flex items-baseline gap-2 md:gap-0">
+            <span className="md:hidden">
+              TURNING NORMAL SPACES
+              <br />
+              INTO STUNNING
+              <br />
+            </span>
+            <span className="hidden md:inline">
+              TURNING NORMAL SPACES INTO STUNNING
+              <br />
+            </span>
+            <span className="inline-flex items-baseline gap-2">
               <span>MASTERPIECES</span>
-              <span className="md:hidden text-lg">(FOR YOU)</span>
+              <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl">(FOR YOU)</span>
             </span>
           </h1>
 
@@ -164,17 +157,6 @@ export default function HeroSection() {
 
         {/* Hero Image */}
         <div className="relative w-full">
-          {/* (FOR YOU) - aligned with MASTERPIECES line - desktop only */}
-          <div
-            ref={forYouRef}
-            className="hidden md:flex justify-end -mt-7 lg:-mt-8 xl:-mt-9"
-            style={{ opacity: 0 }}
-          >
-            <span className="text-xl lg:text-2xl xl:text-3xl font-normal text-[#493425] tracking-tight leading-none">
-              (FOR YOU)
-            </span>
-          </div>
-
           <div
             ref={imageWrapperRef}
             className="relative aspect-[4/3] md:aspect-[2/1] lg:aspect-[2.2/1] overflow-hidden mt-4 md:mt-0"

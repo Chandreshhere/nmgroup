@@ -52,6 +52,7 @@ html.lenis, html.lenis body {
 /* Services Stacking Section */
 .services-stack-container {
   position: relative;
+  background-color: #F5F5F3;
 }
 
 .service-card {
@@ -75,8 +76,8 @@ html.lenis, html.lenis body {
     padding-right: 20px !important;
     height: auto !important;
     min-height: 100vh !important;
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     transform: translateZ(0);
@@ -84,7 +85,14 @@ html.lenis, html.lenis body {
   }
 
   .service-card:first-child {
-    padding-top: 40px !important;
+    padding-top: 0px !important;
+  }
+
+  .service-card:last-child {
+    padding-top: 5px !important;
+    padding-bottom: 120px !important;
+    margin-bottom: 0 !important;
+    min-height: auto !important;
   }
 }
 

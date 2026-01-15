@@ -187,86 +187,97 @@ export default function ContactSection() {
         </p>
       </div>
 
-      {/* Conversational Form */}
-      <form onSubmit={handleSubmit}>
-        {/* Line 1: HELLO, MY NAME */}
-        <div ref={line1Ref} className="mb-8 md:mb-10" style={{ opacity: 0 }}>
-          <div className="flex items-baseline gap-2 md:gap-4 mb-2">
-            <span
-              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
-              style={{ letterSpacing: "-0.02em" }}
-            >
-              HELLO, MY NAME
-            </span>
-          </div>
+      {/* Conversational Form - Single container with uniform gap */}
+      <form onSubmit={handleSubmit} className="flex flex-col gap-10 md:gap-8">
+        {/* Line 1: HELLO, MY NAME + input inline */}
+        <div ref={line1Ref} className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4" style={{ opacity: 0 }}>
+          <span
+            className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425] shrink-0 whitespace-nowrap"
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            HELLO, MY NAME
+          </span>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             placeholder="first name & last name"
-            className="w-full bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+            className="flex-1 bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
           />
         </div>
 
-        {/* Line 2: I NEED */}
-        <div ref={line2Ref} className="mb-8 md:mb-10" style={{ opacity: 0 }}>
-          <div className="flex items-baseline gap-2 md:gap-4 mb-2">
-            <span
-              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
-              style={{ letterSpacing: "-0.02em" }}
-            >
-              I NEED
-            </span>
-          </div>
+        {/* Line 2: I NEED + input inline */}
+        <div ref={line2Ref} className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4" style={{ opacity: 0 }}>
+          <span
+            className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425] shrink-0 whitespace-nowrap"
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            I NEED
+          </span>
           <input
             type="text"
             name="need"
             value={formData.need}
             onChange={handleChange}
-            placeholder="a property that fits my lifestyle investment goals"
-            className="w-full bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+            placeholder="a property that fits my lifestyle and investment goals"
+            className="flex-1 bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
           />
         </div>
 
-        {/* Line 3: MY EMAIL */}
-        <div ref={line3Ref} className="mb-8 md:mb-10" style={{ opacity: 0 }}>
-          <div className="flex items-baseline gap-2 md:gap-4 mb-2">
+        {/* Line 3: PREFERRED LOCATION + input inline */}
+        <div ref={line3Ref} className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4" style={{ opacity: 0 }}>
+          <span
+            className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425] shrink-0 whitespace-nowrap"
+            style={{ letterSpacing: "-0.02em" }}
+          >
+            PREFERRED LOCATION
+          </span>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            placeholder="Palm Jumeirah, Downtown Dubai"
+            className="flex-1 bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+          />
+        </div>
+
+        {/* Line 4: MY BUDGET + MY EMAIL + Submit Button inline */}
+        <div ref={line4Ref} className="flex flex-col md:flex-row md:items-end md:gap-8 -mt-4 md:mt-0" style={{ opacity: 0 }}>
+          {/* MY BUDGET */}
+          <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4">
             <span
-              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#8D7660]"
+              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425] shrink-0 whitespace-nowrap"
               style={{ letterSpacing: "-0.02em" }}
             >
-              MY EMAIL
+              MY BUDGET
             </span>
-          </div>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="name@example.com"
-            className="w-full bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
-          />
-        </div>
-
-        {/* Line 4: MY BUDGET + BUTTON */}
-        <div ref={line4Ref} className="flex flex-row items-end justify-between gap-4" style={{ opacity: 0 }}>
-          <div className="flex-1">
-            <div className="flex items-baseline gap-2 md:gap-4 mb-2">
-              <span
-                className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
-                style={{ letterSpacing: "-0.02em" }}
-              >
-                MY BUDGET
-              </span>
-            </div>
             <input
               type="text"
               name="budget"
               value={formData.budget}
               onChange={handleChange}
               placeholder="$3 000 000 +"
-              className="w-full max-w-[180px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+              className="w-full md:w-[140px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+            />
+          </div>
+
+          {/* MY EMAIL */}
+          <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4 flex-1">
+            <span
+              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#8D7660] shrink-0 whitespace-nowrap"
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              MY EMAIL
+            </span>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="name@example.com"
+              className="flex-1 bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
             />
           </div>
 
@@ -274,8 +285,8 @@ export default function ContactSection() {
           <button
             ref={buttonRef}
             type="submit"
-            className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] rounded-full bg-[#BBA793] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider flex items-center justify-center text-center leading-tight hover:bg-[#A69580] transition-colors shrink-0"
-            style={{ letterSpacing: "0.05em", opacity: 0 }}
+            className="mt-8 md:mt-0 w-[70px] h-[70px] md:w-[90px] md:h-[90px] rounded-full bg-[#BBA793] text-white text-[8px] md:text-[10px] font-bold uppercase flex items-center justify-center text-center leading-none hover:bg-[#A69580] transition-colors shrink-0 self-center md:self-end p-0"
+            style={{ letterSpacing: "0.02em", opacity: 0 }}
           >
             SEND MY
             <br />
