@@ -22,7 +22,8 @@ export default function Footer() {
       // Set initial state - hidden below with larger offset for smooth reveal
       gsap.set(logo, { opacity: 0, y: 100 });
 
-      // Animate logo smoothly from bottom to top on scroll with reverse on scroll up
+      // Animate logo smoothly from bottom to top on scroll
+      // Stays visible once animated, only reverses when scrolling back up past start point
       gsap.to(logo, {
         opacity: 1,
         y: 0,
@@ -32,7 +33,7 @@ export default function Footer() {
           trigger: lowerFooter,
           start: "top 95%",
           end: "top 70%",
-          toggleActions: "play reverse play reverse",
+          toggleActions: "play none none reverse",
         },
       });
     }, footer);
