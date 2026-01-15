@@ -74,9 +74,13 @@ html.lenis, html.lenis body {
     padding-left: 20px !important;
     padding-right: 20px !important;
     height: auto !important;
-    min-height: auto !important;
+    min-height: 100vh !important;
     padding-top: 40px !important;
     padding-bottom: 40px !important;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 
   .service-card:first-child {
@@ -84,4 +88,19 @@ html.lenis, html.lenis body {
   }
 }
 
+/* GPU acceleration for animated elements */
+.service-image-wrapper {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: clip-path;
+}
 
+/* Smooth images on mobile */
+@media (max-width: 768px) {
+  img {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}

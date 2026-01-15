@@ -380,7 +380,7 @@ export default function OurServicesSection() {
           className={`service-image-wrapper relative overflow-hidden mt-4 md:mt-0 ${
             service.showIntro
               ? "w-full md:w-[85%] aspect-square"
-              : "w-full aspect-[4/3] md:aspect-auto md:h-screen"
+              : "w-full aspect-[3/4] md:aspect-auto md:h-screen"
           }`}
           style={{
             marginTop: service.showIntro ? "4vh" : "0",

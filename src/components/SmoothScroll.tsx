@@ -11,11 +11,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: isMobile ? 0.8 : 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       smoothWheel: true,
+      touchMultiplier: isMobile ? 1.5 : 2,
+      infinite: false,
     });
 
     lenisRef.current = lenis;
@@ -28,6 +32,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     });
 
     gsap.ticker.lagSmoothing(0);
+
+    // Refresh ScrollTrigger after Lenis is ready
+    ScrollTrigger.refresh();
 
     return () => {
       lenis.destroy();
