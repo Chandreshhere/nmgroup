@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -15,6 +18,7 @@ export default function HeroSection() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    const section = sectionRef.current;
     const textRow = textRowRef.current;
     const mobileTags = mobileTagsRef.current;
     const imageWrapper = imageWrapperRef.current;
@@ -23,7 +27,16 @@ export default function HeroSection() {
     const image = imageRef.current;
     const button = buttonRef.current;
 
-    if (!textRow || !imageWrapper || !topReveal || !bottomReveal || !image || !button) return;
+    if (!section || !textRow || !imageWrapper || !topReveal || !bottomReveal || !image || !button) return;
+
+    // Pin the hero section using GSAP ScrollTrigger
+    const pinTrigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      pin: true,
+      pinSpacing: false,
+    });
 
     // Set initial states
     gsap.set(textRow, { opacity: 0, x: -80 });
@@ -86,13 +99,14 @@ export default function HeroSection() {
 
     return () => {
       tl.kill();
+      pinTrigger.kill();
     };
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="bg-[#F5F5F3] pt-20 md:pt-20 pb-12 sticky top-0 px-5 md:px-12"
+      className="bg-[#F5F5F3] pt-20 md:pt-20 pb-12 px-5 md:px-12"
       style={{ zIndex: 1 }}
     >
       {/* Hero Container */}
@@ -159,7 +173,7 @@ export default function HeroSection() {
         <div className="relative w-full">
           <div
             ref={imageWrapperRef}
-            className="relative aspect-[4/3] md:aspect-[2/1] lg:aspect-[2.2/1] overflow-hidden mt-4 md:mt-0"
+            className="relative aspect-[4/3] md:aspect-[2.3/1] lg:aspect-[2.5/1] overflow-hidden mt-4 md:mt-0"
           >
             {/* Actual Image */}
             <div ref={imageRef} className="absolute inset-0">

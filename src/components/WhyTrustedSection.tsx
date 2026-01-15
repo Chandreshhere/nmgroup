@@ -227,7 +227,7 @@ export default function WhyTrustedSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] pt-4 pb-16 md:pt-6 md:pb-40 lg:pt-8 lg:pb-48 px-5 md:px-12"
+      className="relative bg-[#F5F5F3] pt-6 pb-16 md:pt-8 md:pb-40 lg:pt-10 lg:pb-48 px-5 md:px-12"
       style={{ zIndex: 2 }}
     >
       {/* Top Row */}

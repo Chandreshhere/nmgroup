@@ -244,7 +244,7 @@ export default function ContactSection() {
         </div>
 
         {/* Line 4: MY BUDGET + MY EMAIL + Submit Button inline */}
-        <div ref={line4Ref} className="flex flex-col md:flex-row md:items-end md:gap-8 -mt-4 md:mt-0" style={{ opacity: 0 }}>
+        <div ref={line4Ref} className="flex flex-col md:flex-row md:items-end gap-6 md:gap-8 -mt-4 md:mt-0" style={{ opacity: 0 }}>
           {/* MY BUDGET */}
           <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4">
             <span
@@ -264,7 +264,7 @@ export default function ContactSection() {
           </div>
 
           {/* MY EMAIL */}
-          <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4 flex-1">
+          <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4 flex-1 mt-2 md:mt-0">
             <span
               className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#8D7660] shrink-0 whitespace-nowrap"
               style={{ letterSpacing: "-0.02em" }}

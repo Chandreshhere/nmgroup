@@ -21,6 +21,12 @@ body {
   background: var(--color-primary);
   color: var(--color-secondary);
   font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal scroll from fixed/absolute elements and animations */
+html {
+  overflow-x: hidden;
 }
 
 /* Lenis smooth scroll */
@@ -76,7 +82,7 @@ html.lenis, html.lenis body {
     padding-right: 20px !important;
     height: auto !important;
     min-height: 100vh !important;
-    padding-top: 30px !important;
+    padding-top: 60px !important;
     padding-bottom: 30px !important;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -85,7 +91,7 @@ html.lenis, html.lenis body {
   }
 
   .service-card:first-child {
-    padding-top: 0px !important;
+    padding-top: 40px !important;
   }
 
   .service-card:last-child {

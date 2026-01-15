@@ -310,14 +310,14 @@ export default function OurServicesSection() {
       <div className={`service-text-content ${index !== 0 ? "md:flex md:items-start md:h-full" : ""}`}>
         {/* Our Services Title - only on first service */}
         {index === 0 && (
-          <h2 className="text-sm font-semibold text-[#493425] leading-[140%] -mt-8 md:mt-0">
+          <h2 className="text-sm font-semibold text-[#493425] leading-[140%] mt-8 md:mt-0">
             Our Services
           </h2>
         )}
 
         {/* Service Item - positioned lower for first, higher for others */}
         <div
-          className={`flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] ${index !== 0 ? "mt-0 md:mt-[10vh]" : "mt-2 md:mt-[35vh]"}`}
+          className={`flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] ${index !== 0 ? "mt-8 md:mt-[10vh]" : "mt-4 md:mt-[35vh]"}`}
         >
           {/* Number with parentheses */}
           <div
@@ -425,7 +425,7 @@ export default function OurServicesSection() {
       {/* Right Column - Text Content - Positioned Higher */}
       <div className="service-text-content md:flex md:items-start md:h-full">
         <div
-          className="flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] mt-0 md:mt-[10vh]"
+          className="flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] mt-8 md:mt-[10vh]"
         >
           {/* Number with parentheses */}
           <div
@@ -477,7 +477,7 @@ export default function OurServicesSection() {
     >
       {/* Left Column - Title - Positioned Higher */}
       <div className="service-text-content flex flex-col md:h-full">
-        <div className="mt-0 md:mt-[10vh]">
+        <div className="mt-8 md:mt-[10vh]">
           {/* Number with parentheses */}
           <div
             className="text-2xl md:text-4xl font-light text-[#493425] mb-4 md:mb-6"

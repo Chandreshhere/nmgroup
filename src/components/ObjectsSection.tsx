@@ -134,7 +134,7 @@ export default function ObjectsSection() {
     <section
       id="objects-section"
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] w-full px-5 md:px-12 py-16 md:py-[14vh]"
+      className="relative bg-[#F5F5F3] w-full px-5 md:px-12 py-16 md:py-[14vh] overflow-x-clip"
       style={{
         zIndex: 2,
       }}

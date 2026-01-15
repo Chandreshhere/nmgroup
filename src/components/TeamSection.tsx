@@ -240,7 +240,7 @@ export default function TeamSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] py-16 md:py-36 lg:py-44 px-5 md:px-12"
+      className="relative bg-[#F5F5F3] py-16 md:py-36 lg:py-44 px-5 md:px-12 overflow-x-clip"
       style={{ zIndex: 2 }}
     >
       {/* Mobile Layout */}
