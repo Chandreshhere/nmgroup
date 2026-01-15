@@ -168,24 +168,20 @@ export default function ContactSection() {
     <section
       id="contact-section"
       ref={sectionRef}
-      className="relative w-full bg-[#F5F5F3]"
+      className="relative w-full bg-[#F5F5F3] px-5 md:px-12 py-16 md:py-[8vh]"
       style={{
-        paddingLeft: "48px",
-        paddingRight: "48px",
-        paddingTop: "8vh",
-        paddingBottom: "9vh",
         zIndex: 2,
       }}
     >
       {/* Header Row */}
-      <div className="flex items-start" style={{ marginBottom: "12vh", gap: "6vw" }}>
-        <p ref={headerLabelRef} className="text-sm font-semibold text-[#493425] leading-[140%]" style={{ opacity: 0 }}>
+      <div className="flex flex-row items-start gap-6 md:gap-[6vw] mb-12 md:mb-[12vh]">
+        <p ref={headerLabelRef} className="text-sm font-semibold text-[#493425] leading-[140%] shrink-0" style={{ opacity: 0 }}>
           Contact us
         </p>
         <p ref={headerDescRef} className="text-sm font-medium text-[#8D7660] leading-[170%]" style={{ opacity: 0 }}>
           Tell us what you&apos;re looking for
           <br />
-          for we&apos;ll find properties
+          we&apos;ll find properties
           <br />
           that match your vision
         </p>
@@ -194,98 +190,83 @@ export default function ContactSection() {
       {/* Conversational Form */}
       <form onSubmit={handleSubmit}>
         {/* Line 1: HELLO, MY NAME */}
-        <div ref={line1Ref} className="flex items-baseline flex-wrap mb-10" style={{ gap: "16px", opacity: 0 }}>
-          <span
-            className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            HELLO,
-          </span>
-          <span
-            className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            MY NAME
-          </span>
+        <div ref={line1Ref} className="mb-8 md:mb-10" style={{ opacity: 0 }}>
+          <div className="flex items-baseline gap-2 md:gap-4 mb-2">
+            <span
+              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              HELLO, MY NAME
+            </span>
+          </div>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             placeholder="first name & last name"
-            className="flex-1 min-w-[200px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+            className="w-full bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
           />
         </div>
 
         {/* Line 2: I NEED */}
-        <div ref={line2Ref} className="flex items-baseline flex-wrap mb-10" style={{ gap: "16px", opacity: 0 }}>
-          <span
-            className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            I NEED
-          </span>
+        <div ref={line2Ref} className="mb-8 md:mb-10" style={{ opacity: 0 }}>
+          <div className="flex items-baseline gap-2 md:gap-4 mb-2">
+            <span
+              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
+              style={{ letterSpacing: "-0.02em" }}
+            >
+              I NEED
+            </span>
+          </div>
           <input
             type="text"
             name="need"
             value={formData.need}
             onChange={handleChange}
-            placeholder="a property that fits my lifestyle and investment goals"
-            className="flex-1 min-w-[300px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+            placeholder="a property that fits my lifestyle investment goals"
+            className="w-full bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
           />
         </div>
 
-        {/* Line 3: PREFERRED LOCATION */}
-        <div ref={line3Ref} className="flex items-baseline flex-wrap mb-10" style={{ gap: "16px", opacity: 0 }}>
-          <span
-            className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#8D7660]"
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            PREFERRED LOCATION
-          </span>
-          <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            placeholder="Palm Jumeirah, Downtown Dubai"
-            className="flex-1 min-w-[250px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
-          />
-        </div>
-
-        {/* Line 4: MY BUDGET + MY EMAIL + BUTTON */}
-        <div ref={line4Ref} className="flex items-baseline flex-wrap" style={{ gap: "24px", opacity: 0 }}>
-          <div className="flex items-baseline flex-wrap" style={{ gap: "16px" }}>
+        {/* Line 3: MY EMAIL */}
+        <div ref={line3Ref} className="mb-8 md:mb-10" style={{ opacity: 0 }}>
+          <div className="flex items-baseline gap-2 md:gap-4 mb-2">
             <span
-              className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
+              className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#8D7660]"
               style={{ letterSpacing: "-0.02em" }}
             >
-              MY BUDGET
+              MY EMAIL
             </span>
+          </div>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="name@example.com"
+            className="w-full bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+          />
+        </div>
+
+        {/* Line 4: MY BUDGET + BUTTON */}
+        <div ref={line4Ref} className="flex flex-row items-end justify-between gap-4" style={{ opacity: 0 }}>
+          <div className="flex-1">
+            <div className="flex items-baseline gap-2 md:gap-4 mb-2">
+              <span
+                className="text-2xl md:text-5xl lg:text-6xl font-normal text-[#493425]"
+                style={{ letterSpacing: "-0.02em" }}
+              >
+                MY BUDGET
+              </span>
+            </div>
             <input
               type="text"
               name="budget"
               value={formData.budget}
               onChange={handleChange}
               placeholder="$3 000 000 +"
-              className="w-[140px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
-            />
-          </div>
-
-          <div className="flex items-baseline flex-wrap" style={{ gap: "16px" }}>
-            <span
-              className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#8D7660]"
-              style={{ letterSpacing: "-0.02em" }}
-            >
-              MY EMAIL
-            </span>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="name@example.com"
-              className="w-[200px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
+              className="w-full max-w-[180px] bg-transparent border-0 border-b border-[#BBA793] text-sm font-medium text-[#493425] placeholder:text-[#BBA793] focus:outline-none focus:border-[#493425] transition-colors pb-2"
             />
           </div>
 
@@ -293,7 +274,7 @@ export default function ContactSection() {
           <button
             ref={buttonRef}
             type="submit"
-            className="ml-auto w-[120px] h-[120px] rounded-full bg-[#BBA793] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center text-center leading-tight hover:bg-[#A69580] transition-colors"
+            className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] rounded-full bg-[#BBA793] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider flex items-center justify-center text-center leading-tight hover:bg-[#A69580] transition-colors shrink-0"
             style={{ letterSpacing: "0.05em", opacity: 0 }}
           >
             SEND MY

@@ -130,12 +130,8 @@ export default function ServicesSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] w-full"
+      className="relative bg-[#F5F5F3] w-full px-5 md:px-12 py-16 md:py-[14vh]"
       style={{
-        paddingLeft: "48px",
-        paddingRight: "48px",
-        paddingTop: "14vh",
-        paddingBottom: "14vh",
         zIndex: 2,
       }}
     >
@@ -156,19 +152,19 @@ export default function ServicesSection() {
               className="w-full bg-[#493425]/15"
               style={{
                 height: "1px",
-                marginTop: "7vh",
-                marginBottom: "7vh",
+                marginTop: "5vh",
+                marginBottom: "5vh",
               }}
             />
           )}
 
           {/* Service Row - Image on left side, Text on right side */}
-          <div className="flex relative cursor-pointer group">
+          <div className="flex flex-col md:flex-row relative cursor-pointer group">
             {/* Left Side - Intro text for first row, Image for others */}
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2 mb-4 md:mb-0">
               {index === 0 ? (
                 /* First row: Intro text + Image */
-                <div className="flex items-start" style={{ gap: "6vw" }}>
+                <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-[6vw]">
                   {/* Intro Text */}
                   <div className="shrink-0">
                     <h2
@@ -183,22 +179,20 @@ export default function ServicesSection() {
                   </div>
                   <p
                     ref={descriptionRef}
-                    className="text-sm font-medium text-[#8D7660] leading-[160%]"
-                    style={{ maxWidth: "165px", opacity: 0 }}
+                    className="text-sm font-medium text-[#8D7660] leading-[160%] max-w-full md:max-w-[165px]"
+                    style={{ opacity: 0 }}
                   >
                     Our approach is built on trust, transparency, and long-term value —
                     ensuring every client feels confident at every stage of their real
                     estate journey
                   </p>
-                  {/* Image Placeholder - shows on hover */}
+                  {/* Image Placeholder - shows on hover - hidden on mobile */}
                   <div
                     ref={(el) => {
                       imageRefs.current[index] = el;
                     }}
-                    className="bg-[#E5E2DD] shrink-0 overflow-hidden relative"
+                    className="hidden md:block bg-[#E5E2DD] shrink-0 overflow-hidden relative w-[130px] h-[130px]"
                     style={{
-                      width: "130px",
-                      height: "130px",
                       opacity: 0,
                       transform: "scale(0.95)",
                     }}
@@ -212,16 +206,14 @@ export default function ServicesSection() {
                   </div>
                 </div>
               ) : (
-                /* Other rows: Just Image with staggered position */
-                <div style={{ paddingLeft: service.imageMarginLeft }}>
+                /* Other rows: Just Image with staggered position - hidden on mobile */
+                <div className="hidden md:block" style={{ paddingLeft: service.imageMarginLeft }}>
                   <div
                     ref={(el) => {
                       imageRefs.current[index] = el;
                     }}
-                    className="bg-[#E5E2DD] overflow-hidden relative"
+                    className="bg-[#E5E2DD] overflow-hidden relative w-[130px] h-[130px]"
                     style={{
-                      width: "130px",
-                      height: "130px",
                       opacity: 0,
                       transform: "scale(0.95)",
                     }}
@@ -238,16 +230,15 @@ export default function ServicesSection() {
             </div>
 
             {/* Right Side - Heading + Paragraph */}
-            <div className="w-1/2" style={{ paddingLeft: "8vw" }}>
+            <div className="w-full md:w-1/2 md:pl-[8vw]">
               <h3
-                className="text-3xl md:text-4xl lg:text-5xl font-normal text-[#493425] tracking-tight leading-[110%] transition-colors duration-300 group-hover:text-[#8D7660]"
+                className="text-2xl md:text-4xl lg:text-5xl font-normal text-[#493425] tracking-tight leading-[110%] transition-colors duration-300 group-hover:text-[#8D7660]"
                 style={{ letterSpacing: "-0.02em" }}
               >
                 {service.heading}
               </h3>
               <p
-                className="text-sm font-medium text-[#8D7660] leading-[170%] mt-6 transition-colors duration-300 group-hover:text-[#493425]"
-                style={{ maxWidth: "380px" }}
+                className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%] mt-3 md:mt-6 transition-colors duration-300 group-hover:text-[#493425] max-w-full md:max-w-[380px]"
               >
                 {service.paragraph}
               </p>
@@ -261,7 +252,7 @@ export default function ServicesSection() {
         className="w-full bg-[#493425]/15"
         style={{
           height: "1px",
-          marginTop: "7vh",
+          marginTop: "5vh",
         }}
       />
     </section>

@@ -240,21 +240,227 @@ export default function ReviewsSection() {
     <section
       id="reviews-section"
       ref={sectionRef}
-      className="relative w-full bg-[#F5F5F3]"
+      className="relative w-full bg-[#F5F5F3] px-5 md:px-12 py-16 md:py-[20vh]"
       style={{
-        paddingLeft: "48px",
-        paddingRight: "48px",
-        paddingTop: "20vh",
-        paddingBottom: "10vh",
         zIndex: 2,
       }}
     >
-      {/* Section Label */}
-      <p ref={sectionLabelRef} className="text-sm font-semibold text-[#493425] leading-[140%]" style={{ marginBottom: "12vh", opacity: 0 }}>Reviews</p>
+      {/* Mobile: Section Label with Navigation Arrows */}
+      <div className="flex md:hidden items-start justify-between mb-8">
+        <p ref={sectionLabelRef} className="text-sm font-semibold text-[#493425] leading-[140%]" style={{ opacity: 0 }}>Reviews</p>
 
-      {/* Main Content Grid */}
+        {/* Mobile Navigation Arrows - Top Right */}
+        <div ref={arrowsRef} className="flex items-center gap-0" style={{ opacity: 0 }}>
+          <button
+            onClick={handlePrev}
+            disabled={!canGoPrev}
+            className={`w-14 h-14 flex items-center justify-center transition-opacity duration-200 ${
+              canGoPrev ? "opacity-100" : "opacity-30"
+            }`}
+            aria-label="Previous review"
+          >
+            <svg
+              width="50"
+              height="50"
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M35 20C25 20 18 30 18 50C18 70 25 80 35 80"
+                stroke={canGoPrev ? "#493425" : "#BBA793"}
+                strokeWidth="3"
+                fill="none"
+              />
+              <path
+                d="M55 35L40 50L55 65"
+                stroke={canGoPrev ? "#493425" : "#BBA793"}
+                strokeWidth="3"
+                fill="none"
+              />
+              <path
+                d="M65 20C75 20 82 30 82 50C82 70 75 80 65 80"
+                stroke={canGoPrev ? "#493425" : "#BBA793"}
+                strokeWidth="3"
+                fill="none"
+              />
+            </svg>
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={!canGoNext}
+            className={`w-14 h-14 flex items-center justify-center transition-opacity duration-200 ${
+              canGoNext ? "opacity-100" : "opacity-30"
+            }`}
+            aria-label="Next review"
+          >
+            <svg
+              width="50"
+              height="50"
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M35 20C25 20 18 30 18 50C18 70 25 80 35 80"
+                stroke={canGoNext ? "#493425" : "#BBA793"}
+                strokeWidth="3"
+                fill="none"
+              />
+              <path
+                d="M45 35L60 50L45 65"
+                stroke={canGoNext ? "#493425" : "#BBA793"}
+                strokeWidth="3"
+                fill="none"
+              />
+              <path
+                d="M65 20C75 20 82 30 82 50C82 70 75 80 65 80"
+                stroke={canGoNext ? "#493425" : "#BBA793"}
+                strokeWidth="3"
+                fill="none"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Desktop: Section Label */}
+      <p className="hidden md:block text-sm font-semibold text-[#493425] leading-[140%] mb-[12vh]">Reviews</p>
+
+      {/* Mobile: Metadata Row as Header (ENTREPRENEUR / FROM / SINGAPORE) */}
+      <div ref={metadataRowRef} className="md:hidden grid grid-cols-3 gap-2 mb-6" style={{ opacity: 0 }}>
+        <span
+          className="text-xs font-semibold text-[#493425] uppercase"
+          style={{ letterSpacing: "0.05em" }}
+        >
+          {currentReview.type}
+        </span>
+        <span
+          className="text-xs font-medium text-[#8D7660] uppercase"
+          style={{ letterSpacing: "0.05em" }}
+        >
+          FROM
+        </span>
+        <span
+          className="text-xs font-semibold text-[#493425] uppercase"
+          style={{ letterSpacing: "0.05em" }}
+        >
+          {currentReview.from}
+        </span>
+      </div>
+
+      {/* Mobile: Facts Grid - 2 rows layout like reference */}
       <div
-        className="grid"
+        ref={factsGridRef}
+        className="md:hidden grid grid-cols-4 gap-x-4 gap-y-4 mb-8"
+        style={{ opacity: 0 }}
+      >
+        {/* Row 1: LOCATION, ROI, YEAR, FORMAT labels */}
+        <div>
+          <p
+            className="text-[10px] font-semibold text-[#493425] uppercase mb-1"
+            style={{ letterSpacing: "0.05em" }}
+          >
+            LOCATION
+          </p>
+          <p className="text-xs font-medium text-[#8D7660]">
+            {currentReview.location}
+          </p>
+        </div>
+        <div>
+          <p
+            className="text-[10px] font-semibold text-[#493425] uppercase mb-1"
+            style={{ letterSpacing: "0.05em" }}
+          >
+            ROI
+          </p>
+          <p className="text-xs font-medium text-[#8D7660]">
+            {currentReview.roi}
+          </p>
+        </div>
+        <div>
+          <p
+            className="text-[10px] font-semibold text-[#493425] uppercase mb-1"
+            style={{ letterSpacing: "0.05em" }}
+          >
+            YEAR
+          </p>
+          <p className="text-xs font-medium text-[#8D7660]">
+            {currentReview.year}
+          </p>
+        </div>
+        <div>
+          <p
+            className="text-[10px] font-semibold text-[#493425] uppercase mb-1"
+            style={{ letterSpacing: "0.05em" }}
+          >
+            FORMAT
+          </p>
+          <p className="text-xs font-medium text-[#8D7660]">
+            {currentReview.format}
+          </p>
+        </div>
+      </div>
+
+      {/* Mobile: Testimonial Text */}
+      <div
+        ref={testimonialRef}
+        className={`md:hidden transition-opacity duration-300 ${
+          isTransitioning ? "opacity-0" : "opacity-100"
+        }`}
+        style={{ opacity: 0 }}
+      >
+        <p
+          className="text-sm font-medium text-[#8D7660] italic"
+          style={{ lineHeight: "1.7" }}
+        >
+          {currentReview.paragraph1}
+        </p>
+        <p
+          className="text-sm font-medium text-[#8D7660] italic mt-4"
+          style={{ lineHeight: "1.7" }}
+        >
+          {currentReview.paragraph2}
+        </p>
+      </div>
+
+      {/* Mobile: Image Gallery */}
+      <div
+        className={`md:hidden grid grid-cols-2 gap-3 mt-8 transition-opacity duration-300 ${
+          isTransitioning ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <div
+          ref={image1Ref}
+          className="relative bg-[#E5E2DD] overflow-hidden aspect-[4/5]"
+        >
+          <div ref={image1InnerRef} className="relative w-full h-full">
+            <Image
+              src={currentReview.images[0]}
+              alt="Property interior"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+        <div
+          ref={image2Ref}
+          className="relative bg-[#E5E2DD] overflow-hidden aspect-[4/5]"
+        >
+          <div ref={image2InnerRef} className="relative w-full h-full">
+            <Image
+              src={currentReview.images[1]}
+              alt="Property interior"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div
+        className="hidden md:grid gap-0"
         style={{
           gridTemplateColumns: "1fr 1fr",
           columnGap: "4vw",
@@ -263,7 +469,7 @@ export default function ReviewsSection() {
         {/* Left Column */}
         <div>
           {/* Metadata Row */}
-          <div ref={metadataRowRef} className="flex items-baseline" style={{ gap: "4vw", opacity: 0 }}>
+          <div className="flex flex-wrap items-baseline gap-[4vw]">
             <span
               className="text-sm font-semibold text-[#493425] uppercase"
               style={{ letterSpacing: "0.05em" }}
@@ -285,8 +491,7 @@ export default function ReviewsSection() {
           </div>
 
           {/* Navigation Arrows */}
-          <div ref={arrowsRef} className="flex items-center mt-24" style={{ gap: "2vw", opacity: 0 }}>
-            {/* Left Arrow */}
+          <div className="flex items-center mt-24 gap-[2vw]">
             <button
               onClick={handlePrev}
               disabled={!canGoPrev}
@@ -304,21 +509,18 @@ export default function ReviewsSection() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* Left bracket */}
                 <path
                   d="M35 20C25 20 18 30 18 50C18 70 25 80 35 80"
                   stroke={canGoPrev ? "#493425" : "#BBA793"}
                   strokeWidth="3"
                   fill="none"
                 />
-                {/* Arrow */}
                 <path
                   d="M55 35L40 50L55 65"
                   stroke={canGoPrev ? "#493425" : "#BBA793"}
                   strokeWidth="3"
                   fill="none"
                 />
-                {/* Right bracket */}
                 <path
                   d="M65 20C75 20 82 30 82 50C82 70 75 80 65 80"
                   stroke={canGoPrev ? "#493425" : "#BBA793"}
@@ -327,8 +529,6 @@ export default function ReviewsSection() {
                 />
               </svg>
             </button>
-
-            {/* Right Arrow */}
             <button
               onClick={handleNext}
               disabled={!canGoNext}
@@ -346,21 +546,18 @@ export default function ReviewsSection() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                {/* Left bracket */}
                 <path
                   d="M35 20C25 20 18 30 18 50C18 70 25 80 35 80"
                   stroke={canGoNext ? "#493425" : "#BBA793"}
                   strokeWidth="3"
                   fill="none"
                 />
-                {/* Arrow */}
                 <path
                   d="M45 35L60 50L45 65"
                   stroke={canGoNext ? "#493425" : "#BBA793"}
                   strokeWidth="3"
                   fill="none"
                 />
-                {/* Right bracket */}
                 <path
                   d="M65 20C75 20 82 30 82 50C82 70 75 80 65 80"
                   stroke={canGoNext ? "#493425" : "#BBA793"}
@@ -375,15 +572,7 @@ export default function ReviewsSection() {
         {/* Right Column */}
         <div>
           {/* Facts Grid */}
-          <div
-            ref={factsGridRef}
-            className="grid"
-            style={{
-              gridTemplateColumns: "repeat(4, auto)",
-              gap: "3vw",
-              opacity: 0,
-            }}
-          >
+          <div className="grid grid-cols-4 gap-[3vw]">
             <div>
               <p
                 className="text-xs font-medium text-[#8D7660] uppercase mb-2"
@@ -432,11 +621,10 @@ export default function ReviewsSection() {
 
           {/* Testimonial Text */}
           <div
-            ref={testimonialRef}
             className={`mt-16 transition-opacity duration-300 ${
               isTransitioning ? "opacity-0" : "opacity-100"
             }`}
-            style={{ maxWidth: "520px", opacity: 0 }}
+            style={{ maxWidth: "520px" }}
           >
             <p
               className="text-sm font-medium text-[#8D7660]"
@@ -454,22 +642,17 @@ export default function ReviewsSection() {
         </div>
       </div>
 
-      {/* Image Gallery */}
+      {/* Desktop: Image Gallery */}
       <div
-        className={`grid mt-16 transition-opacity duration-300 ${
+        className={`hidden md:grid mt-16 transition-opacity duration-300 gap-[1vw] ${
           isTransitioning ? "opacity-0" : "opacity-100"
         }`}
         style={{
           gridTemplateColumns: "1.4fr 1fr",
-          gap: "1vw",
         }}
       >
-        <div
-          ref={image1Ref}
-          className="relative bg-[#E5E2DD] overflow-hidden"
-          style={{ aspectRatio: "16/9" }}
-        >
-          <div ref={image1InnerRef} className="relative w-full h-full">
+        <div className="relative bg-[#E5E2DD] overflow-hidden aspect-[16/9]">
+          <div className="relative w-full h-full">
             <Image
               src={currentReview.images[0]}
               alt="Property interior"
@@ -478,11 +661,8 @@ export default function ReviewsSection() {
             />
           </div>
         </div>
-        <div
-          ref={image2Ref}
-          className="relative bg-[#E5E2DD] overflow-hidden h-full"
-        >
-          <div ref={image2InnerRef} className="relative w-full h-full">
+        <div className="relative bg-[#E5E2DD] overflow-hidden h-full">
+          <div className="relative w-full h-full">
             <Image
               src={currentReview.images[1]}
               alt="Property interior"

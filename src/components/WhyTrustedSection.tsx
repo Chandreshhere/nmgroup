@@ -191,13 +191,13 @@ export default function WhyTrustedSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] py-32 md:py-40 lg:py-48"
-      style={{ paddingLeft: "48px", paddingRight: "48px", zIndex: 2 }}
+      className="relative bg-[#F5F5F3] py-16 md:py-40 lg:py-48 px-5 md:px-12"
+      style={{ zIndex: 2 }}
     >
       {/* Top Row */}
-      <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 lg:items-start">
+      <div className="flex flex-col lg:flex-row gap-6 md:gap-10 lg:gap-0 lg:items-start">
         {/* Left - Why trusted + Description */}
-        <div className="flex gap-10 lg:gap-20 lg:min-w-140 shrink-0 lg:pt-12">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-10 lg:gap-20 lg:min-w-140 shrink-0 lg:pt-12">
           <h2
             ref={headerRef}
             className="text-sm font-semibold text-[#493425] shrink-0 whitespace-nowrap"
@@ -207,7 +207,7 @@ export default function WhyTrustedSection() {
           </h2>
           <p
             ref={descriptionRef}
-            className="text-sm font-medium text-[#493425]/80 leading-[140%] w-44"
+            className="text-sm font-medium text-[#493425]/80 leading-[140%] w-full md:w-44"
             style={{ opacity: 0 }}
           >
             Elite real estate is not an expense, but a strategic investment. We offer
@@ -224,10 +224,10 @@ export default function WhyTrustedSection() {
               ref={(el) => {
                 clientRefs.current[index] = el;
               }}
-              className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4 lg:gap-8 py-8 lg:py-10 border-b border-[#493425]/20"
+              className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-3 md:gap-4 lg:gap-8 py-6 md:py-8 lg:py-10 border-b border-[#493425]/20"
               style={{ opacity: 0 }}
             >
-              <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-[#493425] tracking-tight leading-tight">
+              <h3 className="text-lg md:text-2xl lg:text-3xl font-medium text-[#493425] tracking-tight leading-tight">
                 {client.title}
               </h3>
               <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[160%] text-left">
@@ -239,13 +239,13 @@ export default function WhyTrustedSection() {
       </div>
 
       {/* Bottom Row - Stats */}
-      <div className="mt-12 md:mt-16 flex flex-col lg:flex-row gap-10 lg:gap-0 lg:items-start">
+      <div className="mt-10 md:mt-16 flex flex-col lg:flex-row gap-6 md:gap-10 lg:gap-0 lg:items-start">
         {/* Left - Tagline */}
-        <div className="flex gap-10 lg:gap-20 lg:min-w-140 shrink-0">
-          <div className="w-20 shrink-0"></div>
+        <div className="flex flex-col md:flex-row gap-4 md:gap-10 lg:gap-20 lg:min-w-140 shrink-0">
+          <div className="hidden md:block w-20 shrink-0"></div>
           <p
             ref={statsHeaderRef}
-            className="text-sm font-medium text-[#493425]/80 leading-[140%] w-44"
+            className="text-sm font-medium text-[#493425]/80 leading-[140%] w-full md:w-44"
             style={{ opacity: 0 }}
           >
             Our journey in numbers
@@ -253,7 +253,7 @@ export default function WhyTrustedSection() {
         </div>
 
         {/* Right - Stats */}
-        <div className="flex-1 grid grid-cols-3 gap-4 md:gap-8">
+        <div className="flex-1 grid grid-cols-3 gap-2 md:gap-8">
           {stats.map((stat, index) => (
             <div
               key={index}
@@ -263,13 +263,13 @@ export default function WhyTrustedSection() {
               className="text-left"
               style={{ opacity: 0 }}
             >
-              <div className="text-4xl md:text-5xl lg:text-6xl font-light text-[#493425] tracking-tight leading-[106%]">
+              <div className="text-2xl md:text-5xl lg:text-6xl font-light text-[#493425] tracking-tight leading-[106%]">
                 <AnimatedNumber value={stat.value} suffix={stat.suffix} duration={2} />
                 {stat.hasPlus && (
-                  <span className="text-2xl md:text-3xl lg:text-4xl align-top ml-1">+</span>
+                  <span className="text-lg md:text-3xl lg:text-4xl align-top ml-0.5 md:ml-1">+</span>
                 )}
               </div>
-              <p className="text-xs md:text-sm font-medium text-[#493425]/60 mt-2">{stat.label}</p>
+              <p className="text-[10px] md:text-sm font-medium text-[#493425]/60 mt-1 md:mt-2">{stat.label}</p>
             </div>
           ))}
         </div>

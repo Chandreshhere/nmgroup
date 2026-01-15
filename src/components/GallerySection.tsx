@@ -391,26 +391,21 @@ export default function GallerySection() {
     <section
       id="gallery-section"
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] w-full"
+      className="relative bg-[#F5F5F3] w-full px-5 md:px-12 py-16 md:py-[10vh] min-h-screen md:h-screen"
       style={{
-        height: '100vh',
-        paddingLeft: '48px',
-        paddingRight: '48px',
-        paddingTop: '10vh',
-        paddingBottom: '10vh',
         zIndex: 2,
       }}
     >
       {/* Main Grid */}
       <div
-        className="h-full grid"
+        className="h-full flex flex-col md:grid gap-6 md:gap-0"
         style={{
           gridTemplateColumns: '1.3fr 1fr',
           columnGap: '5.5vw',
         }}
       >
         {/* Left Column - Property Image */}
-        <div className="relative h-full">
+        <div className="relative h-[40vh] md:h-full">
           <div
             ref={imageRef}
             className="relative w-full h-full bg-[#E5E2DD] overflow-hidden"
@@ -424,7 +419,6 @@ export default function GallerySection() {
               />
             </div>
           </div>
-
         </div>
 
         {/* Right Column - Property Details */}
@@ -440,18 +434,18 @@ export default function GallerySection() {
             </h2>
 
             {/* Navigation Arrows */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0 md:gap-1">
               {/* Left Arrow */}
               <button
                 onClick={handlePrev}
                 disabled={isAnimating || currentIndex === 0}
-                className={`w-24 h-24 flex items-center justify-center transition-colors ${
+                className={`w-14 h-14 md:w-24 md:h-24 flex items-center justify-center transition-colors ${
                   currentIndex === 0
                     ? "text-[#493425]/30 cursor-not-allowed"
                     : "text-[#493425]/50 hover:text-[#493425]"
                 }`}
               >
-                <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-10 h-10 md:w-[90px] md:h-[90px]" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M50 28L35 45L50 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M28 18C18 28 12 36 12 45C12 54 18 62 28 72" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
                   <path d="M62 18C72 28 78 36 78 45C78 54 72 62 62 72" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
@@ -459,7 +453,7 @@ export default function GallerySection() {
               </button>
 
               {/* Page Indicator */}
-              <span className="text-xs font-medium text-[#493425]/60 mx-2">
+              <span className="text-[10px] md:text-xs font-medium text-[#493425]/60 mx-1 md:mx-2">
                 {currentIndex + 1} / {galleryData.length}
               </span>
 
@@ -467,13 +461,13 @@ export default function GallerySection() {
               <button
                 onClick={handleNext}
                 disabled={isAnimating || currentIndex === galleryData.length - 1}
-                className={`w-24 h-24 flex items-center justify-center transition-colors ${
+                className={`w-14 h-14 md:w-24 md:h-24 flex items-center justify-center transition-colors ${
                   currentIndex === galleryData.length - 1
                     ? "text-[#493425]/30 cursor-not-allowed"
                     : "text-[#493425] hover:text-[#493425]/70"
                 }`}
               >
-                <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-10 h-10 md:w-[90px] md:h-[90px]" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M40 28L55 45L40 62" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M28 18C18 28 12 36 12 45C12 54 18 62 28 72" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
                   <path d="M62 18C72 28 78 36 78 45C78 54 72 62 62 72" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
@@ -485,23 +479,20 @@ export default function GallerySection() {
           {/* Property Details Grid */}
           <div
             ref={detailsRef}
-            className="grid mt-40"
+            className="grid mt-6 md:mt-40 grid-cols-2 md:grid-cols-4 gap-4 md:gap-x-6 md:gap-y-8"
             style={{
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              rowGap: '32px',
-              columnGap: '24px',
               opacity: 0,
             }}
           >
             {currentData.details.map((detail, index) => (
               <div key={index}>
                 <p
-                  className="text-xs font-semibold text-[#493425] uppercase mb-2"
+                  className="text-[10px] md:text-xs font-semibold text-[#493425] uppercase mb-1 md:mb-2"
                   style={{ letterSpacing: '0.05em' }}
                 >
                   {detail.label}
                 </p>
-                <p className="text-sm font-medium text-[#8D7660]">
+                <p className="text-xs md:text-sm font-medium text-[#8D7660]">
                   {detail.value}
                 </p>
               </div>
@@ -509,17 +500,17 @@ export default function GallerySection() {
           </div>
 
           {/* Description Text */}
-          <div className="mt-auto space-y-6">
+          <div className="mt-6 md:mt-auto space-y-4 md:space-y-6">
             <p
               ref={para1Ref}
-              className="text-sm font-medium text-[#8D7660] leading-[170%]"
+              className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]"
               style={{ opacity: 0 }}
             >
               {currentData.para1}
             </p>
             <p
               ref={para2Ref}
-              className="text-sm font-medium text-[#8D7660] leading-[170%]"
+              className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]"
               style={{ opacity: 0 }}
             >
               {currentData.para2}

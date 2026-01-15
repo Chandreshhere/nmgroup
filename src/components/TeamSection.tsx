@@ -183,31 +183,115 @@ export default function TeamSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] py-28 md:py-36 lg:py-44"
-      style={{ paddingLeft: "48px", paddingRight: "48px", zIndex: 2 }}
+      className="relative bg-[#F5F5F3] py-16 md:py-36 lg:py-44 px-5 md:px-12"
+      style={{ zIndex: 2 }}
     >
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-0">
-        {/* Left - Title and Navigation */}
-        <div className="lg:min-w-140 shrink-0">
+      {/* Mobile Layout */}
+      <div className="md:hidden">
+        {/* Top Row - Title and Navigation */}
+        <div className="flex justify-between items-start mb-8">
           <h2
             ref={titleRef}
             className="text-sm font-semibold text-[#493425]"
             style={{ opacity: 0 }}
           >
-            Team of professionals
+            Team of
+            <br />
+            professionals
           </h2>
 
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows - Top Right */}
           <div
             ref={arrowsRef}
-            className="flex items-center gap-6 mt-40 md:mt-60 lg:mt-80"
+            className="flex items-center gap-2"
             style={{ opacity: 0 }}
           >
-            {/* Left Arrow */}
             <button
               onClick={handlePrev}
               disabled={isAnimating}
-              className="w-36 h-36 md:w-40 md:h-40 flex items-center justify-center text-[#493425]/30 hover:text-[#493425] transition-colors disabled:opacity-50"
+              className="w-14 h-14 flex items-center justify-center text-[#493425]/30 hover:text-[#493425] transition-colors disabled:opacity-50"
+            >
+              <svg width="50" height="50" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M45 25L30 40L45 55" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M25 15C15 25 10 32 10 40C10 48 15 55 25 65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                <path d="M55 15C65 25 70 32 70 40C70 48 65 55 55 65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
+              </svg>
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={isAnimating}
+              className="w-14 h-14 flex items-center justify-center text-[#493425] hover:text-[#493425]/70 transition-colors disabled:opacity-50"
+            >
+              <svg width="50" height="50" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M35 25L50 40L35 55" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M25 15C15 25 10 32 10 40C10 48 15 55 25 65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                <path d="M55 15C65 25 70 32 70 40C70 48 65 55 55 65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Team Cards - Mobile */}
+        <div className="flex gap-4">
+          {/* Main Card - Position 1 (Large) */}
+          <div
+            ref={card1Ref}
+            className="flex flex-col flex-1"
+            style={{ opacity: 0 }}
+          >
+            <div className="relative w-full aspect-[3/4] bg-[#E5E2DD] overflow-hidden">
+              <Image
+                src={visibleMembers[0].image}
+                alt={visibleMembers[0].name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <h3 className="text-xs font-semibold text-[#493425] mt-3 uppercase">{visibleMembers[0].name}</h3>
+            <p className="text-xs font-medium text-[#8D7660] mt-0.5">{visibleMembers[0].role}</p>
+          </div>
+
+          {/* Position 2 - Right side smaller */}
+          <div
+            ref={card2Ref}
+            className="flex flex-col w-[40%] mt-16"
+            style={{ opacity: 0 }}
+          >
+            <div className="relative w-full aspect-[3/4] bg-[#E5E2DD] overflow-hidden">
+              <Image
+                src={visibleMembers[1].image}
+                alt={visibleMembers[1].name}
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+            <h3 className="text-xs font-semibold text-[#493425] mt-3 uppercase">{visibleMembers[1].name}</h3>
+            <p className="text-xs font-medium text-[#8D7660] mt-0.5">{visibleMembers[1].role}</p>
+          </div>
+        </div>
+
+        {/* Hidden card3 ref for mobile - needed for animation */}
+        <div ref={card3Ref} className="hidden" style={{ opacity: 0 }} />
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden md:flex flex-col lg:flex-row gap-12 lg:gap-0">
+        {/* Left - Title and Navigation */}
+        <div className="lg:min-w-140 shrink-0">
+          <h2
+            className="text-sm font-semibold text-[#493425]"
+          >
+            Team of professionals
+          </h2>
+
+          {/* Navigation Arrows - Desktop */}
+          <div
+            className="flex items-center gap-6 mt-60 lg:mt-80"
+          >
+            <button
+              onClick={handlePrev}
+              disabled={isAnimating}
+              className="w-40 h-40 flex items-center justify-center text-[#493425]/30 hover:text-[#493425] transition-colors disabled:opacity-50"
             >
               <svg width="120" height="120" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M45 25L30 40L45 55" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -216,11 +300,10 @@ export default function TeamSection() {
               </svg>
             </button>
 
-            {/* Right Arrow */}
             <button
               onClick={handleNext}
               disabled={isAnimating}
-              className="w-36 h-36 md:w-40 md:h-40 flex items-center justify-center text-[#493425] hover:text-[#493425]/70 transition-colors disabled:opacity-50"
+              className="w-40 h-40 flex items-center justify-center text-[#493425] hover:text-[#493425]/70 transition-colors disabled:opacity-50"
             >
               <svg width="120" height="120" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M35 25L50 40L35 55" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -231,15 +314,13 @@ export default function TeamSection() {
           </div>
         </div>
 
-        {/* Right - Team Cards */}
-        <div className="flex-1 flex flex-col md:flex-row gap-6 lg:gap-8 md:-ml-20 lg:-ml-32 relative">
+        {/* Right - Team Cards Desktop */}
+        <div className="flex-1 flex flex-row gap-6 lg:gap-8 -ml-20 lg:-ml-32 relative">
           {/* Main Card - Position 1 (Large) */}
           <div
-            ref={card1Ref}
             className="flex flex-col"
-            style={{ opacity: 0 }}
           >
-            <div className="relative w-full md:w-80 lg:w-96 aspect-[3/4] bg-[#E5E2DD] overflow-hidden">
+            <div className="relative w-80 lg:w-96 aspect-[3/4] bg-[#E5E2DD] overflow-hidden">
               <Image
                 src={visibleMembers[0].image}
                 alt={visibleMembers[0].name}
@@ -255,11 +336,9 @@ export default function TeamSection() {
           <div className="flex flex-col gap-6 lg:gap-8">
             {/* Position 2 */}
             <div
-              ref={card2Ref}
               className="flex flex-col"
-              style={{ opacity: 0 }}
             >
-              <div className="relative w-full md:w-44 lg:w-52 aspect-[4/5] bg-[#E5E2DD] overflow-hidden">
+              <div className="relative w-44 lg:w-52 aspect-[4/5] bg-[#E5E2DD] overflow-hidden">
                 <Image
                   src={visibleMembers[1].image}
                   alt={visibleMembers[1].name}
@@ -273,11 +352,9 @@ export default function TeamSection() {
 
             {/* Position 3 */}
             <div
-              ref={card3Ref}
-              className="flex flex-col md:ml-44 lg:ml-60 md:-mt-16 lg:-mt-24"
-              style={{ opacity: 0 }}
+              className="flex flex-col ml-44 lg:ml-60 -mt-16 lg:-mt-24"
             >
-              <div className="relative w-full md:w-44 lg:w-52 aspect-[4/5] bg-[#E5E2DD] overflow-hidden">
+              <div className="relative w-44 lg:w-52 aspect-[4/5] bg-[#E5E2DD] overflow-hidden">
                 <Image
                   src={visibleMembers[2].image}
                   alt={visibleMembers[2].name}

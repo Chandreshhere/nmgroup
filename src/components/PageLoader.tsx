@@ -22,6 +22,10 @@ export default function PageLoader() {
 
     if (!loader || !logo || !circle || !innerLogo) return;
 
+    // Get responsive multiplier based on screen width
+    const isMobile = window.innerWidth < 768;
+    const multiplier = isMobile ? 0.5 : 1;
+
     // Create main timeline
     const tl = gsap.timeline({
       onComplete: () => {
@@ -62,16 +66,16 @@ export default function PageLoader() {
 
     // PHASE 4 — LEFT-TOP: Circle moves to left-top, smaller shape
     tl.to(circle, {
-      x: -80,
-      y: -25,
+      x: -80 * multiplier,
+      y: -25 * multiplier,
       scale: 0.7,
       duration: 0.5,
       ease: "power2.inOut",
     });
     // Inner logo moves opposite to keep it fixed in place
     tl.to(innerLogo, {
-      x: 80,
-      y: 25,
+      x: 80 * multiplier,
+      y: 25 * multiplier,
       duration: 0.5,
       ease: "power2.inOut",
     }, "<");
@@ -79,31 +83,31 @@ export default function PageLoader() {
     // PHASE 5 — MIDDLE-TOP: Circle moves to center-top, bigger shape
     tl.to(circle, {
       x: 0,
-      y: -35,
-      scale: 1.2,
+      y: -35 * multiplier,
+      scale: isMobile ? 1 : 1.2,
       duration: 0.5,
       ease: "power2.inOut",
     });
     // Inner logo moves opposite
     tl.to(innerLogo, {
       x: 0,
-      y: 35,
+      y: 35 * multiplier,
       duration: 0.5,
       ease: "power2.inOut",
     }, "<");
 
     // PHASE 6 — BOTTOM-RIGHT: Circle moves to bottom-right, smaller shape
     tl.to(circle, {
-      x: 100,
-      y: 30,
-      scale: 0.4,
+      x: 100 * multiplier,
+      y: 30 * multiplier,
+      scale: isMobile ? 0.5 : 0.4,
       duration: 0.5,
       ease: "power2.inOut",
     });
     // Inner logo moves opposite
     tl.to(innerLogo, {
-      x: -100,
-      y: -30,
+      x: -100 * multiplier,
+      y: -30 * multiplier,
       duration: 0.5,
       ease: "power2.inOut",
     }, "<");
@@ -147,11 +151,7 @@ export default function PageLoader() {
         {/* Layer 1: Dark logo (base layer) */}
         <div
           ref={logoRef}
-          className="relative"
-          style={{
-            width: "clamp(250px, 35vw, 450px)",
-            height: "clamp(80px, 12vw, 150px)",
-          }}
+          className="relative w-[200px] h-[65px] md:w-[clamp(250px,35vw,450px)] md:h-[clamp(80px,12vw,150px)]"
         >
           <Image
             src="/logo.jpg"
@@ -165,14 +165,12 @@ export default function PageLoader() {
         {/* Layer 2: Moving circle with overflow hidden - acts as a mask */}
         <div
           ref={circleRef}
-          className="absolute rounded-full overflow-hidden"
+          className="absolute rounded-full overflow-hidden w-[80px] h-[80px] md:w-[clamp(100px,12vw,160px)] md:h-[clamp(100px,12vw,160px)]"
           style={{
-            width: "clamp(100px, 12vw, 160px)",
-            height: "clamp(100px, 12vw, 160px)",
             left: "50%",
             top: "50%",
-            marginLeft: "calc(-1 * clamp(50px, 6vw, 80px))",
-            marginTop: "calc(-1 * clamp(50px, 6vw, 80px))",
+            marginLeft: "-40px",
+            marginTop: "-40px",
             backgroundColor: "#493425",
             opacity: 0,
           }}
@@ -180,10 +178,8 @@ export default function PageLoader() {
           {/* Inner inverted logo - moves opposite to circle to stay aligned with base logo */}
           <div
             ref={innerLogoRef}
-            className="absolute"
+            className="absolute w-[200px] h-[65px] md:w-[clamp(250px,35vw,450px)] md:h-[clamp(80px,12vw,150px)]"
             style={{
-              width: "clamp(250px, 35vw, 450px)",
-              height: "clamp(80px, 12vw, 150px)",
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",

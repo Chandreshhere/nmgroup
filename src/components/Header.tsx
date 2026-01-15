@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -15,6 +16,17 @@ export default function Header() {
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const lastScrollY = useRef(0);
   const isHidden = useRef(false);
+
+  // Mobile menu state
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  // Set mounted state for portal
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -65,8 +77,20 @@ export default function Header() {
       ease: "power3.out",
     }, "-=0.4");
 
-    // Scroll hide/show logic
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+  // Scroll hide/show logic - separate effect to access isMenuOpen
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
     const handleScroll = () => {
+      // Don't hide header when menu is open
+      if (isMenuOpen) return;
+
       const currentScrollY = window.scrollY;
       const scrollThreshold = 100;
 
@@ -104,12 +128,100 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      tl.kill();
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isMenuOpen]);
+
+  // Mobile menu animation
+  useEffect(() => {
+    const mobileMenu = mobileMenuRef.current;
+    const menuLinks = menuLinksRef.current.filter(Boolean) as HTMLAnchorElement[];
+
+    if (!mobileMenu) return;
+
+    if (isMenuOpen) {
+      // Open menu animation
+      document.body.style.overflow = "hidden";
+      gsap.set(mobileMenu, { display: "flex" });
+
+      gsap.fromTo(mobileMenu,
+        { clipPath: "circle(0% at calc(100% - 40px) 40px)" },
+        {
+          clipPath: "circle(150% at calc(100% - 40px) 40px)",
+          duration: 0.8,
+          ease: "power3.inOut"
+        }
+      );
+
+      // Stagger animate menu links
+      gsap.fromTo(menuLinks,
+        { opacity: 0, y: 60, rotateX: -90 },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          delay: 0.3,
+          ease: "power3.out"
+        }
+      );
+    } else {
+      // Close menu animation
+      gsap.to(menuLinks, {
+        opacity: 0,
+        y: -30,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power2.in"
+      });
+
+      gsap.to(mobileMenu, {
+        clipPath: "circle(0% at calc(100% - 40px) 40px)",
+        duration: 0.6,
+        delay: 0.2,
+        ease: "power3.inOut",
+        onComplete: () => {
+          gsap.set(mobileMenu, { display: "none" });
+          document.body.style.overflow = "";
+        }
+      });
+    }
+  }, [isMenuOpen]);
+
+  const toggleMenu = () => {
+    const header = headerRef.current;
+    // If header is hidden, show it when opening menu
+    if (!isMenuOpen && isHidden.current && header) {
+      isHidden.current = false;
+      gsap.to(header, {
+        y: 0,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    }
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleMobileNavClick = (sectionId: string) => {
+    setIsMenuOpen(false);
+    setTimeout(() => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 600);
+  };
+
+  const mobileNavLinks = [
+    { label: "Services", sectionId: "our-services" },
+    { label: "Works", sectionId: "gallery-section" },
+    { label: "Reviews", sectionId: "reviews-section" },
+    { label: "Contact", sectionId: "contact-section" },
+  ];
 
   return (
+    <>
     <header
       ref={headerRef}
       className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F3] px-6 pt-10 pb-5 md:px-10 lg:px-12"
@@ -198,23 +310,85 @@ export default function Header() {
         </a>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden text-[#493425] ml-auto">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
+        <button
+          onClick={toggleMenu}
+          className={`md:hidden ml-auto relative z-[70] w-8 h-8 flex flex-col items-end justify-center gap-1 transition-colors duration-300 ${
+            isMenuOpen ? "text-white" : "text-[#493425]"
+          }`}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        >
+          <span
+            className={`block h-[1.5px] bg-current transition-all duration-300 origin-right ${
+              isMenuOpen ? "w-6 rotate-45 translate-y-[7px]" : "w-3"
+            }`}
+          />
+          <span
+            className={`block h-[1.5px] bg-current transition-all duration-300 ${
+              isMenuOpen ? "opacity-0 w-0" : "w-5"
+            }`}
+          />
+          <span
+            className={`block h-[1.5px] bg-current transition-all duration-300 origin-right ${
+              isMenuOpen ? "w-6 -rotate-45 -translate-y-[7px]" : "w-6"
+            }`}
+          />
         </button>
       </nav>
     </header>
+
+    {/* Full Screen Mobile Menu - rendered via portal to escape header transforms */}
+    {isMounted && createPortal(
+      <div
+        ref={mobileMenuRef}
+        className="fixed inset-0 bg-[#241B14] z-[60] flex-col items-center justify-center hidden md:hidden"
+        style={{ clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
+      >
+        {/* Close Button - Top Right */}
+        <button
+          onClick={toggleMenu}
+          className="absolute top-10 right-6 w-8 h-8 flex items-center justify-center text-white z-10"
+          aria-label="Close menu"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+
+        <nav className="flex flex-col items-center gap-8" style={{ perspective: "1000px" }}>
+          {mobileNavLinks.map((link, index) => (
+            <a
+              key={link.sectionId}
+              ref={(el) => {
+                menuLinksRef.current[index] = el;
+              }}
+              href={`#${link.sectionId}`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleMobileNavClick(link.sectionId);
+              }}
+              className="text-4xl font-normal text-white hover:text-[#BBA793] transition-colors uppercase tracking-wide"
+              style={{ opacity: 0, transformStyle: "preserve-3d" }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Bottom info - Location left, Email right - same baseline */}
+        <div className="absolute bottom-12 left-0 right-0 px-6">
+          <div className="flex justify-between items-center">
+            <p className="text-xs text-white/60 uppercase tracking-widest">
+              Indore, Madhya Pradesh, India
+            </p>
+            <p className="text-xs text-white/60 uppercase tracking-widest">
+              sales@thenmgroup.com
+            </p>
+          </div>
+        </div>
+      </div>,
+      document.body
+    )}
+    </>
   );
 }

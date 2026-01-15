@@ -134,18 +134,14 @@ export default function ObjectsSection() {
     <section
       id="objects-section"
       ref={sectionRef}
-      className="relative bg-[#F5F5F3] w-full"
+      className="relative bg-[#F5F5F3] w-full px-5 md:px-12 py-16 md:py-[14vh]"
       style={{
-        paddingLeft: '48px',
-        paddingRight: '48px',
-        paddingTop: '14vh',
-        paddingBottom: '14vh',
         zIndex: 2,
       }}
     >
-      {/* Top Text Layout - 3 Column Grid */}
+      {/* Top Text Layout - 3 Column Grid on desktop, stacked on mobile */}
       <div
-        className="grid"
+        className="flex flex-col md:grid gap-6 md:gap-0"
         style={{
           gridTemplateColumns: 'auto 1fr 41vw',
           columnGap: '24px',
@@ -165,7 +161,7 @@ export default function ObjectsSection() {
         </div>
 
         {/* Middle - Description 1 */}
-        <div style={{ maxWidth: '360px' }}>
+        <div className="max-w-full md:max-w-[360px]">
           <p
             ref={desc1Ref}
             className="text-sm font-medium text-[#8D7660] leading-[160%]"
@@ -176,7 +172,7 @@ export default function ObjectsSection() {
         </div>
 
         {/* Right - Description 2 */}
-        <div style={{ maxWidth: '360px' }}>
+        <div className="max-w-full md:max-w-[360px]">
           <p
             ref={desc2Ref}
             className="text-sm font-medium text-[#8D7660] leading-[160%]"
@@ -188,15 +184,14 @@ export default function ObjectsSection() {
       </div>
 
       {/* Image Layout - Editorial Collage */}
-      <div className="relative mt-20">
+      <div className="relative mt-10 md:mt-20">
         {/* Row 1: City Residences + Mountain Retreats */}
-        <div className="flex items-start justify-end gap-6">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-end gap-4 md:gap-6">
           {/* Recognized by Leading Media - Small Square */}
           <div className="flex flex-col shrink-0">
             <div
               ref={cityRef}
-              className="relative bg-[#E5E2DD] overflow-hidden"
-              style={{ width: '280px', height: '280px' }}
+              className="relative bg-[#E5E2DD] overflow-hidden w-full md:w-[280px] aspect-square"
             >
               <Image
                 src="/n3.jpg"
@@ -206,7 +201,7 @@ export default function ObjectsSection() {
               />
             </div>
             <h3
-              className="text-xs font-semibold text-[#493425] mt-4 uppercase"
+              className="text-[10px] md:text-xs font-semibold text-[#493425] mt-3 md:mt-4 uppercase"
               style={{ letterSpacing: '0.12em' }}
             >
               RECOGNIZED BY LEADING MEDIA
@@ -217,8 +212,7 @@ export default function ObjectsSection() {
           <div className="flex flex-col">
             <div
               ref={mountainRef}
-              className="relative bg-[#E5E2DD] overflow-hidden"
-              style={{ width: '41vw', aspectRatio: '16/10' }}
+              className="relative bg-[#E5E2DD] overflow-hidden w-full md:w-[41vw] aspect-[16/10]"
             >
               <Image
                 src="/n6.jpg"
@@ -228,7 +222,7 @@ export default function ObjectsSection() {
               />
             </div>
             <h3
-              className="text-xs font-semibold text-[#493425] mt-4 uppercase"
+              className="text-[10px] md:text-xs font-semibold text-[#493425] mt-3 md:mt-4 uppercase"
               style={{ letterSpacing: '0.12em' }}
             >
               AWARD-WINNING EXCELLENCE
@@ -237,57 +231,79 @@ export default function ObjectsSection() {
         </div>
 
         {/* Row 2: Rural Estates + Heritage Homes + Seaside Villas */}
-        <div className="mt-8">
+        <div className="mt-6 md:mt-8">
           {/* Images row - aligned at bottom */}
-          <div className="flex items-end gap-6">
-            {/* Rural Estates - Very Wide */}
-            <div
-              ref={ruralRef}
-              className="relative bg-[#E5E2DD] overflow-hidden"
-              style={{ width: '52vw', aspectRatio: '16/11' }}
-            >
-              <Image
-                src="/n5.jpg"
-                alt="National Industry Recognition"
-                fill
-                className="object-cover"
-              />
-            </div>
-
-            {/* Heritage Homes & Seaside Villas - Two Small Side by Side */}
-            <div className="flex items-end gap-6 ml-auto">
-              {/* Heritage Homes */}
+          <div className="flex flex-col md:flex-row md:items-end gap-4 md:gap-6">
+            {/* Rural Estates - Very Wide - with label on mobile */}
+            <div className="flex flex-col">
               <div
-                ref={heritageRef}
-                className="relative bg-[#E5E2DD] overflow-hidden"
-                style={{ width: '280px', aspectRatio: '4/5' }}
+                ref={ruralRef}
+                className="relative bg-[#E5E2DD] overflow-hidden w-full md:w-[52vw] aspect-[16/11]"
               >
                 <Image
-                  src="/n4.jpg"
-                  alt="Leadership in Modern Development"
+                  src="/n5.jpg"
+                  alt="National Industry Recognition"
                   fill
                   className="object-cover"
                 />
               </div>
+              {/* Mobile label for Rural - directly under image */}
+              <h3
+                className="md:hidden text-[10px] font-semibold text-[#493425] mt-3 uppercase"
+                style={{ letterSpacing: '0.12em' }}
+              >
+                NATIONAL INDUSTRY RECOGNITION
+              </h3>
+            </div>
+
+            {/* Heritage Homes & Seaside Villas - Two Small Side by Side */}
+            <div className="flex items-end gap-4 md:gap-6 md:ml-auto">
+              {/* Heritage Homes */}
+              <div className="flex-1 md:flex-none">
+                <div
+                  ref={heritageRef}
+                  className="relative bg-[#E5E2DD] overflow-hidden w-full md:w-[280px] aspect-[4/5]"
+                >
+                  <Image
+                    src="/n4.jpg"
+                    alt="Leadership in Modern Development"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3
+                  className="text-[10px] md:text-xs font-semibold text-[#493425] mt-3 md:mt-4 uppercase md:hidden"
+                  style={{ letterSpacing: '0.12em' }}
+                >
+                  LEADERSHIP
+                </h3>
+              </div>
 
               {/* Seaside Villas */}
-              <div
-                ref={seasideRef}
-                className="relative bg-[#E5E2DD] overflow-hidden"
-                style={{ width: '280px', aspectRatio: '4/5' }}
-              >
-                <Image
-                  src="/n2.jpg"
-                  alt="Building a Legacy of Trust"
-                  fill
-                  className="object-cover"
-                />
+              <div className="flex-1 md:flex-none">
+                <div
+                  ref={seasideRef}
+                  className="relative bg-[#E5E2DD] overflow-hidden w-full md:w-[280px] aspect-[4/5]"
+                >
+                  <Image
+                    src="/n2.jpg"
+                    alt="Building a Legacy of Trust"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3
+                  className="text-[10px] md:text-xs font-semibold text-[#493425] mt-3 md:mt-4 uppercase md:hidden"
+                  style={{ letterSpacing: '0.12em' }}
+                >
+                  LEGACY
+                </h3>
               </div>
             </div>
           </div>
 
-          {/* Labels row */}
-          <div className="flex gap-6 mt-4">
+          {/* Labels row - Desktop only */}
+          <div className="hidden md:flex gap-6 mt-4">
             <h3
               className="text-xs font-semibold text-[#493425] uppercase"
               style={{ letterSpacing: '0.12em', width: '52vw' }}

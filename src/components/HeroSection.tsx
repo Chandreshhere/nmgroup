@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const textRowRef = useRef<HTMLDivElement>(null);
+  const mobileTagsRef = useRef<HTMLDivElement>(null);
   const forYouRef = useRef<HTMLDivElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const topRevealRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,7 @@ export default function HeroSection() {
 
   useEffect(() => {
     const textRow = textRowRef.current;
+    const mobileTags = mobileTagsRef.current;
     const forYou = forYouRef.current;
     const imageWrapper = imageWrapperRef.current;
     const topReveal = topRevealRef.current;
@@ -23,11 +25,12 @@ export default function HeroSection() {
     const image = imageRef.current;
     const button = buttonRef.current;
 
-    if (!textRow || !forYou || !imageWrapper || !topReveal || !bottomReveal || !image || !button) return;
+    if (!textRow || !imageWrapper || !topReveal || !bottomReveal || !image || !button) return;
 
     // Set initial states
     gsap.set(textRow, { opacity: 0, x: -80 });
-    gsap.set(forYou, { opacity: 0, x: -80 });
+    if (mobileTags) gsap.set(mobileTags, { opacity: 0, x: -80 });
+    if (forYou) gsap.set(forYou, { opacity: 0, x: -80 });
     gsap.set(topReveal, { yPercent: 0 }); // Covers top half
     gsap.set(bottomReveal, { yPercent: 0 }); // Covers bottom half
     gsap.set(image, { scale: 1 });
@@ -38,21 +41,33 @@ export default function HeroSection() {
       delay: 4.5,
     });
 
+    // Mobile tags animate first
+    if (mobileTags) {
+      tl.to(mobileTags, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    }
+
     // All text elements slide in together from left to right
     tl.to(textRow, {
       opacity: 1,
       x: 0,
       duration: 0.8,
       ease: "power3.out",
-    });
+    }, mobileTags ? "-=0.6" : "+=0");
 
-    // (FOR YOU) slides in from left - same animation as text row
-    tl.to(forYou, {
-      opacity: 1,
-      x: 0,
-      duration: 0.8,
-      ease: "power3.out",
-    }, "<"); // Same time as text row
+    // (FOR YOU) slides in from left - same animation as text row (desktop only)
+    if (forYou) {
+      tl.to(forYou, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      }, "<"); // Same time as text row
+    }
 
     // Image reveals - top cover moves up, bottom cover moves down
     tl.to(topReveal, {
@@ -90,30 +105,50 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#F5F5F3] pt-24 md:pt-28 pb-12 sticky top-0"
-      style={{ paddingLeft: "48px", paddingRight: "48px", zIndex: 1 }}
+      className="bg-[#F5F5F3] pt-24 md:pt-28 pb-12 sticky top-0 px-5 md:px-12"
+      style={{ zIndex: 1 }}
     >
       {/* Hero Container */}
       <div className="relative">
+        {/* Mobile Real Estate Tags - positioned at top right on mobile */}
+        <div
+          ref={mobileTagsRef}
+          className="flex md:hidden justify-between text-[#8D7660] mb-4 mt-4"
+          style={{ opacity: 0 }}
+        >
+          <div className="flex items-start gap-4">
+            <span className="text-xs font-medium tracking-widest">REAL</span>
+            <span className="text-xs font-medium tracking-widest">ESTATE</span>
+            <span className="text-xs font-medium tracking-widest">AGENCY</span>
+          </div>
+          <div className="text-right leading-snug">
+            <span className="text-xs font-medium tracking-widest block">WHERE LUXURY</span>
+            <span className="text-xs font-medium tracking-widest block">MEETS LIFESTYLE</span>
+          </div>
+        </div>
+
         {/* Text Row - All elements move together */}
         <div
           ref={textRowRef}
-          className="flex items-start mb-0 relative z-10"
+          className="flex flex-col md:flex-row items-start mb-0 relative z-10"
           style={{ opacity: 0 }}
         >
           {/* Left - Main Headline */}
-          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-[#493425] tracking-tight leading-tight pb-2 mt-1 -mb-1">
+          <h1 className="text-2xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-[#493425] tracking-tight leading-tight pb-2 mt-1 -mb-1">
             TURNING NORMAL SPACES
             <br />
             INTO STUNNING
             <br />
-            MASTERPIECES
+            <span className="inline-flex items-baseline gap-2 md:gap-0">
+              <span>MASTERPIECES</span>
+              <span className="md:hidden text-lg">(FOR YOU)</span>
+            </span>
           </h1>
 
           {/* Spacer to push Real Estate Tags to align with FOR YOU */}
-          <div className="flex-1" />
+          <div className="flex-1 hidden md:block" />
 
-          {/* Real Estate Tags - aligned with (FOR YOU) left edge */}
+          {/* Real Estate Tags - desktop only */}
           <div className="hidden md:flex flex-col text-[#8D7660] pt-2 text-right">
             <div className="flex items-start gap-2 lg:gap-4">
               <span className="text-xs font-medium tracking-widest">REAL</span>
@@ -129,20 +164,20 @@ export default function HeroSection() {
 
         {/* Hero Image */}
         <div className="relative w-full">
-          {/* (FOR YOU) - aligned with MASTERPIECES line */}
+          {/* (FOR YOU) - aligned with MASTERPIECES line - desktop only */}
           <div
             ref={forYouRef}
-            className="hidden md:flex justify-end -mt-6 md:-mt-7 lg:-mt-8 xl:-mt-9"
+            className="hidden md:flex justify-end -mt-7 lg:-mt-8 xl:-mt-9"
             style={{ opacity: 0 }}
           >
-            <span className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-normal text-[#493425] tracking-tight leading-none">
-              FOR YOU
+            <span className="text-xl lg:text-2xl xl:text-3xl font-normal text-[#493425] tracking-tight leading-none">
+              (FOR YOU)
             </span>
           </div>
 
           <div
             ref={imageWrapperRef}
-            className="relative aspect-[16/11] md:aspect-[2/1] lg:aspect-[2.2/1] overflow-hidden"
+            className="relative aspect-[4/3] md:aspect-[2/1] lg:aspect-[2.2/1] overflow-hidden mt-4 md:mt-0"
           >
             {/* Actual Image */}
             <div ref={imageRef} className="absolute inset-0">
@@ -177,13 +212,11 @@ export default function HeroSection() {
                 contactSection.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="absolute bottom-4 right-4 md:bottom-8 md:right-8 lg:bottom-10 lg:right-12 flex items-center justify-center w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white rounded-full text-center text-[11px] font-bold text-[#493425] uppercase tracking-wider hover:bg-[#F5F5F3] transition-colors shadow-lg z-20 cursor-pointer"
+            className="absolute bottom-4 right-4 md:bottom-8 md:right-8 lg:bottom-10 lg:right-12 flex items-center justify-center w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white rounded-full text-center text-[10px] md:text-[11px] font-bold text-[#493425] uppercase tracking-wider hover:bg-[#F5F5F3] transition-colors shadow-lg z-20 cursor-pointer"
             style={{ opacity: 0 }}
           >
             <span className="leading-tight">
-              GET IN
-              <br />
-              TOUCH
+              GET IN<br />TOUCH
             </span>
           </button>
         </div>

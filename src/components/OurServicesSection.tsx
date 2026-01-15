@@ -296,14 +296,14 @@ export default function OurServicesSection() {
   // Render default layout (text left, image right)
   const renderDefaultLayout = (service: typeof services[0], index: number) => (
     <div
-      className="grid h-full"
+      className="flex flex-col md:grid h-full"
       style={{
         gridTemplateColumns: "1fr 1fr",
         columnGap: "4vw",
       }}
     >
       {/* Left Column - Text Content */}
-      <div className={`service-text-content ${index !== 0 ? "flex items-start h-full" : ""}`}>
+      <div className={`service-text-content ${index !== 0 ? "md:flex md:items-start md:h-full" : ""}`}>
         {/* Our Services Title - only on first service */}
         {index === 0 && (
           <h2 className="text-sm font-semibold text-[#493425] leading-[140%]">
@@ -313,13 +313,12 @@ export default function OurServicesSection() {
 
         {/* Service Item - positioned lower for first, higher for others */}
         <div
-          className="flex items-start"
-          style={{ marginTop: index === 0 ? "35vh" : "20vh", gap: "4vw" }}
+          className={`flex flex-col md:flex-row md:items-start mt-6 gap-4 md:gap-[4vw] ${index !== 0 ? "md:mt-[20vh]" : "md:mt-0"}`}
         >
           {/* Number with parentheses - hide for first service */}
           {index !== 0 && (
             <div
-              className="text-3xl md:text-4xl font-light text-[#493425] shrink-0"
+              className="text-2xl md:text-4xl font-light text-[#493425] shrink-0"
               style={{ letterSpacing: "-0.02em" }}
             >
               <span className="text-[#493425]/40">(</span>
@@ -330,7 +329,7 @@ export default function OurServicesSection() {
 
           {/* Service Title */}
           <h3
-            className="text-sm font-bold text-[#493425] uppercase leading-[160%] shrink-0"
+            className="text-xs md:text-sm font-bold text-[#493425] uppercase leading-[160%] shrink-0"
             style={{ letterSpacing: "0.05em" }}
           >
             {service.title.map((line, i) => (
@@ -343,13 +342,12 @@ export default function OurServicesSection() {
 
           {/* Descriptions - stacked vertically */}
           <div
-            className="flex flex-col"
-            style={{ gap: "24px", maxWidth: "200px" }}
+            className="flex flex-col gap-4 md:gap-6 max-w-full md:max-w-[200px]"
           >
-            <p className="text-sm font-medium text-[#8D7660] leading-[170%]">
+            <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]">
               {service.description1}
             </p>
-            <p className="text-sm font-medium text-[#8D7660] leading-[170%]">
+            <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]">
               {service.description2}
             </p>
           </div>
@@ -357,11 +355,11 @@ export default function OurServicesSection() {
       </div>
 
       {/* Right Column - Image Content */}
-      <div className="service-image-content flex flex-col items-end" style={{ perspective: "1000px" }}>
+      <div className="service-image-content flex flex-col items-end mt-6 md:mt-0" style={{ perspective: "1000px" }}>
         {/* Intro Text - only on first service */}
         {service.showIntro && (
-          <div style={{ width: "85%" }}>
-            <p className="text-sm font-semibold text-[#493425] leading-[170%]">
+          <div className="w-full md:w-[85%]">
+            <p className="text-xs md:text-sm font-semibold text-[#493425] leading-[170%]">
               {service.introTitle}
             </p>
             <p
@@ -370,7 +368,7 @@ export default function OurServicesSection() {
                   paragraphRefs.current[index] = el;
                 }
               }}
-              className="text-sm font-medium text-[#8D7660] leading-[170%] mt-2"
+              className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%] mt-2"
             >
               {service.introText}
             </p>
@@ -379,11 +377,12 @@ export default function OurServicesSection() {
 
         {/* Large Image - aligned to right edge */}
         <div
-          className="service-image-wrapper relative overflow-hidden"
+          className={`service-image-wrapper relative overflow-hidden mt-4 md:mt-0 ${
+            service.showIntro
+              ? "w-full md:w-[85%] aspect-square"
+              : "w-full aspect-[4/3] md:aspect-auto md:h-screen"
+          }`}
           style={{
-            width: service.showIntro ? "85%" : "100%",
-            height: service.showIntro ? "auto" : "100vh",
-            aspectRatio: service.showIntro ? "4/4" : undefined,
             marginTop: service.showIntro ? "4vh" : "0",
           }}
         >
@@ -401,20 +400,16 @@ export default function OurServicesSection() {
   // Render imageLeft layout (image left, text right)
   const renderImageLeftLayout = (service: typeof services[0]) => (
     <div
-      className="grid h-full"
+      className="flex flex-col-reverse md:grid h-full"
       style={{
         gridTemplateColumns: "1fr 1fr",
         columnGap: "4vw",
       }}
     >
       {/* Left Column - Image */}
-      <div className="service-image-content flex flex-col items-start">
+      <div className="service-image-content flex flex-col items-start mt-6 md:mt-0">
         <div
-          className="service-image-wrapper relative overflow-hidden"
-          style={{
-            width: "100%",
-            height: "100vh",
-          }}
+          className="service-image-wrapper relative overflow-hidden w-full aspect-[4/3] md:aspect-auto md:h-screen"
         >
           <Image
             src={service.image}
@@ -426,14 +421,13 @@ export default function OurServicesSection() {
       </div>
 
       {/* Right Column - Text Content - Positioned Higher */}
-      <div className="service-text-content flex items-start h-full">
+      <div className="service-text-content md:flex md:items-start md:h-full">
         <div
-          className="flex items-start"
-          style={{ gap: "4vw", marginTop: "20vh" }}
+          className="flex flex-col md:flex-row md:items-start gap-4 md:gap-[4vw] mt-0 md:mt-[20vh]"
         >
           {/* Number with parentheses */}
           <div
-            className="text-3xl md:text-4xl font-light text-[#493425] shrink-0"
+            className="text-2xl md:text-4xl font-light text-[#493425] shrink-0"
             style={{ letterSpacing: "-0.02em" }}
           >
             <span className="text-[#493425]/40">(</span>
@@ -443,7 +437,7 @@ export default function OurServicesSection() {
 
           {/* Service Title */}
           <h3
-            className="text-sm font-bold text-[#493425] uppercase leading-[160%] shrink-0"
+            className="text-xs md:text-sm font-bold text-[#493425] uppercase leading-[160%] shrink-0"
             style={{ letterSpacing: "0.05em" }}
           >
             {service.title.map((line, i) => (
@@ -456,13 +450,12 @@ export default function OurServicesSection() {
 
           {/* Descriptions - stacked vertically */}
           <div
-            className="flex flex-col"
-            style={{ gap: "24px", maxWidth: "200px" }}
+            className="flex flex-col gap-4 md:gap-6 max-w-full md:max-w-[200px]"
           >
-            <p className="text-sm font-medium text-[#8D7660] leading-[170%]">
+            <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]">
               {service.description1}
             </p>
-            <p className="text-sm font-medium text-[#8D7660] leading-[170%]">
+            <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]">
               {service.description2}
             </p>
           </div>
@@ -474,18 +467,18 @@ export default function OurServicesSection() {
   // Render imageCenter layout (title left, image center, text right)
   const renderImageCenterLayout = (service: typeof services[0]) => (
     <div
-      className="grid h-full"
+      className="flex flex-col md:grid h-full"
       style={{
         gridTemplateColumns: "0.8fr 1.4fr 0.8fr",
         columnGap: "3vw",
       }}
     >
       {/* Left Column - Title - Positioned Higher */}
-      <div className="service-text-content flex flex-col h-full">
-        <div style={{ marginTop: "20vh" }}>
+      <div className="service-text-content flex flex-col md:h-full">
+        <div className="mt-0 md:mt-[20vh]">
           {/* Number with parentheses */}
           <div
-            className="text-3xl md:text-4xl font-light text-[#493425] mb-6"
+            className="text-2xl md:text-4xl font-light text-[#493425] mb-4 md:mb-6"
             style={{ letterSpacing: "-0.02em" }}
           >
             <span className="text-[#493425]/40">(</span>
@@ -495,7 +488,7 @@ export default function OurServicesSection() {
 
           {/* Service Title */}
           <h3
-            className="text-sm font-bold text-[#493425] uppercase leading-[160%]"
+            className="text-xs md:text-sm font-bold text-[#493425] uppercase leading-[160%]"
             style={{ letterSpacing: "0.05em" }}
           >
             {service.title.map((line, i) => (
@@ -509,13 +502,9 @@ export default function OurServicesSection() {
       </div>
 
       {/* Center Column - Image */}
-      <div className="service-image-content flex flex-col items-center">
+      <div className="service-image-content flex flex-col items-center mt-6 md:mt-0 order-last md:order-none">
         <div
-          className="service-image-wrapper relative overflow-hidden"
-          style={{
-            width: "100%",
-            height: "100vh",
-          }}
+          className="service-image-wrapper relative overflow-hidden w-full aspect-[4/3] md:aspect-auto md:h-screen"
         >
           <Image
             src={service.image}
@@ -527,15 +516,14 @@ export default function OurServicesSection() {
       </div>
 
       {/* Right Column - Descriptions - Positioned Higher */}
-      <div className="service-text-content flex flex-col h-full">
+      <div className="service-text-content flex flex-col md:h-full mt-4 md:mt-0">
         <div
-          className="flex flex-col"
-          style={{ gap: "24px", maxWidth: "220px", marginTop: "20vh" }}
+          className="flex flex-col gap-4 md:gap-6 max-w-full md:max-w-[220px] md:mt-[20vh]"
         >
-          <p className="text-sm font-medium text-[#8D7660] leading-[170%]">
+          <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]">
             {service.description1}
           </p>
-          <p className="text-sm font-medium text-[#8D7660] leading-[170%]">
+          <p className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%]">
             {service.description2}
           </p>
         </div>
