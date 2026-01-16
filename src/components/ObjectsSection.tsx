@@ -44,11 +44,13 @@ export default function ObjectsSection() {
       gsap.set(heritage, { clipPath: "inset(0 0 100% 0)" });
       gsap.set(seaside, { clipPath: "inset(0 0 100% 0)" });
 
+      const isMobileView = window.innerWidth < 768;
+
       // All three texts animate together
       gsap.to([title, desc1, desc2], {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: isMobileView ? 0.5 : 0.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -61,7 +63,7 @@ export default function ObjectsSection() {
       // City Residences - first to reveal (bottom to top)
       gsap.to(city, {
         clipPath: "inset(0% 0 0 0)",
-        duration: 1,
+        duration: isMobileView ? 0.7 : 1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: city,
@@ -74,8 +76,8 @@ export default function ObjectsSection() {
       // Mountain Retreats - second to reveal with delay (bottom to top)
       gsap.to(mountain, {
         clipPath: "inset(0% 0 0 0)",
-        duration: 1,
-        delay: 0.3,
+        duration: isMobileView ? 0.7 : 1,
+        delay: isMobileView ? 0.2 : 0.3,
         ease: "power3.out",
         scrollTrigger: {
           trigger: city,
@@ -88,7 +90,7 @@ export default function ObjectsSection() {
       // Rural Estates - first in row 2 (top to bottom)
       gsap.to(rural, {
         clipPath: "inset(0 0 0% 0)",
-        duration: 1.8,
+        duration: isMobileView ? 1.2 : 1.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: rural,
@@ -101,8 +103,8 @@ export default function ObjectsSection() {
       // Heritage Homes - after rural with delay (top to bottom)
       gsap.to(heritage, {
         clipPath: "inset(0 0 0% 0)",
-        duration: 1.8,
-        delay: 0.4,
+        duration: isMobileView ? 1.2 : 1.8,
+        delay: isMobileView ? 0.25 : 0.4,
         ease: "power2.out",
         scrollTrigger: {
           trigger: rural,
@@ -115,8 +117,8 @@ export default function ObjectsSection() {
       // Seaside Villas - same time as heritage (top to bottom)
       gsap.to(seaside, {
         clipPath: "inset(0 0 0% 0)",
-        duration: 1.8,
-        delay: 0.4,
+        duration: isMobileView ? 1.2 : 1.8,
+        delay: isMobileView ? 0.25 : 0.4,
         ease: "power2.out",
         scrollTrigger: {
           trigger: rural,

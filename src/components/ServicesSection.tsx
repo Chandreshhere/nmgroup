@@ -14,6 +14,7 @@ export default function ServicesSection() {
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const services = [
     {
@@ -47,16 +48,40 @@ export default function ServicesSection() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Set images visible on mobile
+  // Handle tap to expand on mobile
+  const handleTap = (index: number) => {
+    if (!isMobile) return;
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
+  // Animate image on expand/collapse
   useEffect(() => {
-    if (isMobile) {
-      imageRefs.current.forEach((imageEl) => {
-        if (imageEl) {
-          gsap.set(imageEl, { opacity: 1, scale: 1 });
+    if (!isMobile) return;
+
+    imageRefs.current.forEach((imageEl, index) => {
+      if (imageEl) {
+        if (expandedIndex === index) {
+          // Set initial state for reveal animation
+          gsap.set(imageEl, { height: "auto" });
+          const height = imageEl.offsetHeight;
+          gsap.set(imageEl, { height: 0, opacity: 1 });
+
+          // Animate height from top to bottom
+          gsap.to(imageEl, {
+            height: height,
+            duration: 0.5,
+            ease: "power3.out",
+          });
+        } else {
+          gsap.to(imageEl, {
+            height: 0,
+            duration: 0.4,
+            ease: "power3.in",
+          });
         }
-      });
-    }
-  }, [isMobile]);
+      }
+    });
+  }, [expandedIndex, isMobile]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -73,10 +98,11 @@ export default function ServicesSection() {
       gsap.set(serviceElements, { opacity: 0, y: 60 });
 
       // Title animation - first to appear
+      const isMobileView = window.innerWidth < 768;
       gsap.to(title, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: isMobileView ? 0.5 : 0.8,
         ease: "power3.out",
         scrollTrigger: {
           trigger: section,
@@ -90,8 +116,8 @@ export default function ServicesSection() {
       gsap.to(description, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        delay: 0.15,
+        duration: isMobileView ? 0.5 : 0.8,
+        delay: isMobileView ? 0.1 : 0.15,
         ease: "power3.out",
         scrollTrigger: {
           trigger: section,
@@ -106,8 +132,8 @@ export default function ServicesSection() {
         gsap.to(service, {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          delay: 0.3 + index * 0.15,
+          duration: isMobileView ? 0.5 : 0.8,
+          delay: isMobileView ? 0.2 + index * 0.1 : 0.3 + index * 0.15,
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
@@ -164,6 +190,7 @@ export default function ServicesSection() {
           ref={(el) => {
             serviceRefs.current[index] = el;
           }}
+          className="group"
           style={{ opacity: 0 }}
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={() => handleMouseLeave(index)}
@@ -181,7 +208,10 @@ export default function ServicesSection() {
           )}
 
           {/* Service Row - Image on left side, Text on right side */}
-          <div className="flex flex-col md:flex-row relative cursor-pointer group">
+          <div
+            className="flex flex-col md:flex-row relative cursor-pointer group"
+            onClick={() => handleTap(index)}
+          >
             {/* Left Side - Intro text for first row, Image for others */}
             <div className="w-full md:w-1/2 mb-4 md:mb-0">
               {index === 0 ? (
@@ -208,41 +238,110 @@ export default function ServicesSection() {
                     ensuring every client feels confident at every stage of their real
                     estate journey
                   </p>
-                  {/* Image Placeholder - shows on hover on desktop, always visible on mobile */}
-                  <div
-                    ref={(el) => {
-                      imageRefs.current[index] = el;
-                    }}
-                    className="bg-[#E5E2DD] shrink-0 overflow-hidden relative w-32 h-32 md:w-[180px] md:h-[180px]"
-                    style={{
-                      opacity: isMobile ? 1 : 0,
-                      transform: "scale(1)",
-                    }}
-                  >
-                    <Image
-                      src={service.image}
-                      alt={service.heading}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
+                  {/* Image Placeholder - shows on hover on desktop only */}
+                  {!isMobile && (
+                    <div
+                      ref={(el) => {
+                        if (!isMobile) imageRefs.current[index] = el;
+                      }}
+                      className="bg-[#E5E2DD] shrink-0 overflow-hidden relative w-[180px] h-[180px]"
+                      style={{
+                        opacity: 0,
+                        transform: "scale(1)",
+                      }}
+                    >
+                      <Image
+                        src={service.image}
+                        alt={service.heading}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
                 </div>
               ) : (
-                /* Other rows: Just Image with staggered position on desktop, visible on mobile */
-                <div className="block md:pl-0" style={{ paddingLeft: isMobile ? '0' : service.imageMarginLeft }}>
+                /* Other rows: Just Image with staggered position on desktop only */
+                !isMobile && (
+                  <div className="block" style={{ paddingLeft: service.imageMarginLeft }}>
+                    <div
+                      ref={(el) => {
+                        if (!isMobile) imageRefs.current[index] = el;
+                      }}
+                      className={`bg-[#E5E2DD] overflow-hidden relative ${
+                        index === 2
+                          ? "w-[260px] h-[160px]"
+                          : "w-[180px] h-[180px]"
+                      }`}
+                      style={{
+                        opacity: 0,
+                        transform: "scale(1)",
+                      }}
+                    >
+                      <Image
+                        src={service.image}
+                        alt={service.heading}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+
+            {/* Right Side - Heading + Paragraph */}
+            <div className="w-full md:w-1/2 md:pl-[8vw]">
+              <div className="flex items-center justify-between">
+                <h3
+                  className="text-2xl md:text-4xl lg:text-5xl font-normal text-[#493425] tracking-tight leading-[110%] transition-colors duration-300 group-hover:text-[#8D7660]"
+                  style={{ letterSpacing: "-0.02em" }}
+                >
+                  {service.heading}
+                </h3>
+                {/* Arrow indicator - mobile only */}
+                {isMobile && (
                   <div
-                    ref={(el) => {
-                      imageRefs.current[index] = el;
-                    }}
-                    className={`bg-[#E5E2DD] overflow-hidden relative ${
-                      index === 2
-                        ? "w-40 h-28 md:w-[260px] md:h-[160px]"
-                        : "w-32 h-32 md:w-[180px] md:h-[180px]"
+                    className={`w-8 h-8 flex items-center justify-center transition-transform duration-300 ${
+                      expandedIndex === index ? "rotate-180" : ""
                     }`}
-                    style={{
-                      opacity: isMobile ? 1 : 0,
-                      transform: "scale(1)",
-                    }}
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4 6L8 10L12 6"
+                        stroke="#493425"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <p
+                className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%] mt-3 md:mt-6 transition-colors duration-300 group-hover:text-[#493425] max-w-full md:max-w-[380px]"
+              >
+                {service.paragraph}
+              </p>
+
+              {/* Image - shown below text on mobile when expanded */}
+              {isMobile && (
+                <div
+                  ref={(el) => {
+                    imageRefs.current[index] = el;
+                  }}
+                  className="overflow-hidden mt-4"
+                  style={{
+                    height: 0,
+                  }}
+                >
+                  <div
+                    className="bg-[#E5E2DD] relative w-full aspect-square"
                   >
                     <Image
                       src={service.image}
@@ -253,21 +352,6 @@ export default function ServicesSection() {
                   </div>
                 </div>
               )}
-            </div>
-
-            {/* Right Side - Heading + Paragraph */}
-            <div className="w-full md:w-1/2 md:pl-[8vw]">
-              <h3
-                className="text-2xl md:text-4xl lg:text-5xl font-normal text-[#493425] tracking-tight leading-[110%] transition-colors duration-300 group-hover:text-[#8D7660]"
-                style={{ letterSpacing: "-0.02em" }}
-              >
-                {service.heading}
-              </h3>
-              <p
-                className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%] mt-3 md:mt-6 transition-colors duration-300 group-hover:text-[#493425] max-w-full md:max-w-[380px]"
-              >
-                {service.paragraph}
-              </p>
             </div>
           </div>
         </div>

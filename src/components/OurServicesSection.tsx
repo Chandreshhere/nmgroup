@@ -15,12 +15,12 @@ const services = [
       "Celebrating Years of Mastery",
     description2:
       "With a legacy built over years of excellence, NM Group stands as a distinguished name in luxury real estate",
-    introTitle: "Our journey is defined by an unwavering commitment to quality, precision, and architectural integrity — crafting spaces that go beyond function to become enduring landmarks.",
+    introTitle: "Our journey is defined by an unwavering commitment to quality, precision, and architectural integrity.",
     introText:
-      "Rooted in experience and guided by vision, we have refined our expertise across every aspect of development. Each project reflects thoughtful planning, superior craftsmanship, and a deep understanding of modern living.",
+      "Rooted in experience and guided by vision, we have refined our expertise across every aspect of development.",
     showIntro: true,
     image: "/building.jpg",
-    layout: "default", // text left, image right
+    layout: "default",
   },
   {
     number: "02",
@@ -28,10 +28,10 @@ const services = [
     description1:
       "Every detail is an expression of artistry",
     description2:
-      "At NM Group, design is more than aesthetics — it's a philosophy. We believe that true luxury lies in the harmony of form, function, and feeling. Our developments are crafted by visionary architects and designers who blend contemporary innovation with timeless elegance, creating environments that inspire and elevate everyday living.",
+      "At NM Group, design is more than aesthetics — it's a philosophy. We blend contemporary innovation with timeless elegance.",
     showIntro: false,
     image: "/i2.jpg",
-    layout: "imageLeft", // image left, text right
+    layout: "imageLeft",
   },
   {
     number: "03",
@@ -39,10 +39,10 @@ const services = [
     description1:
       "Excellence Shaped by Vision & Integrity",
     description2:
-      "Behind NM Group's success is a leadership team driven by purpose and guided by principles. Our founders and directors bring decades of combined expertise, steering every project with a hands-on approach and an unwavering focus on quality. With a clear vision for the future and deep respect for our roots, we continue to set new standards in luxury development.",
+      "Behind NM Group's success is a leadership team driven by purpose. Our founders bring decades of expertise, steering every project with focus on quality.",
     showIntro: false,
     image: "/i3.jpg",
-    layout: "imageCenter", // title left, image center, text right
+    layout: "imageCenter",
   },
   {
     number: "04",
@@ -50,10 +50,10 @@ const services = [
     description1:
       "Shaping tomorrow, one landmark at a time",
     description2:
-      "As NM Group looks ahead, our mission remains clear — to build not just spaces, but lasting legacies. With ambitious new projects on the horizon, we are committed to expanding our footprint while staying true to the values that define us: integrity, innovation, and an uncompromising pursuit of excellence.",
+      "As NM Group looks ahead, our mission remains clear — to build lasting legacies with integrity, innovation, and excellence.",
     showIntro: false,
     image: "/i4.jpg",
-    layout: "default", // text left, image right
+    layout: "default",
   },
 ];
 
@@ -69,14 +69,16 @@ export default function OurServicesSection() {
 
     if (!container || cards.length === 0) return;
 
-    // Check if mobile
     const isMobile = window.innerWidth < 768;
 
+    // Wait for Lenis to initialize before setting up ScrollTrigger
+    const setupScrollTrigger = () => {
+      ScrollTrigger.refresh();
+    };
+
+    const timer = setTimeout(setupScrollTrigger, 100);
+
     const ctx = gsap.context(() => {
-      // Pin each card
-      // First card pins at top, subsequent cards stack below with offset
-      // All cards stay pinned until the 4th card reaches its position, then they all unpin together
-      // Mobile uses same stacking behavior as desktop, just with adjusted positions
       const pinPositions = isMobile ? ["top", "8%", "16%", "24%"] : ["top", "25%", "28%", "31%"];
       const lastCard = cards[cards.length - 1];
 
@@ -84,17 +86,16 @@ export default function OurServicesSection() {
         const pinStart = index === 0 ? "top top" : `top ${pinPositions[index]}`;
 
         if (index === cards.length - 1) {
-          // Last card - pin with pinSpacing to create scroll distance
           ScrollTrigger.create({
             trigger: card,
             start: `top ${pinPositions[index]}`,
             end: "bottom bottom",
             pin: true,
             pinSpacing: true,
-            anticipatePin: 1,
+            pinType: "fixed",
+            invalidateOnRefresh: true,
           });
         } else {
-          // Cards 1, 2, 3 - all stay pinned until the last card finishes (bottom bottom)
           ScrollTrigger.create({
             trigger: card,
             start: pinStart,
@@ -102,7 +103,8 @@ export default function OurServicesSection() {
             end: "bottom bottom",
             pin: true,
             pinSpacing: false,
-            anticipatePin: 1,
+            pinType: "fixed",
+            invalidateOnRefresh: true,
           });
         }
       });
@@ -135,8 +137,8 @@ export default function OurServicesSection() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: firstCard,
-              start: "top 40%",
-              end: "top 20%",
+              start: isMobile ? "top bottom" : "top 40%",
+              end: isMobile ? "top top" : "top 20%",
               toggleActions: "play none none none",
             },
           });
@@ -152,8 +154,8 @@ export default function OurServicesSection() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: firstCard,
-              start: "top 40%",
-              end: "top 20%",
+              start: isMobile ? "top bottom" : "top 40%",
+              end: isMobile ? "top top" : "top 20%",
               toggleActions: "play none none none",
             },
           });
@@ -168,8 +170,8 @@ export default function OurServicesSection() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: firstCard,
-              start: "top 40%",
-              end: "top 20%",
+              start: isMobile ? "top bottom" : "top 40%",
+              end: isMobile ? "top top" : "top 20%",
               toggleActions: "play none none none",
             },
           });
@@ -196,13 +198,13 @@ export default function OurServicesSection() {
           gsap.to(el, {
             opacity: 1,
             x: 0,
-            duration: 0.6,
-            delay: i * 0.05,
+            duration: isMobile ? 0.4 : 0.6,
+            delay: isMobile ? i * 0.03 : i * 0.05,
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 60%",
-              end: "top 30%",
+              start: isMobile ? "top bottom" : "top 60%",
+              end: isMobile ? "top top" : "top 30%",
               toggleActions: "play none none none",
             },
           });
@@ -212,13 +214,13 @@ export default function OurServicesSection() {
         if (image) {
           gsap.to(image, {
             clipPath: "inset(0% 0 0 0)",
-            duration: 0.7,
-            delay: 0.1,
+            duration: isMobile ? 0.5 : 0.7,
+            delay: isMobile ? 0.05 : 0.1,
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 60%",
-              end: "top 30%",
+              start: isMobile ? "top bottom" : "top 60%",
+              end: isMobile ? "top top" : "top 30%",
               toggleActions: "play none none none",
             },
           });
@@ -278,12 +280,13 @@ export default function OurServicesSection() {
         });
 
         // Animate lines on scroll
+        const isMobileView = window.innerWidth < 768;
         gsap.to(lineSpans, {
           rotationX: 0,
           opacity: 1,
-          duration: 0.5,
+          duration: isMobileView ? 0.35 : 0.5,
           ease: "power3.out",
-          stagger: 0.12,
+          stagger: isMobileView ? 0.08 : 0.12,
           scrollTrigger: {
             trigger: paragraph,
             start: "top 70%",
@@ -294,7 +297,10 @@ export default function OurServicesSection() {
       });
     }, container);
 
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   // Render default layout (text left, image right)
@@ -310,7 +316,7 @@ export default function OurServicesSection() {
       <div className={`service-text-content ${index !== 0 ? "md:flex md:items-start md:h-full" : ""}`}>
         {/* Our Services Title - only on first service */}
         {index === 0 && (
-          <h2 className="text-sm font-semibold text-[#493425] leading-[140%] mt-8 md:mt-0">
+          <h2 className="text-sm font-semibold text-[#493425] leading-[140%] -mt-1 md:mt-0">
             Our Services
           </h2>
         )}
@@ -357,11 +363,11 @@ export default function OurServicesSection() {
       </div>
 
       {/* Right Column - Image Content */}
-      <div className={`service-image-content flex flex-col items-end md:mt-0 ${index === 0 ? "mt-0" : "mt-6"}`} style={{ perspective: "1000px" }}>
+      <div className={`service-image-content flex flex-col items-end md:mt-0 ${index === 0 ? "-mt-0" : "mt-0"}`} style={{ perspective: "1000px" }}>
         {/* Intro Text - only on first service */}
         {service.showIntro && (
-          <div className="w-full md:w-[85%]">
-            <p className="text-xs md:text-sm font-semibold text-[#493425] leading-[170%]">
+          <div className="w-full md:w-[90%] space-y-0 ">
+            <p className="text-xs md:text-sm font-semibold text-[#493425] leading-[190%]">
               {service.introTitle}
             </p>
             <p
@@ -370,7 +376,7 @@ export default function OurServicesSection() {
                   paragraphRefs.current[index] = el;
                 }
               }}
-              className="text-xs md:text-sm font-medium text-[#8D7660] leading-[170%] mt-2"
+              className="text-xs md:text-sm font-medium text-[#8D7660] leading-[150%]"
             >
               {service.introText}
             </p>
@@ -409,7 +415,7 @@ export default function OurServicesSection() {
       }}
     >
       {/* Left Column - Image */}
-      <div className="service-image-content flex flex-col items-start mt-6 md:mt-0">
+      <div className="service-image-content flex flex-col items-start mt-2 md:mt-0">
         <div
           className="service-image-wrapper relative overflow-hidden w-full aspect-[3/5] md:aspect-auto md:h-screen"
         >
@@ -504,7 +510,7 @@ export default function OurServicesSection() {
       </div>
 
       {/* Center Column - Image */}
-      <div className="service-image-content flex flex-col items-center mt-6 md:mt-0 order-last md:order-none md:-ml-[30%] md:mr-[10%]">
+      <div className="service-image-content flex flex-col items-center mt-2 md:mt-0 order-last md:order-none md:-ml-[30%] md:mr-[10%]">
         <div
           className="service-image-wrapper relative overflow-hidden w-full aspect-[3/5] md:aspect-auto md:h-screen"
         >

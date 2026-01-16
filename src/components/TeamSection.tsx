@@ -118,6 +118,7 @@ export default function TeamSection() {
     if (!section || !title || !arrows) return;
 
     const ctx = gsap.context(() => {
+      const isMobileView = window.innerWidth < 768;
       gsap.set(title, { opacity: 0, y: 40 });
       gsap.set(arrows, { opacity: 0, y: 20 });
 
@@ -134,7 +135,7 @@ export default function TeamSection() {
       gsap.to(title, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: isMobileView ? 0.5 : 0.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -148,7 +149,7 @@ export default function TeamSection() {
         gsap.to(card1, {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: isMobileView ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
@@ -162,8 +163,8 @@ export default function TeamSection() {
         gsap.to(card2, {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          delay: 0.2,
+          duration: isMobileView ? 0.5 : 0.8,
+          delay: isMobileView ? 0.12 : 0.2,
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
@@ -177,8 +178,8 @@ export default function TeamSection() {
         gsap.to(card3, {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          delay: 0.4,
+          duration: isMobileView ? 0.5 : 0.8,
+          delay: isMobileView ? 0.24 : 0.4,
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
@@ -193,7 +194,7 @@ export default function TeamSection() {
         gsap.to(mobileCard1, {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: isMobileView ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
@@ -207,8 +208,8 @@ export default function TeamSection() {
         gsap.to(mobileCard2, {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          delay: 0.2,
+          duration: isMobileView ? 0.5 : 0.8,
+          delay: isMobileView ? 0.12 : 0.2,
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
@@ -221,8 +222,8 @@ export default function TeamSection() {
       gsap.to(arrows, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        delay: 0.6,
+        duration: isMobileView ? 0.5 : 0.8,
+        delay: isMobileView ? 0.36 : 0.6,
         ease: "power3.out",
         scrollTrigger: {
           trigger: section,

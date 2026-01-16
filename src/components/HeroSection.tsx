@@ -47,6 +47,7 @@ export default function HeroSection() {
     gsap.set(button, { opacity: 0, scale: 0.8 });
 
     // Create timeline - starts after header animation
+    const isMobileView = window.innerWidth < 768;
     const tl = gsap.timeline({
       delay: 4.5,
     });
@@ -56,7 +57,7 @@ export default function HeroSection() {
       tl.to(mobileTags, {
         opacity: 1,
         x: 0,
-        duration: 0.8,
+        duration: isMobileView ? 0.6 : 0.8,
         ease: "power3.out",
       });
     }
@@ -65,37 +66,37 @@ export default function HeroSection() {
     tl.to(textRow, {
       opacity: 1,
       x: 0,
-      duration: 0.8,
+      duration: isMobileView ? 0.6 : 0.8,
       ease: "power3.out",
-    }, mobileTags ? "-=0.6" : "+=0");
+    }, mobileTags ? "-=0.4" : "+=0");
 
     // Image reveals - top cover moves up, bottom cover moves down
     tl.to(topReveal, {
       yPercent: -100,
-      duration: 0.9,
+      duration: isMobileView ? 0.7 : 0.9,
       ease: "power2.inOut",
-    }, "-=0.3");
+    }, "-=0.2");
 
     tl.to(bottomReveal, {
       yPercent: 100,
-      duration: 0.9,
+      duration: isMobileView ? 0.7 : 0.9,
       ease: "power2.inOut",
     }, "<"); // Same time as top reveal
 
     // Image zooms in slightly
     tl.to(image, {
       scale: 1.05,
-      duration: 1.2,
+      duration: isMobileView ? 0.9 : 1.2,
       ease: "power2.out",
-    }, "-=0.9");
+    }, isMobileView ? "-=0.7" : "-=0.9");
 
     // Button appears with bounce
     tl.to(button, {
       opacity: 1,
       scale: 1,
-      duration: 0.5,
+      duration: isMobileView ? 0.4 : 0.5,
       ease: "back.out(1.7)",
-    }, "-=0.4");
+    }, isMobileView ? "-=0.3" : "-=0.4");
 
     return () => {
       tl.kill();
@@ -106,7 +107,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#F5F5F3] pt-20 md:pt-20 pb-12 px-5 md:px-12"
+      className="relative bg-[#F5F5F3] pt-20 md:pt-20 pb-12 px-5 md:px-12"
       style={{ zIndex: 1 }}
     >
       {/* Hero Container */}
@@ -173,7 +174,7 @@ export default function HeroSection() {
         <div className="relative w-full">
           <div
             ref={imageWrapperRef}
-            className="relative aspect-[4/3] md:aspect-[2.3/1] lg:aspect-[2.5/1] overflow-hidden mt-4 md:mt-0"
+            className="relative h-[40vh] md:h-[65vh] lg:h-[70vh] overflow-hidden mt-4 md:mt-0"
           >
             {/* Actual Image */}
             <div ref={imageRef} className="absolute inset-0">

@@ -16,9 +16,9 @@ const reviews = [
     roi: "11.7%",
     format: "remote",
     paragraph1:
-      "I was looking for an apartment that would generate stable passive income without taking much of my time. The team helped me choose a property near Dubai Marina that perfectly fit my investment goals. Within six months, I rented it out with an impressive 11.7% annual yield.",
+      "I needed an apartment for stable passive income. The team helped me choose a property near Dubai Marina. Within six months, I rented it out with an impressive 11.7% annual yield.",
     paragraph2:
-      "Everything — from selection and legal checks to signing and management — was handled remotely with exceptional professionalism. I always felt supported and informed. The process was transparent, smooth, and stress-free. Now I receive steady rental income and complete peace of mind knowing my investment is in reliable hands.",
+      "Everything was handled remotely with exceptional professionalism. The process was transparent and stress-free. Now I receive steady rental income with complete peace of mind.",
     images: ["/rev1.jpg", "/rev2.jpg"],
   },
   {
@@ -69,6 +69,7 @@ export default function ReviewsSection() {
     if (!section || !image1 || !image1Inner || !image2 || !image2Inner) return;
 
     const ctx = gsap.context(() => {
+      const isMobileView = window.innerWidth < 768;
       // Set initial states for text elements - fade up
       gsap.set(sectionLabel, { opacity: 0, y: 30 });
       gsap.set(metadataRow, { opacity: 0, y: 30 });
@@ -87,7 +88,7 @@ export default function ReviewsSection() {
       gsap.to(sectionLabel, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: isMobileView ? 0.5 : 0.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -101,8 +102,8 @@ export default function ReviewsSection() {
       gsap.to(metadataRow, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        delay: 0.1,
+        duration: isMobileView ? 0.5 : 0.8,
+        delay: isMobileView ? 0.06 : 0.1,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -116,8 +117,8 @@ export default function ReviewsSection() {
       gsap.to(arrows, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        delay: 0.2,
+        duration: isMobileView ? 0.5 : 0.8,
+        delay: isMobileView ? 0.12 : 0.2,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -131,8 +132,8 @@ export default function ReviewsSection() {
       gsap.to(factsGrid, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        delay: 0.15,
+        duration: isMobileView ? 0.5 : 0.8,
+        delay: isMobileView ? 0.1 : 0.15,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -146,8 +147,8 @@ export default function ReviewsSection() {
       gsap.to(testimonial, {
         opacity: 1,
         y: 0,
-        duration: 1,
-        delay: 0.3,
+        duration: isMobileView ? 0.7 : 1,
+        delay: isMobileView ? 0.18 : 0.3,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -160,7 +161,7 @@ export default function ReviewsSection() {
       // Image 1 reveal from top right corner - expands to full image
       gsap.to(image1, {
         clipPath: "inset(0% 0% 0% 0%)",
-        duration: 0.8,
+        duration: isMobileView ? 0.6 : 0.8,
         ease: "power2.out",
         scrollTrigger: {
           trigger: image1,
@@ -173,7 +174,7 @@ export default function ReviewsSection() {
       // Image 1 zoom out
       gsap.to(image1Inner, {
         scale: 1,
-        duration: 1,
+        duration: isMobileView ? 0.8 : 1,
         ease: "power2.out",
         scrollTrigger: {
           trigger: image1,
@@ -183,11 +184,11 @@ export default function ReviewsSection() {
         },
       });
 
-      // Image 2 reveal from top right corner - 1 second delay after image 1
+      // Image 2 reveal from top right corner - delay after image 1
       gsap.to(image2, {
         clipPath: "inset(0% 0% 0% 0%)",
-        duration: 0.8,
-        delay: 0.4,
+        duration: isMobileView ? 0.6 : 0.8,
+        delay: isMobileView ? 0.25 : 0.4,
         ease: "power2.out",
         scrollTrigger: {
           trigger: image1,
@@ -197,11 +198,11 @@ export default function ReviewsSection() {
         },
       });
 
-      // Image 2 zoom out - 1 second delay
+      // Image 2 zoom out - delay
       gsap.to(image2Inner, {
         scale: 1,
-        duration: 1,
-        delay: 0.4,
+        duration: isMobileView ? 0.8 : 1,
+        delay: isMobileView ? 0.25 : 0.4,
         ease: "power2.out",
         scrollTrigger: {
           trigger: image1,

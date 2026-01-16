@@ -130,6 +130,7 @@ export default function GallerySection() {
     if (!section || !image || !imageInner || !title || !details || !para1 || !para2) return;
 
     const ctx = gsap.context(() => {
+      const isMobileView = window.innerWidth < 768;
       // Set initial states
       gsap.set(image, { clipPath: "inset(0 0 100% 100%)" });
       gsap.set(imageInner, { scale: 1.3 });
@@ -141,7 +142,7 @@ export default function GallerySection() {
       // Image reveal from top right corner
       gsap.to(image, {
         clipPath: "inset(0 0 0% 0%)",
-        duration: 1.5,
+        duration: isMobileView ? 1 : 1.5,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -154,7 +155,7 @@ export default function GallerySection() {
       // Image zoom out smoothly
       gsap.to(imageInner, {
         scale: 1,
-        duration: 2,
+        duration: isMobileView ? 1.4 : 2,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -168,7 +169,7 @@ export default function GallerySection() {
       gsap.to(title, {
         opacity: 1,
         y: 0,
-        duration: 1.2,
+        duration: isMobileView ? 0.8 : 1.2,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -182,8 +183,8 @@ export default function GallerySection() {
       gsap.to(details, {
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        delay: 0.3,
+        duration: isMobileView ? 0.8 : 1.2,
+        delay: isMobileView ? 0.2 : 0.3,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -197,8 +198,8 @@ export default function GallerySection() {
       gsap.to(para1, {
         opacity: 1,
         y: 0,
-        duration: 1.5,
-        delay: 0.6,
+        duration: isMobileView ? 1 : 1.5,
+        delay: isMobileView ? 0.4 : 0.6,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -212,8 +213,8 @@ export default function GallerySection() {
       gsap.to(para2, {
         opacity: 1,
         y: 0,
-        duration: 1.8,
-        delay: 0.9,
+        duration: isMobileView ? 1.2 : 1.8,
+        delay: isMobileView ? 0.6 : 0.9,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,

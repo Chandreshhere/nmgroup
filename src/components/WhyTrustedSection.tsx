@@ -176,8 +176,8 @@ export default function WhyTrustedSection() {
           opacity: 1,
           x: 0,
           y: 0,
-          duration: 0.6,
-          delay: isMobile ? index * 0.1 : 0,
+          duration: isMobile ? 0.4 : 0.6,
+          delay: isMobile ? index * 0.06 : 0,
           ease: isMobile ? "power3.out" : "power2.out",
           scrollTrigger: {
             trigger: client,
@@ -193,7 +193,7 @@ export default function WhyTrustedSection() {
           opacity: 1,
           x: 0,
           y: 0,
-          duration: 0.6,
+          duration: isMobile ? 0.4 : 0.6,
           ease: isMobile ? "power3.out" : "power2.out",
           scrollTrigger: {
             trigger: statsHeader,
@@ -209,8 +209,8 @@ export default function WhyTrustedSection() {
           opacity: 1,
           x: 0,
           y: 0,
-          duration: 0.6,
-          delay: isMobile ? index * 0.1 : 0,
+          duration: isMobile ? 0.4 : 0.6,
+          delay: isMobile ? index * 0.06 : 0,
           ease: isMobile ? "power3.out" : "power2.out",
           scrollTrigger: {
             trigger: stat,
