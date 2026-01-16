@@ -18,6 +18,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       smoothWheel: true,
+      smoothTouch: isMobile,
       touchMultiplier: isMobile ? 1.5 : 2,
       infinite: false,
     });
